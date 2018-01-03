@@ -14,26 +14,16 @@ import static spark.Spark.*;
 
 public class OpenChat {
 
-    private Clock clock = new Clock();
+    private RegistrationAPI registrationAPI;
+    private LoginAPI loginAPI;
+    private PostAPI postAPI;
+    private FollowAPI followAPI;
+    private WallAPI wallAPI;
+    private UserAPI userAPI;
 
-    private UserRepository userRepository = new UserRepositoryInMemory();
-    private PostRepository postRepository = new PostRepositoryInMemory();
-    private IDGenerator idGenerator = new IDGenerator();
-
-    private RegisterUser registerUser = new RegisterUser(idGenerator, userRepository);
-    private Login login = new Login(userRepository);
-    private CreatePost createPost = new CreatePost(clock, idGenerator, userRepository, postRepository);
-    private RetrieveTimeline retrieveTimeline = new RetrieveTimeline(postRepository);
-    private CreateFollowing createFollowing = new CreateFollowing(userRepository);
-    private RetrieveWall retrieveWall = new RetrieveWall(userRepository, postRepository);
-    private RetrieveAllUsers retrieveAllUsers = new RetrieveAllUsers(userRepository);
-
-    private RegistrationAPI registrationAPI = new RegistrationAPI(registerUser);
-    private LoginAPI loginAPI = new LoginAPI(login);
-    private PostAPI postAPI = new PostAPI(createPost, retrieveTimeline);
-    private FollowAPI followAPI = new FollowAPI(createFollowing);
-    private WallAPI wallAPI = new WallAPI(retrieveWall);
-    private UserAPI userAPI = new UserAPI(retrieveAllUsers);
+    public OpenChat() {
+        initialiseDependencies();
+    }
 
     public void start() {
         port(4321);
@@ -49,5 +39,32 @@ public class OpenChat {
 
     public void stop() {
         Spark.stop();
+    }
+
+    private void initialiseDependencies() {
+        // Infrastructure
+        Clock clock = new Clock();
+        IDGenerator idGenerator = new IDGenerator();
+
+        // Domain
+        UserRepository userRepository = new UserRepositoryInMemory();
+        PostRepository postRepository = new PostRepositoryInMemory();
+
+        //Actions
+        RegisterUser registerUser = new RegisterUser(idGenerator, userRepository);
+        Login login = new Login(userRepository);
+        CreatePost createPost = new CreatePost(clock, idGenerator, userRepository, postRepository);
+        RetrieveTimeline retrieveTimeline = new RetrieveTimeline(postRepository);
+        CreateFollowing createFollowing = new CreateFollowing(userRepository);
+        RetrieveWall retrieveWall = new RetrieveWall(userRepository, postRepository);
+        RetrieveAllUsers retrieveAllUsers = new RetrieveAllUsers(userRepository);
+
+        // APIs
+        registrationAPI = new RegistrationAPI(registerUser);
+        loginAPI = new LoginAPI(login);
+        postAPI = new PostAPI(createPost, retrieveTimeline);
+        followAPI = new FollowAPI(createFollowing);
+        wallAPI = new WallAPI(retrieveWall);
+        userAPI = new UserAPI(retrieveAllUsers);
     }
 }
