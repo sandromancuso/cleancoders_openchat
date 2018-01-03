@@ -6,6 +6,7 @@ import org.openchat.core.domain.post.PostRepository;
 import java.util.List;
 
 public class RetrieveTimeline {
+
     private PostRepository postRepository;
 
     public RetrieveTimeline(PostRepository postRepository) {

@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openchat.builders.PostBuilder.aPost;
 import static org.openchat.builders.UserBuilder.aUser;
 
-public class PostRepositoryShould {
+public class PostRepositoryInMemoryShould {
 
     private static final LocalDateTime TODAY = LocalDateTime.now();
     private static final LocalDateTime YESTERDAY = TODAY.minusDays(1);
@@ -25,11 +25,11 @@ public class PostRepositoryShould {
     private static final Post POST_2 = aPost().withUserId(BOB.id()).withDateTime(YESTERDAY).build();
     private static final Post POST_3 = aPost().withUserId(ALICE.id()).withDateTime(TODAY).build();
 
-    private PostRepository postRepository;
+    private PostRepositoryInMemory postRepository;
 
     @Before
     public void initialise() {
-        postRepository = new PostRepository();
+        postRepository = new PostRepositoryInMemory();
     }
 
     @Test public void

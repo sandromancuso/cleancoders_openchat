@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.domain.post.Post;
-import org.openchat.core.domain.post.PostRepository;
+import org.openchat.core.domain.post.PostRepositoryInMemory;
 
 import java.util.List;
 
@@ -22,7 +22,8 @@ public class RetrieveTimelineShould {
     private static final Post POST_1 = aPost().withId("1").build();
     private static final Post POST_2 = aPost().withId("2").build();
 
-    @Mock PostRepository postRepository;
+    @Mock
+    PostRepositoryInMemory postRepository;
 
     private RetrieveTimeline retrieveTimeline;
 

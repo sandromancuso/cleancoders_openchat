@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.domain.post.Post;
-import org.openchat.core.domain.post.PostRepository;
+import org.openchat.core.domain.post.PostRepositoryInMemory;
 import org.openchat.core.domain.user.User;
 import org.openchat.core.domain.user.UserRepository;
 
@@ -32,7 +32,8 @@ public class RetrieveWallShould {
     private static final Post POST_2 = aPost().build();
 
     @Mock UserRepository userRepository;
-    @Mock PostRepository postRepository;
+    @Mock
+    PostRepositoryInMemory postRepository;
 
     private RetrieveWall retrieveWall;
 

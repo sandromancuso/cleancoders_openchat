@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.domain.post.Post;
-import org.openchat.core.domain.post.PostRepository;
+import org.openchat.core.domain.post.PostRepositoryInMemory;
 import org.openchat.core.domain.user.User;
 import org.openchat.core.domain.user.UserRepository;
 import org.openchat.core.infrastructure.Clock;
@@ -31,7 +31,8 @@ public class CreatePostShould {
 
     @Mock UserRepository userRepository;
     @Mock IDGenerator idGenerator;
-    @Mock PostRepository postRepository;
+    @Mock
+    PostRepositoryInMemory postRepository;
     @Mock Clock clock;
 
     private CreatePost createPost;
