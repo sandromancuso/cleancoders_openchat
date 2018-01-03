@@ -17,6 +17,7 @@ public class OpenChat {
     private RegistrationAPI registrationAPI;
     private LoginAPI loginAPI;
     private PostAPI postAPI;
+    private TimelineAPI timelineAPI;
     private FollowAPI followAPI;
     private WallAPI wallAPI;
     private UserAPI userAPI;
@@ -40,7 +41,7 @@ public class OpenChat {
         post("registration",          registrationAPI::registerUser);
         post("login",                 loginAPI::login);
         post("user/:userId/posts",    postAPI::createPost);
-        get ("user/:userId/timeline", postAPI::timeline);
+        get ("user/:userId/timeline", timelineAPI::timeline);
         get ("user/:userId/wall",     wallAPI::wall);
         post("follow",                followAPI::follow);
         get ("users",                 userAPI::allUsers);
@@ -67,7 +68,8 @@ public class OpenChat {
         // APIs
         registrationAPI = new RegistrationAPI(registerUser);
         loginAPI = new LoginAPI(login);
-        postAPI = new PostAPI(createPost, retrieveTimeline);
+        postAPI = new PostAPI(createPost);
+        timelineAPI = new TimelineAPI(retrieveTimeline);
         followAPI = new FollowAPI(createFollowing);
         wallAPI = new WallAPI(retrieveWall);
         userAPI = new UserAPI(retrieveAllUsers);

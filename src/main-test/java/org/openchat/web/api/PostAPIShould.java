@@ -1,7 +1,5 @@
 package org.openchat.web.api;
 
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,16 +7,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.actions.CreatePost;
-import org.openchat.core.actions.RetrieveTimeline;
 import org.openchat.core.domain.post.Post;
 import org.openchat.core.domain.user.User;
 import spark.Request;
 import spark.Response;
 
-import java.util.List;
 import java.util.Optional;
 
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -37,13 +32,12 @@ public class PostAPIShould {
     @Mock Request request;
     @Mock Response response;
     @Mock CreatePost createPost;
-    @Mock RetrieveTimeline retrieveTimeline;
 
     private PostAPI postAPI;
 
     @Before
     public void initialise() {
-        postAPI = new PostAPI(createPost, retrieveTimeline);
+        postAPI = new PostAPI(createPost);
         given(request.params("userId")).willReturn(ALICE.id());
         given(request.body()).willReturn(jsonRequestContaining(POST_1.text()));
     }
@@ -66,29 +60,6 @@ public class PostAPIShould {
         postAPI.createPost(request, response);
 
         verify(response).status(400);
-    }
-
-    @Test public void
-    return_json_containing_user_timeline() {
-        List<Post> AlicePosts = asList(POST_3, POST_2, POST_1);
-        given(retrieveTimeline.execute(ALICE.id())).willReturn(AlicePosts);
-
-        String timelineJson = postAPI.timeline(request, response);
-
-        verifyTimelineJsonContains(timelineJson, AlicePosts);
-        verify(response).status(200);
-        verify(response).type(JSON);
-    }
-
-    private void verifyTimelineJsonContains(String timelineJson, List<Post> userPosts) {
-        JsonArray timeline = Json.parse(timelineJson).asArray();
-        Post post;
-        JsonObject postJson;
-        for (int i = 0; i < userPosts.size() - 1; i++) {
-            post = userPosts.get(i);
-            postJson = timeline.get(i).asObject();
-            verifyPostJson(postJson.toString(), post);
-        }
     }
 
     private void verifyPostJson(String postJson, Post post) {
