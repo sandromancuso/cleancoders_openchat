@@ -36,6 +36,7 @@ public class OpenChat {
 
     private void createRoutes() {
         get ("helloworld",            (req, res) -> "Hello World!");
+
         post("registration",          registrationAPI::registerUser);
         post("login",                 loginAPI::login);
         post("user/:userId/posts",    postAPI::createPost);
