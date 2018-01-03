@@ -6,6 +6,7 @@ import org.openchat.core.domain.user.UserRepository;
 import java.util.List;
 
 public class RetrieveAllUsers {
+
     private UserRepository userRepository;
 
     public RetrieveAllUsers(UserRepository userRepository) {

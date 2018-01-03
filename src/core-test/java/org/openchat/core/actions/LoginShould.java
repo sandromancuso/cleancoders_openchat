@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.actions.Login.LoginData;
 import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserRepository;
+import org.openchat.core.domain.user.UserRepositoryInMemory;
 
 import java.util.Optional;
 
@@ -24,7 +24,8 @@ public class LoginShould {
     private static final LoginData LOGIN_DATA = new LoginData(USERNAME, PASSWORD);
     private static final User USER = aUser().withUsername(USERNAME).withPassword(PASSWORD).build();
 
-    @Mock UserRepository userRepository;
+    @Mock
+    UserRepositoryInMemory userRepository;
 
     private Login login;
 

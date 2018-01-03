@@ -4,6 +4,7 @@ import org.openchat.core.actions.*;
 import org.openchat.core.domain.post.PostRepository;
 import org.openchat.core.domain.post.PostRepositoryInMemory;
 import org.openchat.core.domain.user.UserRepository;
+import org.openchat.core.domain.user.UserRepositoryInMemory;
 import org.openchat.core.infrastructure.Clock;
 import org.openchat.core.infrastructure.IDGenerator;
 import org.openchat.web.api.*;
@@ -15,7 +16,7 @@ public class OpenChat {
 
     private Clock clock = new Clock();
 
-    private UserRepository userRepository = new UserRepository();
+    private UserRepository userRepository = new UserRepositoryInMemory();
     private PostRepository postRepository = new PostRepositoryInMemory();
     private IDGenerator idGenerator = new IDGenerator();
 

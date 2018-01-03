@@ -10,7 +10,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openchat.builders.UserBuilder.aUser;
 
-public class UserRepositoryShould {
+public class UserRepositoryInMemoryShould {
 
     private static final String NON_EXISTENT_USER_ID = "Non-existent ID";
     private static final String USER_ID = "21432343213";
@@ -18,11 +18,11 @@ public class UserRepositoryShould {
     private static final User BOB = aUser().build();
     private static final User CHARLIE = aUser().build();
 
-    private UserRepository userRepository;
+    private UserRepositoryInMemory userRepository;
 
     @Before
     public void initialise() {
-        userRepository = new UserRepository();
+        userRepository = new UserRepositoryInMemory();
     }
 
     @Test public void

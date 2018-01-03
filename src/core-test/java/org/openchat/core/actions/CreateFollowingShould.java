@@ -8,7 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.actions.CreateFollowing.FollowingData;
 import org.openchat.core.actions.CreateFollowing.InvalidUserException;
 import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserRepository;
+import org.openchat.core.domain.user.UserRepositoryInMemory;
 
 import java.util.Optional;
 
@@ -23,7 +23,8 @@ public class CreateFollowingShould {
     private static final User ALICE = aUser().build();
     private static final User BOB = aUser().build();
 
-    @Mock UserRepository userRepository;
+    @Mock
+    UserRepositoryInMemory userRepository;
 
     private CreateFollowing createFollowing;
 

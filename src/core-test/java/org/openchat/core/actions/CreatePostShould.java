@@ -8,7 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.domain.post.Post;
 import org.openchat.core.domain.post.PostRepositoryInMemory;
 import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserRepository;
+import org.openchat.core.domain.user.UserRepositoryInMemory;
 import org.openchat.core.infrastructure.Clock;
 import org.openchat.core.infrastructure.IDGenerator;
 
@@ -29,7 +29,8 @@ public class CreatePostShould {
     private static final User USER = aUser().withId(USER_ID).build();
     private static final LocalDateTime DATE_TIME = LocalDateTime.of(2017, 12, 30, 10, 30, 00);
 
-    @Mock UserRepository userRepository;
+    @Mock
+    UserRepositoryInMemory userRepository;
     @Mock IDGenerator idGenerator;
     @Mock
     PostRepositoryInMemory postRepository;

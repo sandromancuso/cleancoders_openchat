@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.actions.RegisterUser.RegistrationData;
 import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserRepository;
+import org.openchat.core.domain.user.UserRepositoryInMemory;
 import org.openchat.core.infrastructure.IDGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +23,8 @@ public class RegisterUserShould {
     private static final String USER_ID = "123523";
 
     @Mock IDGenerator idGenerator;
-    @Mock UserRepository userRepository;
+    @Mock
+    UserRepositoryInMemory userRepository;
 
     private RegisterUser registerUser;
 

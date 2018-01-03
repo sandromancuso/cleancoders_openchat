@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserRepository;
+import org.openchat.core.domain.user.UserRepositoryInMemory;
 
 import java.util.List;
 
@@ -19,7 +19,8 @@ public class RetrieveAllUsersShould {
 
     private static final List<User> ALL_USERS = emptyList();
 
-    @Mock UserRepository userRepository;
+    @Mock
+    UserRepositoryInMemory userRepository;
 
     private RetrieveAllUsers retrieveAllUsers;
 

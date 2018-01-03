@@ -2,47 +2,22 @@ package org.openchat.core.domain.user;
 
 import org.openchat.core.actions.Login.LoginData;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
-public class UserRepository {
+public interface UserRepository {
 
-    private Map<String, User> users = new HashMap<>();
-    private List<Follow> follows = new ArrayList();
+    void add(User user);
 
-    public void add(User user) {
-        users.put(user.id(), user);
-        System.out.println("user = " + user);
-    }
+    boolean isUsernameTaken(String username);
 
-    public boolean isUsernameTaken(String username) {
-        return users.values().stream().anyMatch(u -> u.username().equals(username));
-    }
+    Optional<User> userWithMatchingCredentials(LoginData loginData);
 
-    public Optional<User> userWithMatchingCredentials(LoginData loginData) {
-        return users.values()
-                    .stream()
-                    .filter(u -> u.matches(loginData.username(), loginData.password()))
-                    .findFirst();
-    }
+    Optional<User> userFor(String userId);
 
-    public Optional<User> userFor(String userId) {
-        return Optional.ofNullable(users.get(userId));
-    }
+    void addFollowing(String followerId, String followeeId);
 
-    public void addFollowing(String followerId, String followeeId) {
-        follows.add(new Follow(followerId, followeeId));
-    }
+    List<User> followeesFor(String userId);
 
-    public List<User> followeesFor(String userId) {
-        List<User> followees = new ArrayList<>();
-        follows.stream()
-                .filter(follow -> follow.followerId().equals(userId))
-                .map(follow -> userFor(follow.followeeId()).get())
-                .forEach(followees::add);
-        return followees;
-    }
-
-    public List<User> allUsers() {
-        return new ArrayList<>(users.values());
-    }
+    List<User> allUsers();
 }
