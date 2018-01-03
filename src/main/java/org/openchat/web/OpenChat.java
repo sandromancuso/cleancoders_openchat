@@ -27,18 +27,22 @@ public class OpenChat {
 
     public void start() {
         port(4321);
-        get("helloworld", (req, res) -> "Hello World!");
-        post("registration", registrationAPI::registerUser);
-        post("login", loginAPI::login);
-        post("user/:userId/posts", postAPI::createPost);
-        get("user/:userId/timeline", postAPI::timeline);
-        get("user/:userId/wall", wallAPI::wall);
-        post("follow", followAPI::follow);
-        get("users", userAPI::allUsers);
+        createRoutes();
     }
 
     public void stop() {
         Spark.stop();
+    }
+
+    private void createRoutes() {
+        get ("helloworld",            (req, res) -> "Hello World!");
+        post("registration",          registrationAPI::registerUser);
+        post("login",                 loginAPI::login);
+        post("user/:userId/posts",    postAPI::createPost);
+        get ("user/:userId/timeline", postAPI::timeline);
+        get ("user/:userId/wall",     wallAPI::wall);
+        post("follow",                followAPI::follow);
+        get ("users",                 userAPI::allUsers);
     }
 
     private void initialiseDependencies() {
