@@ -29,8 +29,7 @@ public class LoginAPIShould {
     @Mock Request request;
     @Mock Response response;
 
-    @Mock
-    Login login;
+    @Mock Login login;
 
     private LoginAPI loginAPI;
 
