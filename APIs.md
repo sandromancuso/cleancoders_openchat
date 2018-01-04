@@ -57,7 +57,7 @@ Status CREATED - 201
 {
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"text" : "Anything interesting happening tonight?",
+	"text" : "Hello everyone. I'm Alice.",
  	"date" : "10/01/2018",
 	"time" : "11:30:00"
 }
