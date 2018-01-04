@@ -40,10 +40,10 @@ public class RetrieveWallAPI_AcceptanceTest {
 
         whenAliceChecksHerWall();
 
-        ThenAliceShouldSeePosts(POST_6, POST_5, POST_3, POST_2, POST_1);
+        thenAliceShouldSeePosts(POST_6, POST_5, POST_3, POST_2, POST_1);
     }
 
-    private void ThenAliceShouldSeePosts(String... postTexts) {
+    private void thenAliceShouldSeePosts(String... postTexts) {
         JsonArray wallPosts = Json.parse(wall).asArray();
         for (int i = 0; i < postTexts.length; i++) {
             assertThat(postText(wallPosts, i)).isEqualTo(postTexts[i]);

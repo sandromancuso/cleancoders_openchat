@@ -17,7 +17,7 @@ import static org.openchat.web.infrastructure.jsonparsers.UserToJson.jsonFor;
 public class RegistrationAPI {
 
     private static final String JSON = "application/json";
-    private static final String USERNAME_ALREADY_IN_USER = "Username already in use.";
+    private static final String USERNAME_ALREADY_IN_USE = "Username already in use.";
     private RegisterUser registerUser;
 
     public RegistrationAPI(RegisterUser registerUser) {
@@ -36,7 +36,7 @@ public class RegistrationAPI {
             return jsonFor(user.get()).toString();
         } else {
             response.status(BAD_REQUEST_400);
-            return USERNAME_ALREADY_IN_USER;
+            return USERNAME_ALREADY_IN_USE;
         }
     }
 
