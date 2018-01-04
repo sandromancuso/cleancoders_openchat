@@ -3,6 +3,7 @@ package org.openchat.web;
 import org.openchat.core.actions.*;
 import org.openchat.core.domain.post.PostRepository;
 import org.openchat.core.domain.post.PostRepositoryInMemory;
+import org.openchat.core.domain.post.PostService;
 import org.openchat.core.domain.user.UserRepository;
 import org.openchat.core.domain.user.UserRepositoryInMemory;
 import org.openchat.core.domain.user.UserService;
@@ -57,10 +58,10 @@ public class OpenChat {
         UserRepository userRepository = new UserRepositoryInMemory();
         PostRepository postRepository = new PostRepositoryInMemory();
         UserService userService = new UserService(idGenerator, userRepository);
+        PostService postService = new PostService(clock, idGenerator, userService, postRepository);
 
         //Actions
         RegisterUser registerUser = new RegisterUser(idGenerator, userRepository);
-        CreatePost createPost = new CreatePost(clock, idGenerator, userRepository, postRepository);
         RetrieveTimeline retrieveTimeline = new RetrieveTimeline(postRepository);
         RetrieveWall retrieveWall = new RetrieveWall(userRepository, postRepository);
         RetrieveAllUsers retrieveAllUsers = new RetrieveAllUsers(userRepository);
@@ -68,7 +69,7 @@ public class OpenChat {
         // APIs
         registrationAPI = new RegistrationAPI(registerUser);
         loginAPI = new LoginAPI(userService);
-        postAPI = new PostAPI(createPost);
+        postAPI = new PostAPI(postService);
         timelineAPI = new TimelineAPI(retrieveTimeline);
         followAPI = new FollowAPI(userService);
         wallAPI = new WallAPI(retrieveWall);
