@@ -38,7 +38,7 @@ public class UserService {
         return userRepository.allUsers();
     }
 
-    public void createFollowing(Following following) throws InvalidUserException {
+    public void create(Following following) throws InvalidUserException {
         Optional<User> follower = userRepository.userFor(following.followerId());
         Optional<User> followee = userRepository.userFor(following.followeeId());
         if (!follower.isPresent() || !followee.isPresent())
