@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.RetrieveTimeline;
 import org.openchat.core.domain.post.Post;
+import org.openchat.core.domain.post.PostService;
 import org.openchat.core.domain.user.User;
 import spark.Request;
 import spark.Response;
@@ -34,13 +34,13 @@ public class TimelineAPIShould {
 
     @Mock Request request;
     @Mock Response response;
-    @Mock RetrieveTimeline retrieveTimeline;
+    @Mock PostService postService;
 
     private TimelineAPI timelineAPI;
 
     @Before
     public void initialise() {
-        timelineAPI = new TimelineAPI(retrieveTimeline);
+        timelineAPI = new TimelineAPI(postService);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class TimelineAPIShould {
     return_json_containing_user_timeline() {
         given(request.params("userId")).willReturn(ALICE.id());
         List<Post> AlicePosts = asList(POST_3, POST_2, POST_1);
-        given(retrieveTimeline.execute(ALICE.id())).willReturn(AlicePosts);
+        given(postService.timelineFor(ALICE.id())).willReturn(AlicePosts);
 
         String timelineJson = timelineAPI.timeline(request, response);
 

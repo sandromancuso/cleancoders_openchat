@@ -1,7 +1,7 @@
 package org.openchat.web.api;
 
-import org.openchat.core.actions.RetrieveTimeline;
 import org.openchat.core.domain.post.Post;
+import org.openchat.core.domain.post.PostService;
 import spark.Request;
 import spark.Response;
 
@@ -14,15 +14,15 @@ public class TimelineAPI {
 
     private static final String JSON = "application/json";
 
-    private RetrieveTimeline retrieveTimeline;
+    private PostService postService;
 
-    public TimelineAPI(RetrieveTimeline retrieveTimeline) {
-        this.retrieveTimeline = retrieveTimeline;
+    public TimelineAPI(PostService postService) {
+        this.postService = postService;
     }
 
     public String timeline(Request request, Response response) {
         String userId = request.params("userId");
-        List<Post> timeline = retrieveTimeline.execute(userId);
+        List<Post> timeline = postService.timelineFor(userId);
         return prepareTimelineResponse(response, timeline);
     }
 
@@ -31,7 +31,4 @@ public class TimelineAPI {
         response.type(JSON);
         return jsonFor(timeline).toString();
     }
-
-
-
 }
