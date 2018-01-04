@@ -62,7 +62,6 @@ public class OpenChat {
 
         //Actions
         RetrieveWall retrieveWall = new RetrieveWall(userRepository, postRepository);
-        RetrieveAllUsers retrieveAllUsers = new RetrieveAllUsers(userRepository);
 
         // APIs
         registrationAPI = new RegistrationAPI(userService);
@@ -71,6 +70,6 @@ public class OpenChat {
         timelineAPI = new TimelineAPI(postService);
         followAPI = new FollowAPI(userService);
         wallAPI = new WallAPI(retrieveWall);
-        userAPI = new UserAPI(retrieveAllUsers);
+        userAPI = new UserAPI(userService);
     }
 }

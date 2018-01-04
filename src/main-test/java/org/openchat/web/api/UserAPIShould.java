@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.RetrieveAllUsers;
 import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -31,19 +31,19 @@ public class UserAPIShould {
 
     @Mock Request request;
     @Mock Response response;
-    @Mock RetrieveAllUsers retrieveAllUsers;
+    @Mock UserService userService;
 
     private UserAPI userAPI;
 
     @Before
     public void initialise() {
-        userAPI = new UserAPI(retrieveAllUsers);
+        userAPI = new UserAPI(userService);
     }
 
     @Test public void
     return_all_registered_users() {
         List<User> users = asList(ALICE, BOB, CHARLIE);
-        given(retrieveAllUsers.execute()).willReturn(users);
+        given(userService.allUsers()).willReturn(users);
 
         String usersJson = userAPI.allUsers(request, response);
 

@@ -1,7 +1,7 @@
 package org.openchat.web.api;
 
-import org.openchat.core.actions.RetrieveAllUsers;
 import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -12,14 +12,14 @@ import static org.openchat.web.infrastructure.jsonparsers.UserToJson.jsonFor;
 
 public class UserAPI {
     private static final String JSON = "application/json";
-    private RetrieveAllUsers retrieveAllUsers;
+    private UserService userService;
 
-    public UserAPI(RetrieveAllUsers retrieveAllUsers) {
-        this.retrieveAllUsers = retrieveAllUsers;
+    public UserAPI(UserService userService) {
+        this.userService = userService;
     }
 
     public String allUsers(Request request, Response response) {
-        List<User> users = retrieveAllUsers.execute();
+        List<User> users = userService.allUsers();
         response.status(OK_200);
         response.type(JSON);
         return jsonFor(users);
