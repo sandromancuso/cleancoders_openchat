@@ -1,13 +1,11 @@
 package org.openchat.core.domain.user;
 
-import org.openchat.core.actions.Login.LoginData;
-
 import java.util.*;
 
 public class UserRepositoryInMemory implements UserRepository {
 
     private Map<String, User> users = new HashMap<>();
-    private List<Follow> follows = new ArrayList();
+    private List<Following> followings = new ArrayList();
 
     public void add(User user) {
         users.put(user.id(), user);
@@ -29,13 +27,13 @@ public class UserRepositoryInMemory implements UserRepository {
         return Optional.ofNullable(users.get(userId));
     }
 
-    public void addFollowing(String followerId, String followeeId) {
-        follows.add(new Follow(followerId, followeeId));
+    public void add(Following following) {
+        followings.add(following);
     }
 
     public List<User> followeesFor(String userId) {
         List<User> followees = new ArrayList<>();
-        follows.stream()
+        followings.stream()
                 .filter(follow -> follow.followerId().equals(userId))
                 .map(follow -> userFor(follow.followeeId()).get())
                 .forEach(followees::add);

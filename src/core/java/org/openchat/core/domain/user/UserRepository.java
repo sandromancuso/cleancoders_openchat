@@ -1,7 +1,5 @@
 package org.openchat.core.domain.user;
 
-import org.openchat.core.actions.Login.LoginData;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +13,7 @@ public interface UserRepository {
 
     Optional<User> userFor(String userId);
 
-    void addFollowing(String followerId, String followeeId);
+    void add(Following following);
 
     List<User> followeesFor(String userId);
 

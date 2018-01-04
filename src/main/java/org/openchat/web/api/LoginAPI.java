@@ -3,7 +3,7 @@ package org.openchat.web.api;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 import org.openchat.core.actions.Login;
-import org.openchat.core.actions.Login.LoginData;
+import org.openchat.core.domain.user.LoginData;
 import org.openchat.core.domain.user.User;
 import org.openchat.web.infrastructure.jsonparsers.UserToJson;
 import spark.Request;

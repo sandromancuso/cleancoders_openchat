@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.CreateFollowing.FollowingData;
-import org.openchat.core.actions.CreateFollowing.InvalidUserException;
+import org.openchat.core.domain.user.Following;
+import org.openchat.core.domain.user.InvalidUserException;
 import org.openchat.core.domain.user.User;
 import org.openchat.core.domain.user.UserRepositoryInMemory;
 
@@ -38,7 +38,7 @@ public class CreateFollowingShould {
 
     @Test(expected = InvalidUserException.class) public void
     throw_exception_when_follower_does_not_exist() {
-        FollowingData followingData = new FollowingData(UNKNOWN_USER.id(), BOB.id());
+        Following followingData = new Following(UNKNOWN_USER.id(), BOB.id());
 
         try {
             createFollowing.execute(followingData);
@@ -49,7 +49,7 @@ public class CreateFollowingShould {
 
     @Test(expected = InvalidUserException.class) public void
     throw_exception_when_followee_does_not_exist() {
-        FollowingData followingData = new FollowingData(ALICE.id(), UNKNOWN_USER.id());
+        Following followingData = new Following(ALICE.id(), UNKNOWN_USER.id());
 
         try {
             createFollowing.execute(followingData);
@@ -60,11 +60,11 @@ public class CreateFollowingShould {
 
     @Test public void
     create_following() {
-        FollowingData followingData = new FollowingData(ALICE.id(), BOB.id());
+        Following followingData = new Following(ALICE.id(), BOB.id());
 
         createFollowing.execute(followingData);
 
-        verify(userRepository).addFollowing(ALICE.id(), BOB.id());
+        verify(userRepository).add(followingData);
     }
 
 }

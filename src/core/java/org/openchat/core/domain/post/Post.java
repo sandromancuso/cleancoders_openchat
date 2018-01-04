@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 public class Post {
 
@@ -54,13 +51,4 @@ public class Post {
         return reflectionEquals(this, other);
     }
 
-    @Override
-    public int hashCode() {
-        return reflectionHashCode(this);
-    }
-
-    @Override
-    public String toString() {
-        return reflectionToString(this, MULTI_LINE_STYLE);
-    }
 }

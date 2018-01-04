@@ -3,8 +3,8 @@ package org.openchat.web.api;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 import org.openchat.core.actions.CreateFollowing;
-import org.openchat.core.actions.CreateFollowing.FollowingData;
-import org.openchat.core.actions.CreateFollowing.InvalidUserException;
+import org.openchat.core.domain.user.Following;
+import org.openchat.core.domain.user.InvalidUserException;
 import spark.Request;
 import spark.Response;
 
@@ -19,7 +19,7 @@ public class FollowAPI {
     }
 
     public String follow(Request request, Response response) {
-        FollowingData followingData = followingDataFrom(request.body());
+        Following followingData = followingDataFrom(request.body());
         try {
             createFollowing.execute(followingData);
             response.status(CREATED_201);
@@ -29,9 +29,9 @@ public class FollowAPI {
         return "";
     }
 
-    private FollowingData followingDataFrom(String followingJsonString) {
+    private Following followingDataFrom(String followingJsonString) {
         JsonObject followingJson = Json.parse(followingJsonString).asObject();
-        return new FollowingData(followingJson.getString("followerId", ""),
+        return new Following(followingJson.getString("followerId", ""),
                                  followingJson.getString("followeeId", ""));
     }
 }

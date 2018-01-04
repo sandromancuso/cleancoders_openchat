@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.Login.LoginData;
+import org.openchat.core.domain.user.LoginData;
 import org.openchat.core.domain.user.User;
 import org.openchat.core.domain.user.UserRepositoryInMemory;
 

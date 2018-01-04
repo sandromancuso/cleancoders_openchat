@@ -2,7 +2,6 @@ package org.openchat.core.domain.user;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openchat.core.actions.Login.LoginData;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,8 +78,8 @@ public class UserRepositoryInMemoryShould {
         userRepository.add(ALICE);
         userRepository.add(BOB);
         userRepository.add(CHARLIE);
-        userRepository.addFollowing(ALICE.id(), BOB.id());
-        userRepository.addFollowing(ALICE.id(), CHARLIE.id());
+        userRepository.add(new Following(ALICE.id(), BOB.id()));
+        userRepository.add(new Following(ALICE.id(), CHARLIE.id()));
 
         List<User> followees = userRepository.followeesFor(ALICE.id());
 

@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.core.actions.CreateFollowing;
-import org.openchat.core.actions.CreateFollowing.FollowingData;
-import org.openchat.core.actions.CreateFollowing.InvalidUserException;
+import org.openchat.core.domain.user.Following;
+import org.openchat.core.domain.user.InvalidUserException;
 import org.openchat.core.domain.user.User;
 import spark.Request;
 import spark.Response;
@@ -39,7 +39,7 @@ public class FollowAPIShould {
     @Test public void
     create_following_relationship() {
         given(request.body()).willReturn(jsonContaining(ALICE.id(), BOB.id()));
-        FollowingData followingData = new FollowingData(ALICE.id(), BOB.id());
+        Following followingData = new Following(ALICE.id(), BOB.id());
 
         followAPI.follow(request, response);
 
@@ -50,7 +50,7 @@ public class FollowAPIShould {
     @Test public void
     return_bad_request_if_either_follower_or_followee_do_not_exist() {
         given(request.body()).willReturn(jsonContaining(ALICE.id(), UNKNOWN_USER.id()));
-        FollowingData followingData = new FollowingData(ALICE.id(), UNKNOWN_USER.id());
+        Following followingData = new Following(ALICE.id(), UNKNOWN_USER.id());
         doThrow(InvalidUserException.class).when(createFollowing).execute(followingData);
 
         followAPI.follow(request, response);
