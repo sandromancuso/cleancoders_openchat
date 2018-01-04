@@ -2,9 +2,9 @@ package org.openchat.web.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
-import org.openchat.core.actions.RegisterUser;
-import org.openchat.core.actions.RegisterUser.RegistrationData;
+import org.openchat.core.domain.user.RegistrationData;
 import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -18,14 +18,14 @@ public class RegistrationAPI {
 
     private static final String JSON = "application/json";
     private static final String USERNAME_ALREADY_IN_USE = "Username already in use.";
-    private RegisterUser registerUser;
+    private UserService userService;
 
-    public RegistrationAPI(RegisterUser registerUser) {
-        this.registerUser = registerUser;
+    public RegistrationAPI(UserService userService) {
+        this.userService = userService;
     }
 
     public String registerUser(Request request, Response response) {
-        Optional<User> user = registerUser.execute(registrationData(request.body()));
+        Optional<User> user = userService.createUser(registrationData(request.body()));
         return prepareResponse(response, user);
     }
 

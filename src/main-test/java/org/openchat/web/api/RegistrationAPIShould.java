@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.RegisterUser;
-import org.openchat.core.actions.RegisterUser.RegistrationData;
+import org.openchat.core.domain.user.RegistrationData;
 import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -34,27 +34,27 @@ public class RegistrationAPIShould {
     @Mock Request request;
     @Mock Response response;
 
-    @Mock RegisterUser registerUser;
+    @Mock UserService userService;
 
     @Before
     public void initialise() {
-        registrationAPI = new RegistrationAPI(registerUser);
+        registrationAPI = new RegistrationAPI(userService);
         given(request.body()).willReturn(registrationJsonWith(USERNAME, PASSWORD, ABOUT));
         registrationData = new RegistrationData(USERNAME, PASSWORD, ABOUT);
     }
 
     @Test public void
     register_a_new_user() {
-        given(registerUser.execute(registrationData)).willReturn(Optional.of(USER));
+        given(userService.createUser(registrationData)).willReturn(Optional.of(USER));
 
         registrationAPI.registerUser(request, response);
 
-        verify(registerUser).execute(registrationData);
+        verify(userService).createUser(registrationData);
     }
 
     @Test public void
     return_json_containing_new_user_information() {
-        given(registerUser.execute(registrationData)).willReturn(Optional.of(USER));
+        given(userService.createUser(registrationData)).willReturn(Optional.of(USER));
 
         String userJson = registrationAPI.registerUser(request, response);
 
@@ -68,7 +68,7 @@ public class RegistrationAPIShould {
 
     @Test public void
     inform_when_username_already_exist() {
-        given(registerUser.execute(registrationData)).willReturn(empty());
+        given(userService.createUser(registrationData)).willReturn(empty());
 
         String responseBody = registrationAPI.registerUser(request, response);
 
