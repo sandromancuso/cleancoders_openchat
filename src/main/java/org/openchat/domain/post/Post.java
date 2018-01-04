@@ -5,7 +5,10 @@ import java.time.format.DateTimeFormatter;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
+<<<<<<< HEAD:src/main/java/org/openchat/domain/post/Post.java
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
+=======
+>>>>>>> User and Post services added but not used:src/core/java/org/openchat/core/domain/post/Post.java
 
 public class Post {
     private static DateTimeFormatter dateFormatter = ofPattern("dd/MM/yyyy");
@@ -52,8 +55,11 @@ public class Post {
         return reflectionEquals(this, other);
     }
 
+<<<<<<< HEAD:src/main/java/org/openchat/domain/post/Post.java
     @Override
     public int hashCode() {
         return reflectionHashCode(this);
     }
+=======
+>>>>>>> User and Post services added but not used:src/core/java/org/openchat/core/domain/post/Post.java
 }
