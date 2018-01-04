@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.CreatePost;
 import org.openchat.core.domain.post.Post;
+import org.openchat.core.domain.post.PostService;
 import org.openchat.core.domain.user.User;
 import spark.Request;
 import spark.Response;
@@ -31,20 +31,20 @@ public class PostAPIShould {
 
     @Mock Request request;
     @Mock Response response;
-    @Mock CreatePost createPost;
+    @Mock PostService postService;
 
     private PostAPI postAPI;
 
     @Before
     public void initialise() {
-        postAPI = new PostAPI(createPost);
+        postAPI = new PostAPI(postService);
         given(request.params("userId")).willReturn(ALICE.id());
         given(request.body()).willReturn(jsonRequestContaining(POST_1.text()));
     }
 
     @Test public void
     return_json_containing_the_created_post() {
-        given(createPost.execute(ALICE.id(), POST_1.text())).willReturn(Optional.of(POST_1));
+        given(postService.createPost(ALICE.id(), POST_1.text())).willReturn(Optional.of(POST_1));
 
         String postJson = postAPI.createPost(request, response);
 
@@ -55,7 +55,7 @@ public class PostAPIShould {
 
     @Test public void
     return_bad_request_when_post_cannot_be_created() {
-        given(createPost.execute(ALICE.id(), POST_1.text())).willReturn(Optional.empty());
+        given(postService.createPost(ALICE.id(), POST_1.text())).willReturn(Optional.empty());
 
         postAPI.createPost(request, response);
 

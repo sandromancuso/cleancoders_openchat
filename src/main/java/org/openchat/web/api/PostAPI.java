@@ -1,8 +1,8 @@
 package org.openchat.web.api;
 
 import com.eclipsesource.json.Json;
-import org.openchat.core.actions.CreatePost;
 import org.openchat.core.domain.post.Post;
+import org.openchat.core.domain.post.PostService;
 import spark.Request;
 import spark.Response;
 
@@ -15,16 +15,16 @@ import static org.openchat.web.infrastructure.jsonparsers.PostToJson.jsonFor;
 public class PostAPI {
 
     private static final String JSON = "application/json";
-    private CreatePost createPost;
+    private PostService postService;
 
-    public PostAPI(CreatePost createPost) {
-        this.createPost = createPost;
+    public PostAPI(PostService postService) {
+        this.postService = postService;
     }
 
     public String createPost(Request request, Response response) {
         String userId = request.params("userId");
         String postText = postTextFrom(request.body());
-        Optional<Post> post = createPost.execute(userId, postText);
+        Optional<Post> post = postService.createPost(userId, postText);
         return prepareCreatePostResponse(response, post);
     }
 
