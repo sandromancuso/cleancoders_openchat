@@ -101,7 +101,7 @@ public class UserServiceShould {
         Following following = new Following(UNKNOWN_USER.id(), BOB.id());
 
         try {
-            userService.createFollowing(following);
+            userService.create(following);
         } finally {
             verify(userRepository).userFor(following.followerId());
         }
@@ -112,7 +112,7 @@ public class UserServiceShould {
         Following following = new Following(ALICE.id(), UNKNOWN_USER.id());
 
         try {
-            userService.createFollowing(following);
+            userService.create(following);
         } finally {
             verify(userRepository).userFor(following.followeeId());
         }
@@ -122,7 +122,7 @@ public class UserServiceShould {
     create_following() {
         Following following = new Following(ALICE.id(), BOB.id());
 
-        userService.createFollowing(following);
+        userService.create(following);
 
         verify(userRepository).add(new Following(ALICE.id(), BOB.id()));
     }

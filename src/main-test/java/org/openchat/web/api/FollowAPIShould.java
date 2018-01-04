@@ -6,10 +6,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.CreateFollowing;
 import org.openchat.core.domain.user.Following;
 import org.openchat.core.domain.user.InvalidUserException;
 import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -27,31 +27,31 @@ public class FollowAPIShould {
 
     @Mock Request request;
     @Mock Response response;
-    @Mock CreateFollowing createFollowing;
+    @Mock UserService userService;
 
     private FollowAPI followAPI;
 
     @Before
     public void initialise() {
-        followAPI = new FollowAPI(createFollowing);
+        followAPI = new FollowAPI(userService);
     }
 
     @Test public void
     create_following_relationship() {
         given(request.body()).willReturn(jsonContaining(ALICE.id(), BOB.id()));
-        Following followingData = new Following(ALICE.id(), BOB.id());
+        Following following = new Following(ALICE.id(), BOB.id());
 
         followAPI.follow(request, response);
 
-        verify(createFollowing).execute(followingData);
+        verify(userService).create(following);
         verify(response).status(201);
     }
 
     @Test public void
     return_bad_request_if_either_follower_or_followee_do_not_exist() {
         given(request.body()).willReturn(jsonContaining(ALICE.id(), UNKNOWN_USER.id()));
-        Following followingData = new Following(ALICE.id(), UNKNOWN_USER.id());
-        doThrow(InvalidUserException.class).when(createFollowing).execute(followingData);
+        Following following = new Following(ALICE.id(), UNKNOWN_USER.id());
+        doThrow(InvalidUserException.class).when(userService).create(following);
 
         followAPI.follow(request, response);
 

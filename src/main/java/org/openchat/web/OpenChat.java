@@ -5,6 +5,7 @@ import org.openchat.core.domain.post.PostRepository;
 import org.openchat.core.domain.post.PostRepositoryInMemory;
 import org.openchat.core.domain.user.UserRepository;
 import org.openchat.core.domain.user.UserRepositoryInMemory;
+import org.openchat.core.domain.user.UserService;
 import org.openchat.core.infrastructure.Clock;
 import org.openchat.core.infrastructure.IDGenerator;
 import org.openchat.web.api.*;
@@ -55,13 +56,13 @@ public class OpenChat {
         // Domain
         UserRepository userRepository = new UserRepositoryInMemory();
         PostRepository postRepository = new PostRepositoryInMemory();
+        UserService userService = new UserService(idGenerator, userRepository);
 
         //Actions
         RegisterUser registerUser = new RegisterUser(idGenerator, userRepository);
         Login login = new Login(userRepository);
         CreatePost createPost = new CreatePost(clock, idGenerator, userRepository, postRepository);
         RetrieveTimeline retrieveTimeline = new RetrieveTimeline(postRepository);
-        CreateFollowing createFollowing = new CreateFollowing(userRepository);
         RetrieveWall retrieveWall = new RetrieveWall(userRepository, postRepository);
         RetrieveAllUsers retrieveAllUsers = new RetrieveAllUsers(userRepository);
 
@@ -70,7 +71,7 @@ public class OpenChat {
         loginAPI = new LoginAPI(login);
         postAPI = new PostAPI(createPost);
         timelineAPI = new TimelineAPI(retrieveTimeline);
-        followAPI = new FollowAPI(createFollowing);
+        followAPI = new FollowAPI(userService);
         wallAPI = new WallAPI(retrieveWall);
         userAPI = new UserAPI(retrieveAllUsers);
     }
