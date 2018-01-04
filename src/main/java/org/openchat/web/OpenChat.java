@@ -60,7 +60,6 @@ public class OpenChat {
 
         //Actions
         RegisterUser registerUser = new RegisterUser(idGenerator, userRepository);
-        Login login = new Login(userRepository);
         CreatePost createPost = new CreatePost(clock, idGenerator, userRepository, postRepository);
         RetrieveTimeline retrieveTimeline = new RetrieveTimeline(postRepository);
         RetrieveWall retrieveWall = new RetrieveWall(userRepository, postRepository);
@@ -68,7 +67,7 @@ public class OpenChat {
 
         // APIs
         registrationAPI = new RegistrationAPI(registerUser);
-        loginAPI = new LoginAPI(login);
+        loginAPI = new LoginAPI(userService);
         postAPI = new PostAPI(createPost);
         timelineAPI = new TimelineAPI(retrieveTimeline);
         followAPI = new FollowAPI(userService);

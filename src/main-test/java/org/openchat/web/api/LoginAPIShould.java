@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.Login;
 import org.openchat.core.domain.user.LoginData;
 import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -29,19 +29,19 @@ public class LoginAPIShould {
     @Mock Request request;
     @Mock Response response;
 
-    @Mock Login login;
+    @Mock UserService userService;
 
     private LoginAPI loginAPI;
 
     @Before
     public void initialise() {
-        loginAPI = new LoginAPI(login);
+        loginAPI = new LoginAPI(userService);
         given(request.body()).willReturn(loginRequestJsonWith(USERNAME, PASSWORD));
     }
 
     @Test public void
     return_logged_in_user_json_after_successful_login() {
-        given(login.execute(loginData(USERNAME, PASSWORD))).willReturn(Optional.of(USER));
+        given(userService.login(loginData(USERNAME, PASSWORD))).willReturn(Optional.of(USER));
 
         String responseJson = loginAPI.login(request, response);
 
@@ -52,7 +52,7 @@ public class LoginAPIShould {
 
     @Test public void
     inform_when_credentials_are_not_valid() {
-        given(login.execute(loginData(USERNAME, PASSWORD))).willReturn(Optional.empty());
+        given(userService.login(loginData(USERNAME, PASSWORD))).willReturn(Optional.empty());
 
         String responseBody = loginAPI.login(request, response);
 

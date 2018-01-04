@@ -2,9 +2,9 @@ package org.openchat.web.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
-import org.openchat.core.actions.Login;
 import org.openchat.core.domain.user.LoginData;
 import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
 import org.openchat.web.infrastructure.jsonparsers.UserToJson;
 import spark.Request;
 import spark.Response;
@@ -17,14 +17,14 @@ import static org.eclipse.jetty.http.HttpStatus.OK_200;
 public class LoginAPI {
     private static final String JSON = "application/json";
     private static final String INVALID_CREDENTIALS = "Invalid credentials.";
-    private Login login;
+    private UserService userService;
 
-    public LoginAPI(Login login) {
-        this.login = login;
+    public LoginAPI(UserService userService) {
+        this.userService = userService;
     }
 
     public String login(Request request, Response response) {
-        Optional<User> user = login.execute(loginData(request.body()));
+        Optional<User> user = userService.login(loginData(request.body()));
         return prepareResponse(response, user);
     }
 
