@@ -3,20 +3,16 @@ package org.openchat.domain.post;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
-<<<<<<< HEAD:src/main/java/org/openchat/domain/post/Post.java
-import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
-=======
->>>>>>> User and Post services added but not used:src/core/java/org/openchat/core/domain/post/Post.java
 
 public class Post {
-    private static DateTimeFormatter dateFormatter = ofPattern("dd/MM/yyyy");
-    private static DateTimeFormatter timeFormatter = ofPattern("HH/mm/ss");
+
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     private final String postId;
     private final String userId;
-    private final String text;
+    private String text;
     private final LocalDateTime dateTime;
 
     public Post(String postId, String userId, String text, LocalDateTime dateTime) {
@@ -26,7 +22,7 @@ public class Post {
         this.dateTime = dateTime;
     }
 
-    public String postId() {
+    public String id() {
         return postId;
     }
 
@@ -43,11 +39,11 @@ public class Post {
     }
 
     public String dateAsString() {
-        return dateTime.format(dateFormatter);
+        return dateTime.toLocalDate().format(dateFormatter);
     }
 
     public String timeAsString() {
-        return dateTime.format(timeFormatter);
+        return dateTime.toLocalTime().format(timeFormatter);
     }
 
     @Override
@@ -55,11 +51,4 @@ public class Post {
         return reflectionEquals(this, other);
     }
 
-<<<<<<< HEAD:src/main/java/org/openchat/domain/post/Post.java
-    @Override
-    public int hashCode() {
-        return reflectionHashCode(this);
-    }
-=======
->>>>>>> User and Post services added but not used:src/core/java/org/openchat/core/domain/post/Post.java
 }

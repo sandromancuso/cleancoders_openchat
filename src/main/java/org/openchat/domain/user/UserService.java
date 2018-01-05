@@ -1,62 +1,56 @@
 package org.openchat.domain.user;
 
-import org.openchat.infrastructure.persistence.IdGenerator;
+import org.openchat.infrastructure.IDGenerator;
 
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Optional.empty;
+
 public class UserService {
 
-    private final IdGenerator idGenerator;
+    private final IDGenerator idGenerator;
     private final UserRepository userRepository;
 
-    public UserService(IdGenerator idGenerator, UserRepository userRepository) {
+    public UserService(IDGenerator idGenerator, UserRepository userRepository) {
         this.idGenerator = idGenerator;
         this.userRepository = userRepository;
     }
 
-    public User create(RegistrationData registrationData) {
-        validateUsername(registrationData.username());
-        User user = userFrom(registrationData);
+    public Optional<User> createUser(RegistrationData registrationData) {
+        if (userRepository.isUsernameTaken(registrationData.username())) {
+            return empty();
+        }
+
+        User user = new User(idGenerator.nextId(),
+                registrationData.username(),
+                registrationData.password(),
+                registrationData.about());
         userRepository.add(user);
-        return user;
+        return Optional.of(user);
     }
 
-    private User userFrom(RegistrationData registrationData) {
-        return new User(idGenerator.nextId(),
-                                    registrationData.username(),
-                                    registrationData.password(),
-                                    registrationData.about());
+    public Optional<User> login(LoginData loginData) {
+        return userRepository.userWithMatchingCredentials(loginData);
     }
 
-    private void validateUsername(String username) {
-        if (userRepository.isUsernameInUse(username)) {
-            throw new UsernameAlreadyInUseException();
-        }
+    public List<User> allUsers() {
+        return userRepository.allUsers();
     }
 
-    public Optional<User> userBy(String username, String password) {
-        return userRepository.userFor(username, password);
+    public void create(Following following) throws InvalidUserException {
+        Optional<User> follower = userRepository.userFor(following.followerId());
+        Optional<User> followee = userRepository.userFor(following.followeeId());
+        if (!follower.isPresent() || !followee.isPresent())
+            throw new InvalidUserException();
+        userRepository.add(following);
     }
 
-    public Optional<User> userBy(String userId) {
-        return userRepository.userForId(userId);
-    }
-
-    public void createFollowing(String followerId, String followeeId) {
-        Optional<User> follower = userRepository.userForId(followerId);
-        Optional<User> followee = userRepository.userForId(followeeId);
-        if (!follower.isPresent() || !followee.isPresent()) {
-            throw new UserDoesNotExistException();
-        }
-        userRepository.createFollowing(follower.get(), followee.get());
+    public Optional<User> userFor(String userId) {
+        return userRepository.userFor(userId);
     }
 
     public List<User> followeesFor(String userId) {
         return userRepository.followeesFor(userId);
-    }
-
-    public List<User> allUsers() {
-        return userRepository.all();
     }
 }

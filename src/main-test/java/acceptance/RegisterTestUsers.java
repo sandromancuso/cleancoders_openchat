@@ -11,8 +11,8 @@ import static acceptance.APITestSuite.BASE_URL;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.util.Arrays.asList;
-import static org.openchat.builders.UserBuilder.aCloneFrom;
-import static org.openchat.builders.UserBuilder.aUser;
+import static builders.UserBuilder.aCloneFrom;
+import static builders.UserBuilder.aUser;
 
 public class RegisterTestUsers {
 

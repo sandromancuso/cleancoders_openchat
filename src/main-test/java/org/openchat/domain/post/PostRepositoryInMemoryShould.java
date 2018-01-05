@@ -9,8 +9,8 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.openchat.builders.PostBuilder.aPost;
-import static org.openchat.builders.UserBuilder.aUser;
+import static builders.PostBuilder.aPost;
+import static builders.UserBuilder.aUser;
 
 public class PostRepositoryInMemoryShould {
 

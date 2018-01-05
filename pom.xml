@@ -129,7 +129,11 @@
 						<include>**/*Should.java</include>
 					</includes>
 				</configuration>
+<<<<<<< HEAD
 			</plugin>   
+=======
+			</plugin>
+>>>>>>> Removed core source folder
 		</plugins>
 	</build>
 

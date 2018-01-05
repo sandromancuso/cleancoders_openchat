@@ -1,4 +1,4 @@
-package org.openchat.builders;
+package builders;
 
 import org.openchat.domain.post.Post;
 import org.openchat.infrastructure.IDGenerator;
