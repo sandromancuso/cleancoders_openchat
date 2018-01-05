@@ -1,16 +1,20 @@
 package org.openchat.api;
 
-import org.openchat.domain.post.Post;
-import org.openchat.domain.post.PostService;
-import org.openchat.domain.user.UserDoesNotExistException;
-import org.openchat.infrastructure.jsonparser.PostToJson;
+import com.eclipsesource.json.Json;
+import org.openchat.core.domain.post.Post;
+import org.openchat.core.domain.post.PostService;
 import spark.Request;
 import spark.Response;
 
-import static com.eclipsesource.json.Json.parse;
+import java.util.Optional;
+
+import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
+import static org.eclipse.jetty.http.HttpStatus.CREATED_201;
+import static org.openchat.infrastructure.jsonparsers.PostToJson.jsonFor;
 
 public class PostAPI {
 
+    private static final String JSON = "application/json";
     private PostService postService;
 
     public PostAPI(PostService postService) {
@@ -20,20 +24,21 @@ public class PostAPI {
     public String createPost(Request request, Response response) {
         String userId = request.params("userId");
         String postText = postTextFrom(request.body());
-
-        try {
-            Post post = postService.createPost(userId, postText);
-
-            response.status(201);
-            response.type("application/json");
-            return PostToJson.toJson(post);
-        } catch (UserDoesNotExistException e) {
-            response.status(400);
-            return "User does not exist.";
-        }
+        Optional<Post> post = postService.createPost(userId, postText);
+        return prepareCreatePostResponse(response, post);
     }
 
-    private String postTextFrom(String requestJson) {
-        return parse(requestJson).asObject().getString("text", "");
+    private String prepareCreatePostResponse(Response response, Optional<Post> post) {
+        if (post.isPresent()) {
+            response.status(CREATED_201);
+            response.type(JSON);
+            return jsonFor(post.get()).toString();
+        }
+        response.status(BAD_REQUEST_400);
+        return "";
+    }
+
+    private String postTextFrom(String requestBody) {
+        return Json.parse(requestBody).asObject().get("text").asString();
     }
 }

@@ -1,17 +1,17 @@
 package org.openchat;
 
+import org.openchat.core.domain.post.PostRepository;
+import org.openchat.core.domain.post.PostRepositoryInMemory;
+import org.openchat.core.domain.post.PostService;
+import org.openchat.core.domain.user.UserRepository;
+import org.openchat.core.domain.user.UserRepositoryInMemory;
+import org.openchat.core.domain.user.UserService;
+import org.openchat.core.infrastructure.Clock;
+import org.openchat.core.infrastructure.IDGenerator;
 import org.openchat.api.*;
-import org.openchat.domain.post.Clock;
-import org.openchat.domain.post.PostRepository;
-import org.openchat.domain.post.PostService;
-import org.openchat.infrastructure.persistence.IdGenerator;
-import org.openchat.domain.user.UserRepository;
-import org.openchat.domain.user.UserService;
 import spark.Spark;
 
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class OpenChat {
 
@@ -21,50 +21,51 @@ public class OpenChat {
     private TimelineAPI timelineAPI;
     private FollowAPI followAPI;
     private WallAPI wallAPI;
-    private UsersAPI usersAPI;
-    private FolloweesAPI followeesAPI;
+    private UserAPI userAPI;
 
     public OpenChat() {
-        initialiseAPIs();
+        initialiseDependencies();
     }
 
     public void start() {
         port(4321);
-        post("registration", registrationAPI::register);
-        post("login", loginAPI::login);
-        post("user/:userId/posts", postAPI::createPost);
-        get("user/:userId/timeline", timelineAPI::timeline);
-        post("follow", followAPI::follow);
-        get("user/:userId/wall", wallAPI::wall);
-        get("users", usersAPI::allUsers);
-        get("user/:userId/followees", followeesAPI::allFollowees);
+        createRoutes();
     }
 
     public void stop() {
         Spark.stop();
     }
 
-    private void initialiseAPIs() {
-        IdGenerator idGenerator = new IdGenerator();
+    private void createRoutes() {
+        get ("helloworld",            (req, res) -> "Hello World!");
 
-        UserRepository userRepository = userRepository();
-        UserService userService = new UserService(idGenerator, userRepository);
+        post("registration",          registrationAPI::registerUser);
+        post("login",                 loginAPI::login);
+        post("user/:userId/posts",    postAPI::createPost);
+        get ("user/:userId/timeline", timelineAPI::timeline);
+        get ("user/:userId/wall",     wallAPI::wall);
+        post("follow",                followAPI::follow);
+        get ("users",                 userAPI::allUsers);
+    }
 
-        PostRepository postRepository = new PostRepository();
+    private void initialiseDependencies() {
+        // Infrastructure
         Clock clock = new Clock();
-        PostService postService = new PostService(userService, postRepository, idGenerator, clock);
+        IDGenerator idGenerator = new IDGenerator();
 
-        registrationAPI =  new RegistrationAPI(userService);
+        // Domain
+        UserRepository userRepository = new UserRepositoryInMemory();
+        PostRepository postRepository = new PostRepositoryInMemory();
+        UserService userService = new UserService(idGenerator, userRepository);
+        PostService postService = new PostService(clock, idGenerator, userService, postRepository);
+
+        // APIs
+        registrationAPI = new RegistrationAPI(userService);
         loginAPI = new LoginAPI(userService);
         postAPI = new PostAPI(postService);
         timelineAPI = new TimelineAPI(postService);
         followAPI = new FollowAPI(userService);
         wallAPI = new WallAPI(postService);
-        usersAPI = new UsersAPI(userService);
-        followeesAPI = new FolloweesAPI(userService);
-    }
-
-    protected UserRepository userRepository() {
-        return new UserRepository();
+        userAPI = new UserAPI(userService);
     }
 }

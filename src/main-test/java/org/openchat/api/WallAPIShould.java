@@ -1,4 +1,4 @@
-package org.openchat.web.api;
+package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
@@ -15,6 +15,7 @@ import spark.Request;
 import spark.Response;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,45 +25,55 @@ import static org.openchat.builders.PostBuilder.aPost;
 import static org.openchat.builders.UserBuilder.aUser;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TimelineAPIShould {
+public class WallAPIShould {
 
     private static final String JSON = "application/json";
+
+    private static final Post POST_1 = aPost().build();
+    private static final Post POST_2 = aPost().build();
     private static final User ALICE = aUser().build();
-    private static final Post POST_1 = aPost().withUserId(ALICE.id()).withText("post 1").build();
-    private static final Post POST_2 = aPost().withUserId(ALICE.id()).withText("post 2").build();
-    private static final Post POST_3 = aPost().withUserId(ALICE.id()).withText("post 3").build();
+    private static final User UNKNOWN_USER = aUser().build();
 
     @Mock Request request;
     @Mock Response response;
     @Mock PostService postService;
 
-    private TimelineAPI timelineAPI;
+    private WallAPI wallAPI;
 
     @Before
     public void initialise() {
-        timelineAPI = new TimelineAPI(postService);
+        wallAPI = new WallAPI(postService);
     }
 
-    @Test
-    public void
-    return_json_containing_user_timeline() {
+    @Test public void
+    return_json_containing_user_wall() {
+        List<Post> posts = asList(POST_2, POST_1);
         given(request.params("userId")).willReturn(ALICE.id());
-        List<Post> AlicePosts = asList(POST_3, POST_2, POST_1);
-        given(postService.timelineFor(ALICE.id())).willReturn(AlicePosts);
+        given(postService.wallFor(ALICE.id())).willReturn(Optional.of(posts));
 
-        String timelineJson = timelineAPI.timeline(request, response);
+        String wallJson = wallAPI.wall(request, response);
 
-        verifyTimelineJsonContains(timelineJson, AlicePosts);
+        verifyWallJsonContains(wallJson, posts);
         verify(response).status(200);
         verify(response).type(JSON);
     }
 
-    private void verifyTimelineJsonContains(String timelineJson, List<Post> userPosts) {
-        JsonArray timeline = Json.parse(timelineJson).asArray();
+    @Test public void
+    return_400_if_user_does_not_exist() {
+        given(request.params("userId")).willReturn(UNKNOWN_USER.id());
+        given(postService.wallFor(UNKNOWN_USER.id())).willReturn(Optional.empty());
+
+        wallAPI.wall(request, response);
+
+        verify(response).status(400);
+    }
+
+    private void verifyWallJsonContains(String wallJson, List<Post> posts) {
+        JsonArray timeline = Json.parse(wallJson).asArray();
         Post post;
         JsonObject postJson;
-        for (int i = 0; i < userPosts.size() - 1; i++) {
-            post = userPosts.get(i);
+        for (int i = 0; i < posts.size() - 1; i++) {
+            post = posts.get(i);
             postJson = timeline.get(i).asObject();
             verifyPostJson(postJson.toString(), post);
         }
@@ -70,13 +81,12 @@ public class TimelineAPIShould {
 
     private void verifyPostJson(String postJson, Post post) {
         String expectedJson = new JsonObject()
-                .add("postId", post.id())
-                .add("userId", post.userId())
-                .add("text", post.text())
-                .add("date", post.dateAsString())
-                .add("time", post.timeAsString())
-                .toString();
+                                    .add("postId", post.id())
+                                    .add("userId", post.userId())
+                                    .add("text", post.text())
+                                    .add("date", post.dateAsString())
+                                    .add("time", post.timeAsString())
+                                    .toString();
         assertThat(postJson).isEqualTo(expectedJson);
     }
-
 }

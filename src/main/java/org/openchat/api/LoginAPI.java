@@ -2,17 +2,21 @@ package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
-import org.openchat.domain.user.User;
-import org.openchat.domain.user.UserService;
+import org.openchat.core.domain.user.LoginData;
+import org.openchat.core.domain.user.User;
+import org.openchat.core.domain.user.UserService;
+import org.openchat.infrastructure.jsonparsers.UserToJson;
 import spark.Request;
 import spark.Response;
 
 import java.util.Optional;
 
-import static org.openchat.infrastructure.jsonparser.UserToJson.jsonFor;
+import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
+import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
 public class LoginAPI {
-
+    private static final String JSON = "application/json";
+    private static final String INVALID_CREDENTIALS = "Invalid credentials.";
     private UserService userService;
 
     public LoginAPI(UserService userService) {
@@ -20,22 +24,24 @@ public class LoginAPI {
     }
 
     public String login(Request request, Response response) {
-        JsonObject requestJson = Json.parse(request.body()).asObject();
-        String username = requestJson.getString("username", "");
-        String password = requestJson.getString("password", "");
-
-        Optional<User> user = userService.userBy(username, password);
-
-        return createResponse(response, user);
+        Optional<User> user = userService.login(loginData(request.body()));
+        return prepareResponse(response, user);
     }
 
-    private String createResponse(Response response, Optional<User> user) {
+    private String prepareResponse(Response response, Optional<User> user) {
         if (user.isPresent()) {
-            response.status(200);
-            response.type("application/json");
-            return jsonFor(user.get());
+            response.status(OK_200);
+            response.type(JSON);
+            return UserToJson.jsonFor(user.get()).toString();
+        } else {
+            response.status(BAD_REQUEST_400);
+            return INVALID_CREDENTIALS;
         }
-        response.status(400);
-        return "Invalid credentials.";
+    }
+
+    private LoginData loginData(String loginJson) {
+        JsonObject jsonObject = Json.parse(loginJson).asObject();
+        return new LoginData(jsonObject.getString("username", ""),
+                            jsonObject.getString("password", ""));
     }
 }
