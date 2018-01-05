@@ -1,14 +1,14 @@
-package org.openchat.core.domain.post;
+package org.openchat.domain.post;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserService;
-import org.openchat.core.infrastructure.Clock;
-import org.openchat.core.infrastructure.IDGenerator;
+import org.openchat.domain.user.User;
+import org.openchat.domain.user.UserService;
+import org.openchat.infrastructure.Clock;
+import org.openchat.infrastructure.IDGenerator;
 
 import java.util.List;
 import java.util.Optional;

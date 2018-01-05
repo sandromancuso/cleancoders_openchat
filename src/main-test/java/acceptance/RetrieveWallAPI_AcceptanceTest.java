@@ -5,7 +5,7 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import io.restassured.response.Response;
 import org.junit.Test;
-import org.openchat.core.domain.user.User;
+import org.openchat.domain.user.User;
 
 import static acceptance.APITestSuite.BASE_URL;
 import static acceptance.RegisterTestUsers.*;

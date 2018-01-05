@@ -6,10 +6,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.domain.user.Following;
-import org.openchat.core.domain.user.InvalidUserException;
-import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserService;
+import org.openchat.domain.user.Following;
+import org.openchat.domain.user.InvalidUserException;
+import org.openchat.domain.user.User;
+import org.openchat.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 

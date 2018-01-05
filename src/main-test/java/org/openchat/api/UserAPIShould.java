@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.domain.user.User;
-import org.openchat.core.domain.user.UserService;
+import org.openchat.domain.user.User;
+import org.openchat.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
