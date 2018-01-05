@@ -1,4 +1,4 @@
-package org.openchat.web.api;
+package org.openchat.api;
 
 import org.openchat.core.domain.user.User;
 import org.openchat.core.domain.user.UserService;
@@ -8,7 +8,7 @@ import spark.Response;
 import java.util.List;
 
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
-import static org.openchat.web.infrastructure.jsonparsers.UserToJson.jsonFor;
+import static org.openchat.infrastructure.jsonparsers.UserToJson.jsonFor;
 
 public class UserAPI {
     private static final String JSON = "application/json";

@@ -4,7 +4,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.openchat.web.OpenChat;
+import org.openchat.OpenChat;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

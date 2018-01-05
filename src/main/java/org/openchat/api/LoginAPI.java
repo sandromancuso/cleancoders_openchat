@@ -1,11 +1,11 @@
-package org.openchat.web.api;
+package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 import org.openchat.core.domain.user.LoginData;
 import org.openchat.core.domain.user.User;
 import org.openchat.core.domain.user.UserService;
-import org.openchat.web.infrastructure.jsonparsers.UserToJson;
+import org.openchat.infrastructure.jsonparsers.UserToJson;
 import spark.Request;
 import spark.Response;
 

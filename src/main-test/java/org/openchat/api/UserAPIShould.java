@@ -1,4 +1,4 @@
-package org.openchat.web.api;
+package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;

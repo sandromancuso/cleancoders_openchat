@@ -1,4 +1,4 @@
-package org.openchat.web;
+package org.openchat;
 
 public class OpenChatLauncher {
 

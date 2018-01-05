@@ -1,4 +1,4 @@
-package org.openchat.web.infrastructure.jsonparsers;
+package org.openchat.infrastructure.jsonparsers;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;

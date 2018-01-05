@@ -1,4 +1,4 @@
-package org.openchat.web.api;
+package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
 import static org.eclipse.jetty.http.HttpStatus.CREATED_201;
-import static org.openchat.web.infrastructure.jsonparsers.UserToJson.jsonFor;
+import static org.openchat.infrastructure.jsonparsers.UserToJson.jsonFor;
 
 public class RegistrationAPI {
 

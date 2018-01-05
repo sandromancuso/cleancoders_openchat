@@ -1,4 +1,4 @@
-package org.openchat.web.api;
+package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openchat.core.actions.RetrieveWall;
 import org.openchat.core.domain.post.Post;
+import org.openchat.core.domain.post.PostService;
 import org.openchat.core.domain.user.User;
 import spark.Request;
 import spark.Response;
@@ -36,20 +36,20 @@ public class WallAPIShould {
 
     @Mock Request request;
     @Mock Response response;
-    @Mock RetrieveWall retrieveWall;
+    @Mock PostService postService;
 
     private WallAPI wallAPI;
 
     @Before
     public void initialise() {
-        wallAPI = new WallAPI(retrieveWall);
+        wallAPI = new WallAPI(postService);
     }
 
     @Test public void
     return_json_containing_user_wall() {
         List<Post> posts = asList(POST_2, POST_1);
         given(request.params("userId")).willReturn(ALICE.id());
-        given(retrieveWall.execute(ALICE.id())).willReturn(Optional.of(posts));
+        given(postService.wallFor(ALICE.id())).willReturn(Optional.of(posts));
 
         String wallJson = wallAPI.wall(request, response);
 
@@ -61,7 +61,7 @@ public class WallAPIShould {
     @Test public void
     return_400_if_user_does_not_exist() {
         given(request.params("userId")).willReturn(UNKNOWN_USER.id());
-        given(retrieveWall.execute(UNKNOWN_USER.id())).willReturn(Optional.empty());
+        given(postService.wallFor(UNKNOWN_USER.id())).willReturn(Optional.empty());
 
         wallAPI.wall(request, response);
 

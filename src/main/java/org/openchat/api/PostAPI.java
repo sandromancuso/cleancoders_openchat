@@ -1,4 +1,4 @@
-package org.openchat.web.api;
+package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import org.openchat.core.domain.post.Post;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
 import static org.eclipse.jetty.http.HttpStatus.CREATED_201;
-import static org.openchat.web.infrastructure.jsonparsers.PostToJson.jsonFor;
+import static org.openchat.infrastructure.jsonparsers.PostToJson.jsonFor;
 
 public class PostAPI {
 

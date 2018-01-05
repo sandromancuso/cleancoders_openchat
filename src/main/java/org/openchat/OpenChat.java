@@ -1,6 +1,5 @@
-package org.openchat.web;
+package org.openchat;
 
-import org.openchat.core.actions.*;
 import org.openchat.core.domain.post.PostRepository;
 import org.openchat.core.domain.post.PostRepositoryInMemory;
 import org.openchat.core.domain.post.PostService;
@@ -9,7 +8,7 @@ import org.openchat.core.domain.user.UserRepositoryInMemory;
 import org.openchat.core.domain.user.UserService;
 import org.openchat.core.infrastructure.Clock;
 import org.openchat.core.infrastructure.IDGenerator;
-import org.openchat.web.api.*;
+import org.openchat.api.*;
 import spark.Spark;
 
 import static spark.Spark.*;
@@ -60,16 +59,13 @@ public class OpenChat {
         UserService userService = new UserService(idGenerator, userRepository);
         PostService postService = new PostService(clock, idGenerator, userService, postRepository);
 
-        //Actions
-        RetrieveWall retrieveWall = new RetrieveWall(userRepository, postRepository);
-
         // APIs
         registrationAPI = new RegistrationAPI(userService);
         loginAPI = new LoginAPI(userService);
         postAPI = new PostAPI(postService);
         timelineAPI = new TimelineAPI(postService);
         followAPI = new FollowAPI(userService);
-        wallAPI = new WallAPI(retrieveWall);
+        wallAPI = new WallAPI(postService);
         userAPI = new UserAPI(userService);
     }
 }
