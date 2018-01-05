@@ -1,4 +1,4 @@
-package org.openchat.core.domain.user;
+package org.openchat.domain.user;
 
 import org.junit.Before;
 import org.junit.Test;

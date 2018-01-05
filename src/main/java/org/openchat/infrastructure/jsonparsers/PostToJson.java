@@ -2,7 +2,7 @@ package org.openchat.infrastructure.jsonparsers;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
-import org.openchat.core.domain.post.Post;
+import org.openchat.domain.post.Post;
 
 import java.util.List;
 

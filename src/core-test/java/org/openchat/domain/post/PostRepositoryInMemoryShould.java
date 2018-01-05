@@ -1,8 +1,8 @@
-package org.openchat.core.domain.post;
+package org.openchat.domain.post;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openchat.core.domain.user.User;
+import org.openchat.domain.user.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

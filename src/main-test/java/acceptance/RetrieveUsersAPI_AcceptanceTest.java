@@ -3,7 +3,7 @@ package acceptance;
 import com.eclipsesource.json.Json;
 import io.restassured.response.Response;
 import org.junit.Test;
-import org.openchat.core.domain.user.User;
+import org.openchat.domain.user.User;
 
 import java.util.List;
 

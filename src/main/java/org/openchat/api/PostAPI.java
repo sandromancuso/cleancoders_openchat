@@ -1,8 +1,8 @@
 package org.openchat.api;
 
 import com.eclipsesource.json.Json;
-import org.openchat.core.domain.post.Post;
-import org.openchat.core.domain.post.PostService;
+import org.openchat.domain.post.Post;
+import org.openchat.domain.post.PostService;
 import spark.Request;
 import spark.Response;
 

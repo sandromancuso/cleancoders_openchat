@@ -1,4 +1,4 @@
-package org.openchat.core.domain.user;
+package org.openchat.domain.user;
 
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;

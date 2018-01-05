@@ -2,9 +2,9 @@ package org.openchat.api;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
-import org.openchat.core.domain.user.Following;
-import org.openchat.core.domain.user.InvalidUserException;
-import org.openchat.core.domain.user.UserService;
+import org.openchat.domain.user.Following;
+import org.openchat.domain.user.InvalidUserException;
+import org.openchat.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 

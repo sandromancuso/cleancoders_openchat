@@ -1,14 +1,14 @@
 package org.openchat;
 
-import org.openchat.core.domain.post.PostRepository;
-import org.openchat.core.domain.post.PostRepositoryInMemory;
-import org.openchat.core.domain.post.PostService;
-import org.openchat.core.domain.user.UserRepository;
-import org.openchat.core.domain.user.UserRepositoryInMemory;
-import org.openchat.core.domain.user.UserService;
-import org.openchat.core.infrastructure.Clock;
-import org.openchat.core.infrastructure.IDGenerator;
 import org.openchat.api.*;
+import org.openchat.domain.post.PostRepository;
+import org.openchat.domain.post.PostRepositoryInMemory;
+import org.openchat.domain.post.PostService;
+import org.openchat.domain.user.UserRepository;
+import org.openchat.domain.user.UserRepositoryInMemory;
+import org.openchat.domain.user.UserService;
+import org.openchat.infrastructure.Clock;
+import org.openchat.infrastructure.IDGenerator;
 import spark.Spark;
 
 import static spark.Spark.*;
