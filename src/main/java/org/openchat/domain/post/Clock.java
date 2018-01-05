@@ -1,4 +1,4 @@
-package org.openchat.infrastructure;
+package org.openchat.domain.post;
 
 import java.time.LocalDateTime;
 
