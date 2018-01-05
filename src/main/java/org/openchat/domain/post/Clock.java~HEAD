@@ -1,9 +1,9 @@
-package org.openchat.infrastructure;
+package org.openchat.domain.post;
 
 import java.time.LocalDateTime;
 
 public class Clock {
-    public LocalDateTime dateTime() {
+    public LocalDateTime now() {
         return LocalDateTime.now();
     }
 }

@@ -2,7 +2,6 @@ package org.openchat.domain.post;
 
 import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserService;
-import org.openchat.infrastructure.Clock;
 import org.openchat.infrastructure.IDGenerator;
 
 import java.util.List;

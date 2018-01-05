@@ -3,7 +3,7 @@ package org.openchat.domain.post;
 import java.time.LocalDateTime;
 
 public class Clock {
-    public LocalDateTime now() {
+    public LocalDateTime dateTime() {
         return LocalDateTime.now();
     }
 }

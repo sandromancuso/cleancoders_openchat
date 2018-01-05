@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserService;
-import org.openchat.infrastructure.Clock;
 import org.openchat.infrastructure.IDGenerator;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import org.openchat.domain.post.PostService;
 import org.openchat.domain.user.UserRepository;
 import org.openchat.domain.user.UserRepositoryInMemory;
 import org.openchat.domain.user.UserService;
-import org.openchat.infrastructure.Clock;
+import org.openchat.domain.post.Clock;
 import org.openchat.infrastructure.IDGenerator;
 import spark.Spark;
 
