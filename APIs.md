@@ -26,7 +26,7 @@ Response: "Username already in use."
 
 ## Login
 
-POST - openchat/userService
+POST - openchat/login
 {
 	"username" : "Alice"
 	"password" : "alki324d"
