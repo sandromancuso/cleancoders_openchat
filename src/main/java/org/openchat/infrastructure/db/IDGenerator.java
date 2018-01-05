@@ -1,4 +1,4 @@
-package org.openchat.infrastructure;
+package org.openchat.infrastructure.db;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package builders;
 
 import org.openchat.domain.user.User;
-import org.openchat.infrastructure.IDGenerator;
+import org.openchat.infrastructure.db.IDGenerator;
 
 public class UserBuilder {
 

@@ -1,7 +1,7 @@
 package builders;
 
 import org.openchat.domain.post.Post;
-import org.openchat.infrastructure.IDGenerator;
+import org.openchat.infrastructure.db.IDGenerator;
 
 import java.time.LocalDateTime;
 
