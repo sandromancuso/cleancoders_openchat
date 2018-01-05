@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.openchat.builders.UserBuilder.aUser;
+import static builders.UserBuilder.aUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserAPIShould {
