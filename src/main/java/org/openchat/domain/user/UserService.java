@@ -11,11 +11,22 @@ public class UserService {
     }
 
     public User create(RegistrationData registrationData) {
-        User user = new User(idGenerator.nextId(),
-                                registrationData.username(),
-                                registrationData.password(),
-                                registrationData.about());
+        validateUsername(registrationData.username());
+        User user = userFrom(registrationData);
         userRepository.add(user);
         return user;
+    }
+
+    private User userFrom(RegistrationData registrationData) {
+        return new User(idGenerator.nextId(),
+                                    registrationData.username(),
+                                    registrationData.password(),
+                                    registrationData.about());
+    }
+
+    private void validateUsername(String username) {
+        if (userRepository.isUsernameInUse(username)) {
+            throw new UsernameAlreadyInUseException();
+        }
     }
 }

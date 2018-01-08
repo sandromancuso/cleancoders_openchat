@@ -23,16 +23,17 @@ public class UserServiceShould {
     @Mock UserRepository userRepository;
 
     private UserService userService;
+    private static final RegistrationData REGISTRATION_DATA = new RegistrationData(ALICE, PASSWORD, ABOUT_ALICE);
 
     @Before
     public void initialise() {
         userService = new UserService(idGenerator, userRepository);
         given(idGenerator.nextId()).willReturn(USER_ID);
+        given(userRepository.isUsernameInUse(ALICE)).willReturn(false);
     }
 
     @Test public void
     create_a_new_user() {
-        RegistrationData registrationData = new RegistrationData(ALICE, PASSWORD, ABOUT_ALICE);
         User user = aUser()
                         .withUserId(idGenerator.nextId())
                         .withUsername(ALICE)
@@ -40,14 +41,13 @@ public class UserServiceShould {
                         .withAbout(ABOUT_ALICE)
                         .build();
 
-        userService.create(registrationData);
+        userService.create(REGISTRATION_DATA);
 
         verify(userRepository).add(user);
     }
 
     @Test public void
     return_the_newly_created_user() {
-        RegistrationData registrationData = new RegistrationData(ALICE, PASSWORD, ABOUT_ALICE);
         User user = aUser()
                         .withUserId(idGenerator.nextId())
                         .withUsername(ALICE)
@@ -55,9 +55,16 @@ public class UserServiceShould {
                         .withAbout(ABOUT_ALICE)
                         .build();
 
-        User result = userService.create(registrationData);
+        User result = userService.create(REGISTRATION_DATA);
 
         assertThat(result).isEqualTo(user);
+    }
+
+    @Test(expected = UsernameAlreadyInUseException.class) public void
+    throws_exception_when_username_already_in_user() {
+        given(userRepository.isUsernameInUse(ALICE)).willReturn(true);
+
+        userService.create(REGISTRATION_DATA);
     }
 
 }
