@@ -33,6 +33,6 @@ public class UserService {
     }
 
     public Optional<User> userFor(String username, String password) {
-        throw new UnsupportedOperationException();
+        return userRepository.userFor(username, password);
     }
 }
