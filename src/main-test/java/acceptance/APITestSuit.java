@@ -8,7 +8,6 @@ import org.openchat.OpenChat;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        HelloWorldAPI_AcceptanceTest.class,
         RegistrationAPI_AcceptanceTest.class
 })
 public class APITestSuit {
