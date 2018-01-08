@@ -1,11 +1,18 @@
 package org.openchat.domain.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserRepository {
+
+    private List<User> users = new ArrayList<>();
+
     void add(User user) {
-        throw new UnsupportedOperationException();
+        this.users.add(user);
     }
 
     public boolean isUsernameInUse(String username) {
-        throw new UnsupportedOperationException();
+        return users.stream()
+                    .anyMatch(u -> u.username().equals(username));
     }
 }
