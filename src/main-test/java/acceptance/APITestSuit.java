@@ -8,9 +8,12 @@ import org.openchat.OpenChat;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        HelloWorldAPI_AcceptanceTest.class
+        HelloWorldAPI_AcceptanceTest.class,
+        RegistrationAPI_AcceptanceTest.class
 })
 public class APITestSuit {
+
+    static String BASE_URL = "http://localhost:4321";
 
     private static OpenChat openChat;
 
