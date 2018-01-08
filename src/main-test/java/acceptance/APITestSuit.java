@@ -14,8 +14,6 @@ public class APITestSuit {
 
     private static OpenChat openChat;
 
-    static String BASE_URL = "http://localhost:4321";
-
     @BeforeClass
     public static void setUp() {
         openChat = new OpenChat();

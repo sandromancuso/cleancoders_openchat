@@ -13,7 +13,7 @@ POST - openchat/registration
 
 **Success**
 Status CREATED - 201
-Reponse:
+Response:
 {
     "userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	"username" : "Alice",
