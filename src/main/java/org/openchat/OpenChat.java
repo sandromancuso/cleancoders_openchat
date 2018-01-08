@@ -1,6 +1,7 @@
 package org.openchat;
 
 import org.openchat.api.RegistrationAPI;
+import org.openchat.domain.user.UserService;
 import spark.Spark;
 
 import static spark.Spark.get;
@@ -9,7 +10,11 @@ import static spark.Spark.post;
 
 public class OpenChat {
 
-    private RegistrationAPI registrationAPI = new RegistrationAPI();
+    private RegistrationAPI registrationAPI;
+
+    public OpenChat() {
+        initialiseAPIs();
+    }
 
     public void start() {
         port(4321);
@@ -19,5 +24,9 @@ public class OpenChat {
 
     public void stop() {
         Spark.stop();
+    }
+
+    private void initialiseAPIs() {
+        registrationAPI =  new RegistrationAPI(new UserService());
     }
 }
