@@ -7,7 +7,7 @@ public class UserRepository {
 
     private List<User> users = new ArrayList<>();
 
-    void add(User user) {
+    public void add(User user) {
         this.users.add(user);
     }
 

@@ -34,7 +34,7 @@ POST - openchat/login
 
 **Success**
 Status OK - 200
-Reponse:
+Response:
 {
     "userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	"username" : "Alice",

@@ -1,7 +1,7 @@
 package org.openchat.domain.user;
 
 public class UserBuilder {
-    private String userId = "1234245";
+    private String userId = new IdGenerator().nextId();
     private String username = "Alice";
     private String password = "lask3424";
     private String about = "About Alice";

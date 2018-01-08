@@ -14,15 +14,15 @@ public class RegistrationAPI_AcceptanceTest {
     @Test public void
     register_a_new_user() {
         given()
-                .body(withJsonContaining("Alice", "alki324d", "About Alice"))
+                .body(withJsonContaining("Lucy", "alki324d", "About Lucy"))
         .when()
                 .post(BASE_URL + "/registration")
         .then()
                 .statusCode(201)
                 .contentType(JSON)
                 .body("userId", notNullValue())
-                .body("username", is("Alice"))
-                .body("about", is("About Alice"));
+                .body("username", is("Lucy"))
+                .body("about", is("About Lucy"));
     }
 
     private String withJsonContaining(String username, String password, String about) {

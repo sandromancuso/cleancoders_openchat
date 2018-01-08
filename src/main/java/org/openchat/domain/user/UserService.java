@@ -1,5 +1,7 @@
 package org.openchat.domain.user;
 
+import java.util.Optional;
+
 public class UserService {
 
     private final IdGenerator idGenerator;
@@ -28,5 +30,9 @@ public class UserService {
         if (userRepository.isUsernameInUse(username)) {
             throw new UsernameAlreadyInUseException();
         }
+    }
+
+    public Optional<User> userFor(String username, String password) {
+        throw new UnsupportedOperationException();
     }
 }

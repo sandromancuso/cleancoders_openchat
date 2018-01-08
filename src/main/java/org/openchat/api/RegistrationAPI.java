@@ -6,6 +6,7 @@ import org.openchat.domain.user.RegistrationData;
 import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserService;
 import org.openchat.domain.user.UsernameAlreadyInUseException;
+import org.openchat.instrastructure.jsonparser.UserToJson;
 import spark.Request;
 import spark.Response;
 
@@ -21,20 +22,11 @@ public class RegistrationAPI {
             User user = userService.create(registrationData(request));
             response.status(201);
             response.type("application/json");
-            return jsonFor(user);
+            return UserToJson.jsonFor(user);
         } catch (UsernameAlreadyInUseException e) {
             response.status(400);
             return "Username already in use.";
         }
-    }
-
-    private String jsonFor(User user) {
-        return new JsonObject()
-                .add("userId", user.userId())
-                .add("username", user.username())
-                .add("about", user.about())
-                .toString();
-
     }
 
     private RegistrationData registrationData(Request request) {

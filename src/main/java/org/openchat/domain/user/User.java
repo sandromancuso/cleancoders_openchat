@@ -28,6 +28,10 @@ public class User {
         return about;
     }
 
+    public String password() {
+        return password;
+    }
+
     @Override
     public boolean equals(Object other) {
         return reflectionEquals(this, other);
