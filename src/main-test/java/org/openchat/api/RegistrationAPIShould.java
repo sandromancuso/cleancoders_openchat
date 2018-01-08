@@ -9,14 +9,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.domain.user.RegistrationData;
 import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserService;
+import org.openchat.domain.user.UsernameAlreadyInUseException;
 import spark.Request;
 import spark.Response;
 
-import java.util.Optional;
-
-import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.openchat.domain.user.UserBuilder.aUser;
 
@@ -43,7 +42,7 @@ public class RegistrationAPIShould {
         registrationAPI = new RegistrationAPI(userService);
         given(request.body()).willReturn(registrationDataWith(USERNAME, PASSWORD, ABOUT));
         registrationData = new RegistrationData(USERNAME, PASSWORD, ABOUT);
-        given(userService.create(registrationData)).willReturn(Optional.of(NEW_USER));
+        given(userService.create(registrationData)).willReturn(NEW_USER);
     }
 
     @Test public void
@@ -64,12 +63,15 @@ public class RegistrationAPIShould {
 
     @Test public void
     inform_username_is_already_in_use() {
-        given(userService.create(registrationData)).willReturn(empty());
+        doThrow(new UsernameAlreadyInUseException()).when(userService).create(registrationData);
 
-        String result = registrationAPI.register(request, response);
-
-        verify(response).status(400);
-        assertThat(result).isEqualTo("Username already in use.");
+        String result = "";
+        try {
+            result = registrationAPI.register(request, response);
+        } finally {
+            verify(response).status(400);
+            assertThat(result).isEqualTo("Username already in use.");
+        }
     }
 
     private String jsonContaining(User user) {

@@ -1,10 +1,21 @@
 package org.openchat.domain.user;
 
-import java.util.Optional;
-
 public class UserService {
 
-    public Optional<User> create(RegistrationData registrationData) {
-        throw new UnsupportedOperationException();
+    private final IdGenerator idGenerator;
+    private final UserRepository userRepository;
+
+    public UserService(IdGenerator idGenerator, UserRepository userRepository) {
+        this.idGenerator = idGenerator;
+        this.userRepository = userRepository;
+    }
+
+    public User create(RegistrationData registrationData) {
+        User user = new User(idGenerator.nextId(),
+                                registrationData.username(),
+                                registrationData.password(),
+                                registrationData.about());
+        userRepository.add(user);
+        return user;
     }
 }

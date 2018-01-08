@@ -14,6 +14,18 @@ public class RegistrationData {
         this.about = about;
     }
 
+    public String username() {
+        return username;
+    }
+
+    public String password() {
+        return password;
+    }
+
+    public String about() {
+        return about;
+    }
+
     @Override
     public boolean equals(Object other) {
         return reflectionEquals(this, other);

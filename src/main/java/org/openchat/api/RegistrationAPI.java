@@ -5,10 +5,9 @@ import com.eclipsesource.json.JsonObject;
 import org.openchat.domain.user.RegistrationData;
 import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserService;
+import org.openchat.domain.user.UsernameAlreadyInUseException;
 import spark.Request;
 import spark.Response;
-
-import java.util.Optional;
 
 public class RegistrationAPI {
     private UserService userService;
@@ -18,18 +17,15 @@ public class RegistrationAPI {
     }
 
     public String register(Request request, Response response) {
-        Optional<User> user = userService.create(registrationData(request));
-        return prepareResponse(response, user);
-    }
-
-    private String prepareResponse(Response response, Optional<User> user) {
-        if (user.isPresent()) {
+        try {
+            User user = userService.create(registrationData(request));
             response.status(201);
             response.type("application/json");
-            return jsonFor(user.get());
+            return jsonFor(user);
+        } catch (UsernameAlreadyInUseException e) {
+            response.status(400);
+            return "Username already in use.";
         }
-        response.status(400);
-        return "Username already in use.";
     }
 
     private String jsonFor(User user) {

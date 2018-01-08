@@ -1,6 +1,8 @@
 package org.openchat;
 
 import org.openchat.api.RegistrationAPI;
+import org.openchat.domain.user.IdGenerator;
+import org.openchat.domain.user.UserRepository;
 import org.openchat.domain.user.UserService;
 import spark.Spark;
 
@@ -25,6 +27,10 @@ public class OpenChat {
     }
 
     private void initialiseAPIs() {
-        registrationAPI =  new RegistrationAPI(new UserService());
+        IdGenerator idGenerator = new IdGenerator();
+        UserRepository userRepository = new UserRepository();
+        UserService userService = new UserService(idGenerator, userRepository);
+
+        registrationAPI =  new RegistrationAPI(userService);
     }
 }
