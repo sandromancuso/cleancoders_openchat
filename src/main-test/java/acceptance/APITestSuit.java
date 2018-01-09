@@ -16,7 +16,8 @@ import static org.openchat.domain.user.UserBuilder.aUser;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         RegistrationAPI_AcceptanceTest.class,
-        LoginAPI_AcceptanceTest.class
+        LoginAPI_AcceptanceTest.class,
+        PostAPI_AcceptanceTest.class,
 })
 public class APITestSuit {
 

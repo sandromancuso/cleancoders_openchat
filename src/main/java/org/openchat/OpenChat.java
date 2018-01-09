@@ -1,6 +1,7 @@
 package org.openchat;
 
 import org.openchat.api.LoginAPI;
+import org.openchat.api.PostAPI;
 import org.openchat.api.RegistrationAPI;
 import org.openchat.domain.user.IdGenerator;
 import org.openchat.domain.user.UserRepository;
@@ -14,6 +15,7 @@ public class OpenChat {
 
     private RegistrationAPI registrationAPI;
     private LoginAPI loginAPI;
+    private PostAPI postAPI;
 
     public OpenChat() {
         initialiseAPIs();
@@ -23,6 +25,7 @@ public class OpenChat {
         port(4321);
         post("registration", registrationAPI::register);
         post("login", loginAPI::login);
+        post("user/:userId/posts", postAPI::createPost);
     }
 
     public void stop() {
@@ -36,6 +39,7 @@ public class OpenChat {
 
         registrationAPI =  new RegistrationAPI(userService);
         loginAPI = new LoginAPI(userService);
+        postAPI = new PostAPI();
     }
 
     protected UserRepository userRepository() {
