@@ -52,7 +52,7 @@ public class OpenChat {
         registrationAPI =  new RegistrationAPI(userService);
         loginAPI = new LoginAPI(userService);
         postAPI = new PostAPI(postService);
-        timelineAPI = new TimelineAPI();
+        timelineAPI = new TimelineAPI(postService);
     }
 
     protected UserRepository userRepository() {

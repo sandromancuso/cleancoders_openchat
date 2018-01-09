@@ -4,6 +4,8 @@ import org.openchat.domain.user.IdGenerator;
 import org.openchat.domain.user.UserDoesNotExistException;
 import org.openchat.domain.user.UserService;
 
+import java.util.List;
+
 public class PostService {
 
     private final UserService userService;
@@ -31,5 +33,9 @@ public class PostService {
     private void validate(String userId) {
         if (!userService.userForId(userId).isPresent())
             throw new UserDoesNotExistException();
+    }
+
+    public List<Post> timelineFor(String userId) {
+        throw new UnsupportedOperationException();
     }
 }
