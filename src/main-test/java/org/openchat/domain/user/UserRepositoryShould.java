@@ -22,7 +22,7 @@ public class UserRepositoryShould {
     }
 
     @Test public void
-    inform_when_username_is_in_use() {
+    inform_when_username_is_in_use() {                   
         assertThat(userRepository.isUsernameInUse(ALICE.username())).isTrue();
         assertThat(userRepository.isUsernameInUse(BOB.username())).isTrue();
 
