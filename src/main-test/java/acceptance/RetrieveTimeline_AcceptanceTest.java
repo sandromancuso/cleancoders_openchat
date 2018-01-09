@@ -25,8 +25,8 @@ public class RetrieveTimeline_AcceptanceTest {
     private static final LocalDateTime TODAY = LocalDateTime.now();
     private static final LocalDateTime YESTERDAY = TODAY.minusDays(1);
 
-    private static final Post POST_1 = aPost().withUserId(ALICE.userId()).withDateTime(YESTERDAY).build();
-    private static final Post POST_2 = aPost().withUserId(ALICE.userId()).withDateTime(TODAY).build();
+    private static final Post POST_1 = aPost().withUserId(ALICE.userId()).withText("Post 1").withDateTime(YESTERDAY).build();
+    private static final Post POST_2 = aPost().withUserId(ALICE.userId()).withText("Post 2").withDateTime(TODAY).build();
 
     private Response response;
     private JsonArray timeline;
@@ -59,8 +59,8 @@ public class RetrieveTimeline_AcceptanceTest {
     }
 
     private void assertThatTimelineContains(Post post, int index) {
-        String timelinePostId = timeline.get(index).asObject().getString("postId", "");
-        assertThat(timelinePostId).isEqualTo(post.postId());
+        String text = timeline.get(index).asObject().getString("text", "");
+        assertThat(text).isEqualTo(post.text());
     }
 
     private void create(Post post) {

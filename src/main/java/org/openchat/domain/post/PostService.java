@@ -30,12 +30,13 @@ public class PostService {
         return post;
     }
 
+    public List<Post> timelineFor(String userId) {
+        validate(userId);
+        return postRepository.postsInReverseChronologicalOrderFor(userId);
+    }
+
     private void validate(String userId) {
         if (!userService.userForId(userId).isPresent())
             throw new UserDoesNotExistException();
-    }
-
-    public List<Post> timelineFor(String userId) {
-        throw new UnsupportedOperationException();
     }
 }
