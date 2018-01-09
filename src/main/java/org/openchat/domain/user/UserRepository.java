@@ -23,4 +23,10 @@ public class UserRepository {
                                  u.password().equals(password))
                     .findFirst();
     }
+
+    public Optional<User> userForId(String userId) {
+        return users.stream()
+                    .filter(u -> u.userId().equals(userId))
+                    .findFirst();
+    }
 }

@@ -3,6 +3,8 @@ package org.openchat;
 import org.openchat.api.LoginAPI;
 import org.openchat.api.PostAPI;
 import org.openchat.api.RegistrationAPI;
+import org.openchat.domain.post.Clock;
+import org.openchat.domain.post.PostRepository;
 import org.openchat.domain.post.PostService;
 import org.openchat.domain.user.IdGenerator;
 import org.openchat.domain.user.UserRepository;
@@ -39,7 +41,9 @@ public class OpenChat {
         UserRepository userRepository = userRepository();
         UserService userService = new UserService(idGenerator, userRepository);
 
-        PostService postService = new PostService();
+        PostRepository postRepository = new PostRepository();
+        Clock clock = new Clock();
+        PostService postService = new PostService(userService, postRepository, idGenerator, clock);
 
         registrationAPI =  new RegistrationAPI(userService);
         loginAPI = new LoginAPI(userService);

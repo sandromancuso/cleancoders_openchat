@@ -35,4 +35,8 @@ public class UserService {
     public Optional<User> userFor(String username, String password) {
         return userRepository.userFor(username, password);
     }
+
+    public Optional<User> userForId(String userId) {
+        return userRepository.userForId(userId);
+    }
 }

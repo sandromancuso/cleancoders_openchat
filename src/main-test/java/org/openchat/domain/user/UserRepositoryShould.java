@@ -36,4 +36,11 @@ public class UserRepositoryShould {
         assertThat(userRepository.userFor(UNKNOWN.username(), UNKNOWN.password())).isEmpty();
     }
 
+    @Test public void
+    return_user_matching_user_id() {
+        assertThat(userRepository.userForId(ALICE.userId())).contains(ALICE);
+
+        assertThat(userRepository.userForId(UNKNOWN.userId())).isEmpty();
+    }
+
 }

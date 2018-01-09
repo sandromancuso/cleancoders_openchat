@@ -13,6 +13,11 @@ public class PostBuilder {
         return new PostBuilder();
     }
 
+    public PostBuilder withPostId(String postId) {
+        this.postId = postId;
+        return this;
+    }
+
     public PostBuilder withUserId(String userId) {
         this.userId = userId;
         return this;
@@ -20,6 +25,11 @@ public class PostBuilder {
 
     public PostBuilder withText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public PostBuilder withDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
         return this;
     }
 

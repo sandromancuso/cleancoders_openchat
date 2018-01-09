@@ -80,4 +80,15 @@ public class UserServiceShould {
         assertThat(user.get()).isEqualTo(ALICE);
     }
 
+    @Test public void
+    return_a_user_for_a_matching_user_id() {
+        given(userRepository.userForId(ALICE.userId())).willReturn(Optional.of(ALICE));
+
+        Optional<User> user = userService.userForId(ALICE.userId());
+
+        assertThat(user.get()).isEqualTo(ALICE);
+    }
+
+
+
 }

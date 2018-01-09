@@ -1,9 +1,9 @@
 package org.openchat.api;
 
-import com.eclipsesource.json.JsonObject;
 import org.openchat.domain.post.Post;
 import org.openchat.domain.post.PostService;
 import org.openchat.domain.user.UserDoesNotExistException;
+import org.openchat.instrastructure.jsonparser.PostToJson;
 import spark.Request;
 import spark.Response;
 
@@ -30,18 +30,6 @@ public class PostAPI {
         } catch (UserDoesNotExistException e) {
             response.status(400);
             return "User does not exist.";
-        }
-    }
-
-    public static class PostToJson {
-        public static String toJson(Post post) {
-            return new JsonObject()
-                            .add("postId", post.postId())
-                            .add("userId", post.userId())
-                            .add("text", post.text())
-                            .add("date", post.dateAsString())
-                            .add("time", post.timeAsString())
-                            .toString();
         }
     }
 
