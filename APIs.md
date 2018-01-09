@@ -63,9 +63,10 @@ Status CREATED - 201
 }
 
 **Failure**
-Status: BAD_REQUEST - 400
+Status: BAD_REQUEST - 400 (in case user does not exist)
+Response: "User does not exit."
 
-## Retrive Posts (User timeline)
+## Retrieve Posts (User timeline)
 
 GET - openchat/user/<userId>/timeline
 [{
@@ -87,6 +88,7 @@ Status OK - 200
 
 **Failure**
 Status: BAD_REQUEST - 400 (in case user does not exist)
+Response: "User does not exit."
 
 ## Follow User
 
