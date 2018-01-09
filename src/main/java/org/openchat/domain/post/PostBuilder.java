@@ -1,10 +1,12 @@
 package org.openchat.domain.post;
 
+import org.openchat.domain.user.IdGenerator;
+
 import java.time.LocalDateTime;
 
 public class PostBuilder {
 
-    private String postId = "1232342";
+    private String postId = new IdGenerator().nextId();
     private String userId = "1234";
     private String text = "some text";
     private LocalDateTime dateTime = LocalDateTime.now();
