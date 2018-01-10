@@ -99,10 +99,11 @@ POST - openchat/follow
 }
 
 **Success**
-Status OK - 200
+Status OK - 201
 
 **Failure**
 Status: BAD_REQUEST - 400  (in case one of the users doesn't exist)
+Response: "At least one of the users does not exit."
 
 ## Retrieve Wall
 

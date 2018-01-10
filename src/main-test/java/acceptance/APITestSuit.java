@@ -17,15 +17,18 @@ import static org.openchat.domain.user.UserBuilder.aUser;
 @Suite.SuiteClasses({
         RegistrationAPI_AcceptanceTest.class,
         LoginAPI_AcceptanceTest.class,
-        RetrieveTimeline_AcceptanceTest.class,
+        TimelineAPI_AcceptanceTest.class,
+        WallAPI_AcceptanceTest.class
 })
 public class APITestSuit {
 
     static User ALICE = aUser().withUsername("Alice").build();
     static User BOB = aUser().withUsername("Bob").build();
     static User CHARLIE = aUser().withUsername("Charlie").build();
+    static User JULIE = aUser().withUsername("Julie").build();
 
-    static List<User> USERS = asList(ALICE, BOB, CHARLIE);
+
+    static List<User> USERS = asList(ALICE, BOB, CHARLIE, JULIE);
 
     static String BASE_URL = "http://localhost:4321";
 

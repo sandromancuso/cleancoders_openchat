@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.is;
 import static org.openchat.domain.post.PostBuilder.aPost;
 
-public class RetrieveTimeline_AcceptanceTest {
+public class TimelineAPI_AcceptanceTest {
 
     private static final LocalDateTime TODAY = LocalDateTime.now();
     private static final LocalDateTime YESTERDAY = TODAY.minusDays(1);

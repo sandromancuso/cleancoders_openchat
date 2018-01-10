@@ -39,4 +39,8 @@ public class UserService {
     public Optional<User> userForId(String userId) {
         return userRepository.userForId(userId);
     }
+
+    public void createFollowing(String followerId, String followeeId) {
+        throw new UnsupportedOperationException();
+    }
 }
