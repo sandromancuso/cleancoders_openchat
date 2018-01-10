@@ -19,7 +19,8 @@ import static org.openchat.domain.user.UserBuilder.aUser;
         LoginAPI_AcceptanceTest.class,
         TimelineAPI_AcceptanceTest.class,
         WallAPI_AcceptanceTest.class,
-        UsersAPI_AcceptanceTest.class
+        UsersAPI_AcceptanceTest.class,
+        FolloweesAPI_AcceptanceTest.class
 })
 public class APITestSuit {
 

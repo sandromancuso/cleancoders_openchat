@@ -22,6 +22,7 @@ public class OpenChat {
     private FollowAPI followAPI;
     private WallAPI wallAPI;
     private UsersAPI usersAPI;
+    private FolloweesAPI followeesAPI;
 
     public OpenChat() {
         initialiseAPIs();
@@ -36,6 +37,7 @@ public class OpenChat {
         post("follow", followAPI::follow);
         get("user/:userId/wall", wallAPI::wall);
         get("users", usersAPI::allUsers);
+        get("user/:userId/followees", followeesAPI::allFollowees);
     }
 
     public void stop() {
@@ -59,6 +61,7 @@ public class OpenChat {
         followAPI = new FollowAPI(userService);
         wallAPI = new WallAPI(postService);
         usersAPI = new UsersAPI(userService);
+        followeesAPI = new FolloweesAPI(userService);
     }
 
     protected UserRepository userRepository() {
