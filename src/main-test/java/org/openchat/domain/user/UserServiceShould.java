@@ -6,8 +6,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -26,6 +28,7 @@ public class UserServiceShould {
 
     private static final User ALICE = aUser().build();
     private static final User BOB = aUser().build();
+    private static final User CHARLIE = aUser().build();
 
     @Mock IdGenerator idGenerator;
     @Mock UserRepository userRepository;
@@ -109,6 +112,15 @@ public class UserServiceShould {
     @Test(expected = UserDoesNotExistException.class) public void
     throw_exception_when_creating_a_following_if_followee_does_not_exist() {
         userService.createFollowing(ALICE.userId(), UNKNOWN_USER_ID);
+    }
+
+    @Test public void
+    return_the_followees_for_a_given_user() {
+        given(userRepository.followeesFor(ALICE.userId())).willReturn(asList(BOB, CHARLIE));
+
+        List<User> followees = userService.followeesFor(ALICE.userId());
+
+        assertThat(followees).containsExactly(BOB, CHARLIE);
     }
 
 }

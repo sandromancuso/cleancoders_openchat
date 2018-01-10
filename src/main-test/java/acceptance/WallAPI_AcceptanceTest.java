@@ -11,6 +11,7 @@ import static acceptance.APITestSuit.*;
 import static com.eclipsesource.json.Json.parse;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openchat.domain.post.PostBuilder.aPost;
 
@@ -52,7 +53,11 @@ public class WallAPI_AcceptanceTest {
                 .statusCode(201);
     }
 
-    private void givenAliceFollows(User follower, User followee) {
+    private void givenAliceFollows(User... followees) {
+        asList(followees).forEach(followee -> createFollowing(ALICE, followee));
+    }
+
+    private void createFollowing(User follower, User followee) {
         given()
                 .body(withJsonContaining(follower, followee))
         .when()

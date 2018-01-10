@@ -51,6 +51,6 @@ public class UserService {
     }
 
     public List<User> followeesFor(String userId) {
-        throw new UnsupportedOperationException();
+        return userRepository.followeesFor(userId);
     }
 }

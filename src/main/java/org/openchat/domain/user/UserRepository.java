@@ -4,9 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 public class UserRepository {
 
     private List<User> users = new ArrayList<>();
+    private List<Follow> followings = new ArrayList<>();
+
+    private class Follow {
+        private final User follower;
+        private final User followee;
+
+        Follow(User follower, User followee) {
+            this.follower = follower;
+            this.followee = followee;
+        }
+    }
 
     public void add(User user) {
         this.users.add(user);
@@ -31,5 +44,17 @@ public class UserRepository {
     }
 
     public void createFollowing(User follower, User followee) {
+        followings.add(follow(follower, followee));
+    }
+
+    public List<User> followeesFor(String userId) {
+        return followings.stream()
+                            .filter(follow -> follow.follower.userId().equals(userId))
+                            .map(follow -> userForId(follow.followee.userId()).get())
+                            .collect(toList());
+    }
+
+    private Follow follow(User follower, User followee) {
+        return new Follow(follower, followee);
     }
 }
