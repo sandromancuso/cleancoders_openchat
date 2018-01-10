@@ -24,7 +24,14 @@ public class PostRepository {
     }
 
     public List<Post> postsInReverseChronologicalOrderFor(List<User> users) {
-        return null;
+        return unmodifiableList(
+                    posts.stream()
+                            .filter(post -> belongsTo(users, post.userId()))
+                            .collect(toList()));
+    }
+
+    private boolean belongsTo(List<User> users, String userId) {
+        return users.stream().anyMatch(user -> user.userId().equals(userId));
     }
 
 }
