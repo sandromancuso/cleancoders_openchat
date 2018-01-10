@@ -1,9 +1,11 @@
 package org.openchat.domain.post;
 
 import org.openchat.domain.user.IdGenerator;
+import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserDoesNotExistException;
 import org.openchat.domain.user.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostService {
@@ -36,11 +38,16 @@ public class PostService {
     }
 
     private void validate(String userId) {
-        if (!userService.userForId(userId).isPresent())
+        if (!userService.userBy(userId).isPresent())
             throw new UserDoesNotExistException();
     }
 
     public List<Post> wallFor(String userId) {
-        throw new UnsupportedOperationException();
+        validate(userId);
+        User user = userService.userBy(userId).get();
+        List<User> followees = userService.followeesFor(userId);
+        List<User> allUsers = new ArrayList<>(followees);
+        allUsers.add(user);
+        return postRepository.postsInReverseChronologicalOrderFor(allUsers);
     }
 }

@@ -24,7 +24,7 @@ public class LoginAPI {
         String username = requestJson.getString("username", "");
         String password = requestJson.getString("password", "");
 
-        Optional<User> user = userService.userFor(username, password);
+        Optional<User> user = userService.userBy(username, password);
 
         return createResponse(response, user);
     }

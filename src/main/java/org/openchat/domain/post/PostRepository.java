@@ -1,5 +1,7 @@
 package org.openchat.domain.post;
 
+import org.openchat.domain.user.User;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,4 +22,9 @@ public class PostRepository {
                             .filter(post -> post.userId().equals(userId))
                             .collect(toList()));
     }
+
+    public List<Post> postsInReverseChronologicalOrderFor(List<User> users) {
+        return null;
+    }
+
 }

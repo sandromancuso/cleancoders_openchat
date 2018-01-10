@@ -40,7 +40,7 @@ public class LoginAPIShould {
     @Test public void
     return_a_json_representing_an_existing_user() {
         given(request.body()).willReturn(jsonContaining(ALICE.username(), ALICE.password()));
-        given(userService.userFor(ALICE.username(), ALICE.password())).willReturn(Optional.of(ALICE));
+        given(userService.userBy(ALICE.username(), ALICE.password())).willReturn(Optional.of(ALICE));
 
         String result = loginAPI.login(request, response);
 
@@ -52,7 +52,7 @@ public class LoginAPIShould {
     @Test public void
     return_invalid_credentials_when_username_or_password_do_not_match() {
         given(request.body()).willReturn(jsonContaining("Unknown", "234234"));
-        given(userService.userFor("Unknown", "234234")).willReturn(empty());
+        given(userService.userBy("Unknown", "234234")).willReturn(empty());
 
         String result = loginAPI.login(request, response);
 

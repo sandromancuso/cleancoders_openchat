@@ -82,14 +82,14 @@ public class UserServiceShould {
     return_a_user_for_a_matching_username_and_password() {
         given(userRepository.userFor(ALICE.username(), ALICE.password())).willReturn(Optional.of(ALICE));
 
-        Optional<User> user = userService.userFor(ALICE.username(), ALICE.password());
+        Optional<User> user = userService.userBy(ALICE.username(), ALICE.password());
 
         assertThat(user.get()).isEqualTo(ALICE);
     }
 
     @Test public void
     return_a_user_for_a_matching_user_id() {
-        Optional<User> user = userService.userForId(ALICE.userId());
+        Optional<User> user = userService.userBy(ALICE.userId());
 
         assertThat(user.get()).isEqualTo(ALICE);
     }

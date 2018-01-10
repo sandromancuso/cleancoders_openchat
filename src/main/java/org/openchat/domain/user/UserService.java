@@ -1,5 +1,6 @@
 package org.openchat.domain.user;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserService {
@@ -32,11 +33,11 @@ public class UserService {
         }
     }
 
-    public Optional<User> userFor(String username, String password) {
+    public Optional<User> userBy(String username, String password) {
         return userRepository.userFor(username, password);
     }
 
-    public Optional<User> userForId(String userId) {
+    public Optional<User> userBy(String userId) {
         return userRepository.userForId(userId);
     }
 
@@ -47,5 +48,9 @@ public class UserService {
             throw new UserDoesNotExistException();
         }
         userRepository.createFollowing(follower.get(), followee.get());
+    }
+
+    public List<User> followeesFor(String userId) {
+        throw new UnsupportedOperationException();
     }
 }
