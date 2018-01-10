@@ -18,7 +18,7 @@ public class FolloweesAPI_AcceptanceTest {
                 .statusCode(200)
                 .contentType(JSON)
                 .body("userId[0]", is(BOB.userId()))
-                .body("userId[2]", is(CHARLIE.userId()));
+                .body("userId[1]", is(CHARLIE.userId()));
     }
 
 }
