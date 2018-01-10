@@ -122,5 +122,14 @@ public class UserServiceShould {
 
         assertThat(followees).containsExactly(BOB, CHARLIE);
     }
+    
+    @Test public void
+    return_all_users() {
+        given(userRepository.all()).willReturn(asList(ALICE, BOB));
+
+        List<User> users = userService.allUsers();
+
+        assertThat(users).containsExactly(ALICE, BOB);
+    }
 
 }

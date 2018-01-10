@@ -53,4 +53,8 @@ public class UserService {
     public List<User> followeesFor(String userId) {
         return userRepository.followeesFor(userId);
     }
+
+    public List<User> allUsers() {
+        return userRepository.all();
+    }
 }

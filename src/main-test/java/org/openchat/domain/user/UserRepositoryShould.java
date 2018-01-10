@@ -57,4 +57,9 @@ public class UserRepositoryShould {
         assertThat(followees).containsExactly(BOB, CHARLIE);
     }
 
+    @Test public void
+    return_all_users() {
+        assertThat(userRepository.all()).containsExactlyInAnyOrder(ALICE, BOB, CHARLIE);
+    }
+
 }

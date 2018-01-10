@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toList;
 
 public class UserRepository {
@@ -12,13 +13,19 @@ public class UserRepository {
     private List<Follow> followings = new ArrayList<>();
 
     private class Follow {
-        private final User follower;
-        private final User followee;
 
+        private final User follower;
+
+        private final User followee;
         Follow(User follower, User followee) {
             this.follower = follower;
             this.followee = followee;
         }
+
+    }
+
+    public List<User> all() {
+        return unmodifiableList(users);
     }
 
     public void add(User user) {

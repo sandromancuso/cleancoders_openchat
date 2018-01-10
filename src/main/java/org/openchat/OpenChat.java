@@ -21,6 +21,7 @@ public class OpenChat {
     private TimelineAPI timelineAPI;
     private FollowAPI followAPI;
     private WallAPI wallAPI;
+    private UsersAPI usersAPI;
 
     public OpenChat() {
         initialiseAPIs();
@@ -34,6 +35,7 @@ public class OpenChat {
         get("user/:userId/timeline", timelineAPI::timeline);
         post("follow", followAPI::follow);
         get("user/:userId/wall", wallAPI::wall);
+        get("users", usersAPI::allUsers);
     }
 
     public void stop() {
@@ -56,6 +58,7 @@ public class OpenChat {
         timelineAPI = new TimelineAPI(postService);
         followAPI = new FollowAPI(userService);
         wallAPI = new WallAPI(postService);
+        usersAPI = new UsersAPI(userService);
     }
 
     protected UserRepository userRepository() {
