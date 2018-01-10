@@ -29,4 +29,8 @@ public class UserRepository {
                     .filter(u -> u.userId().equals(userId))
                     .findFirst();
     }
+
+    public Object createFollowing(User follower, User followee) {
+        throw new UnsupportedOperationException();
+    }
 }

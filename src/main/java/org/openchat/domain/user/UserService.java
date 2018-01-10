@@ -41,6 +41,11 @@ public class UserService {
     }
 
     public void createFollowing(String followerId, String followeeId) {
-        throw new UnsupportedOperationException();
+        Optional<User> follower = userRepository.userForId(followerId);
+        Optional<User> followee = userRepository.userForId(followeeId);
+        if (!follower.isPresent() || !followee.isPresent()) {
+            throw new UserDoesNotExistException();
+        }
+        userRepository.createFollowing(follower.get(), followee.get());
     }
 }
