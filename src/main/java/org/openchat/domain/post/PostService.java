@@ -39,4 +39,8 @@ public class PostService {
         if (!userService.userForId(userId).isPresent())
             throw new UserDoesNotExistException();
     }
+
+    public List<Post> wallFor(String userId) {
+        throw new UnsupportedOperationException();
+    }
 }

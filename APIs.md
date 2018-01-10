@@ -144,7 +144,8 @@ GET - openchat/user/<userId>/wall
 Status OK - 200
 
 **Failure**
-Status: BAD_REQUEST - 400  (in case user does not exist)
+Status: BAD_REQUEST - 400 (in case user does not exist)
+Response: "User does not exist."
 
 ## Retrieve All Users
 

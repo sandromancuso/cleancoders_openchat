@@ -30,7 +30,6 @@ public class UserRepository {
                     .findFirst();
     }
 
-    public Object createFollowing(User follower, User followee) {
-        throw new UnsupportedOperationException();
+    public void createFollowing(User follower, User followee) {
     }
 }
