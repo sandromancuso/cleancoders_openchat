@@ -35,7 +35,7 @@ public class FollowAPIShould {
     }
 
     @Test public void
-    create_a_following_relationship() {
+    create_a_following_relationship() throws UserDoesNotExistException {
         given(request.body()).willReturn(jsonContaining(FOLLOWER_ID, FOLLOWEE_ID));
 
         followAPI.follow(request, response);
@@ -45,7 +45,7 @@ public class FollowAPIShould {
     }
 
     @Test public void
-    return_error_when_one_of_the_users_does_not_exist() {
+    return_error_when_one_of_the_users_does_not_exist() throws UserDoesNotExistException {
         given(request.body()).willReturn(jsonContaining(FOLLOWER_ID, FOLLOWEE_ID));
         doThrow(UserDoesNotExistException.class).when(userService).createFollowing(FOLLOWER_ID, FOLLOWEE_ID);
 

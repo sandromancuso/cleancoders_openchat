@@ -7,6 +7,9 @@ import org.openchat.domain.user.UserService;
 import spark.Request;
 import spark.Response;
 
+import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
+import static org.eclipse.jetty.http.HttpStatus.CREATED_201;
+
 public class FollowAPI {
 
     private UserService userService;
@@ -16,18 +19,22 @@ public class FollowAPI {
     }
 
     public String follow(Request request, Response response) {
+        try {
+            createFollowing(request);
+            response.status(CREATED_201);
+            return "";
+        } catch (UserDoesNotExistException e) {
+            response.status(BAD_REQUEST_400);
+            return "At least one of the users does not exist.";
+        }
+    }
+
+    private void createFollowing(Request request) throws UserDoesNotExistException {
         JsonObject requestJson = Json.parse(request.body()).asObject();
         String followerId = requestJson.getString("followerId", "");
         String followeeId = requestJson.getString("followeeId", "");
 
-        try {
-            userService.createFollowing(followerId, followeeId);
-            response.status(201);
-            return "";
-        } catch (UserDoesNotExistException e) {
-            response.status(400);
-            return "At least one of the users does not exist.";
-        }
-
+        userService.createFollowing(followerId, followeeId);
     }
+
 }

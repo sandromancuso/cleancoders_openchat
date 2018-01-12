@@ -100,19 +100,19 @@ public class UserServiceShould {
     }
 
     @Test public void
-    create_a_following_relationship() {
+    create_a_following_relationship() throws UserDoesNotExistException {
         userService.createFollowing(ALICE.userId(), BOB.userId());
 
         verify(userRepository).createFollowing(ALICE, BOB);
     }
 
     @Test(expected = UserDoesNotExistException.class) public void
-    throw_exception_when_creating_a_following_if_follower_does_not_exist() {
+    throw_exception_when_creating_a_following_if_follower_does_not_exist() throws UserDoesNotExistException {
         userService.createFollowing(UNKNOWN_USER_ID, ALICE.userId());
     }
 
     @Test(expected = UserDoesNotExistException.class) public void
-    throw_exception_when_creating_a_following_if_followee_does_not_exist() {
+    throw_exception_when_creating_a_following_if_followee_does_not_exist() throws UserDoesNotExistException {
         userService.createFollowing(ALICE.userId(), UNKNOWN_USER_ID);
     }
 

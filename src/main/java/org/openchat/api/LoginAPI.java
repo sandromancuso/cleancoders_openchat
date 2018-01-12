@@ -9,10 +9,13 @@ import spark.Response;
 
 import java.util.Optional;
 
+import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
+import static org.eclipse.jetty.http.HttpStatus.OK_200;
 import static org.openchat.infrastructure.jsonparser.UserToJson.jsonFor;
 
 public class LoginAPI {
 
+    private static final String JSON = "application/json";
     private UserService userService;
 
     public LoginAPI(UserService userService) {
@@ -31,11 +34,11 @@ public class LoginAPI {
 
     private String createResponse(Response response, Optional<User> user) {
         if (user.isPresent()) {
-            response.status(200);
-            response.type("application/json");
+            response.status(OK_200);
+            response.type(JSON);
             return jsonFor(user.get());
         }
-        response.status(400);
+        response.status(BAD_REQUEST_400);
         return "Invalid credentials.";
     }
 }

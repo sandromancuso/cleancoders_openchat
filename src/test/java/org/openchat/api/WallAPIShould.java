@@ -40,7 +40,7 @@ public class WallAPIShould {
     }
 
     @Test public void
-    return_json_representing_a_users_wall() {
+    return_json_representing_a_users_wall() throws UserDoesNotExistException {
         given(postService.wallFor(USER_ID)).willReturn(asList(POST_2, POST_1));
 
         String result = wallAPI.wall(request, response);
@@ -51,7 +51,7 @@ public class WallAPIShould {
     }
     
     @Test public void
-    return_error_if_the_user_does_not_exist() {
+    return_error_if_the_user_does_not_exist() throws UserDoesNotExistException {
         doThrow(UserDoesNotExistException.class).when(postService).wallFor(USER_ID);
 
         String result = wallAPI.wall(request, response);

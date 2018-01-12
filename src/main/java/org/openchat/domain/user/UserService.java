@@ -43,7 +43,7 @@ public class UserService {
         return userRepository.userForId(userId);
     }
 
-    public void createFollowing(String followerId, String followeeId) {
+    public void createFollowing(String followerId, String followeeId) throws UserDoesNotExistException {
         Optional<User> follower = userRepository.userForId(followerId);
         Optional<User> followee = userRepository.userForId(followeeId);
         if (!follower.isPresent() || !followee.isPresent()) {

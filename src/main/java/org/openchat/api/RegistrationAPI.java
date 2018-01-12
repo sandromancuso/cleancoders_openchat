@@ -10,7 +10,11 @@ import org.openchat.infrastructure.jsonparser.UserToJson;
 import spark.Request;
 import spark.Response;
 
+import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
+import static org.eclipse.jetty.http.HttpStatus.CREATED_201;
+
 public class RegistrationAPI {
+    private static final String JSON = "application/json";
     private UserService userService;
 
     public RegistrationAPI(UserService userService) {
@@ -20,11 +24,11 @@ public class RegistrationAPI {
     public String register(Request request, Response response) {
         try {
             User user = userService.create(registrationData(request));
-            response.status(201);
-            response.type("application/json");
+            response.status(CREATED_201);
+            response.type(JSON);
             return UserToJson.jsonFor(user);
         } catch (UsernameAlreadyInUseException e) {
-            response.status(400);
+            response.status(BAD_REQUEST_400);
             return "Username already in use.";
         }
     }

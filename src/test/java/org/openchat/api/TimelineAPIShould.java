@@ -40,7 +40,7 @@ public class TimelineAPIShould {
     }
 
     @Test public void
-    return_json_representing_posts_from_a_user() {
+    return_json_representing_posts_from_a_user() throws UserDoesNotExistException {
         given(postService.timelineFor(USER_ID)).willReturn(asList(POST_2, POST_1));
 
         String result = timelineAPI.timeline(request, response);
@@ -51,7 +51,7 @@ public class TimelineAPIShould {
     }
     
     @Test public void
-    return_error_when_user_does_not_exist() {
+    return_error_when_user_does_not_exist() throws UserDoesNotExistException {
         doThrow(UserDoesNotExistException.class).when(postService).timelineFor(USER_ID);
 
         String result = timelineAPI.timeline(request, response);

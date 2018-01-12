@@ -59,14 +59,14 @@ public class PostServiceShould {
     }
 
     @Test(expected = UserDoesNotExistException.class) public void
-    throw_exception_when_creating_a_post_for_a_non_existing_user() {
+    throw_exception_when_creating_a_post_for_a_non_existing_user() throws UserDoesNotExistException {
         given(userService.userBy(NON_EXISTENT_USER_ID)).willReturn(empty());
 
         postService.createPost(NON_EXISTENT_USER_ID, POST_TEXT);
     }
     
     @Test public void
-    store_a_new_post() {
+    store_a_new_post() throws UserDoesNotExistException {
         Post post = aPost()
                         .withPostId(POST_ID)
                         .withUserId(ALICE_ID)
@@ -80,7 +80,7 @@ public class PostServiceShould {
     }
     
     @Test public void
-    return_a_timeline_for_a_given_user() {
+    return_a_timeline_for_a_given_user() throws UserDoesNotExistException {
         given(postRepository.postsInReverseChronologicalOrderFor(ALICE_ID)).willReturn(asList(POST_2, POST_1));
 
         List<Post> timeline = postService.timelineFor(ALICE_ID);
@@ -89,14 +89,14 @@ public class PostServiceShould {
     }
     
     @Test(expected = UserDoesNotExistException.class) public void
-    throw_exception_when_returning_a_timeline_for_a_non_existing_user() {
+    throw_exception_when_returning_a_timeline_for_a_non_existing_user() throws UserDoesNotExistException {
         given(userService.userBy(NON_EXISTENT_USER_ID)).willReturn(empty());
 
         postService.timelineFor(NON_EXISTENT_USER_ID);
     }
 
     @Test public void
-    return_the_wall_for_a_given_user() {
+    return_the_wall_for_a_given_user() throws UserDoesNotExistException {
         given(userService.followeesFor(ALICE.userId())).willReturn(asList(BOB, CHARLIE));
         given(postRepository.postsInReverseChronologicalOrderFor(asList(BOB, CHARLIE, ALICE)))
                 .willReturn(asList(POST_3, POST_2, POST_1));
@@ -107,7 +107,7 @@ public class PostServiceShould {
     }
 
     @Test(expected = UserDoesNotExistException.class) public void
-    throw_exception_when_return_wall_for_a_non_existing_user() {
+    throw_exception_when_return_wall_for_a_non_existing_user() throws UserDoesNotExistException {
         given(userService.userBy(NON_EXISTENT_USER_ID)).willReturn(empty());
 
         postService.wallFor(NON_EXISTENT_USER_ID);

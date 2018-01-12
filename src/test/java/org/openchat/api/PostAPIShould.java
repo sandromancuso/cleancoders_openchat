@@ -34,7 +34,7 @@ public class PostAPIShould {
     private PostAPI postAPI;
 
     @Before
-    public void initialise() {
+    public void initialise() throws UserDoesNotExistException {
         postAPI = new PostAPI(postService);
         given(request.params("userId")).willReturn(USER_ID);
         given(request.body()).willReturn(jsonContaining(POST_TEXT));
@@ -42,7 +42,7 @@ public class PostAPIShould {
     }
 
     @Test public void
-    store_new_post() {
+    store_new_post() throws UserDoesNotExistException {
         postAPI.createPost(request, response);
 
         verify(postService).createPost(USER_ID, POST_TEXT);
@@ -58,7 +58,7 @@ public class PostAPIShould {
     }
 
     @Test public void
-    return_error_when_user_does_not_exist() {
+    return_error_when_user_does_not_exist() throws UserDoesNotExistException {
         doThrow(UserDoesNotExistException.class).when(postService).createPost(USER_ID, POST_TEXT);
 
         String result = postAPI.createPost(request, response);

@@ -25,24 +25,24 @@ public class PostService {
         this.clock = clock;
     }
 
-    public Post createPost(String userId, String postText) {
+    public Post createPost(String userId, String postText) throws UserDoesNotExistException {
         validate(userId);
         Post post = new Post(idGenerator.nextId(), userId, postText, clock.now());
         postRepository.add(post);
         return post;
     }
 
-    public List<Post> timelineFor(String userId) {
+    public List<Post> timelineFor(String userId) throws UserDoesNotExistException {
         validate(userId);
         return postRepository.postsInReverseChronologicalOrderFor(userId);
     }
 
-    private void validate(String userId) {
+    private void validate(String userId) throws UserDoesNotExistException {
         if (!userService.userBy(userId).isPresent())
             throw new UserDoesNotExistException();
     }
 
-    public List<Post> wallFor(String userId) {
+    public List<Post> wallFor(String userId) throws UserDoesNotExistException {
         validate(userId);
         User user = userService.userBy(userId).get();
         List<User> followees = userService.followeesFor(userId);
