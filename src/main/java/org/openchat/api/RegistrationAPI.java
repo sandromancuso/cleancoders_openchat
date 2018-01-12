@@ -6,7 +6,7 @@ import org.openchat.domain.user.RegistrationData;
 import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserService;
 import org.openchat.domain.user.UsernameAlreadyInUseException;
-import org.openchat.instrastructure.jsonparser.UserToJson;
+import org.openchat.infrastructure.jsonparser.UserToJson;
 import spark.Request;
 import spark.Response;
 

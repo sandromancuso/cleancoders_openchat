@@ -9,7 +9,7 @@ import spark.Response;
 
 import java.util.Optional;
 
-import static org.openchat.instrastructure.jsonparser.UserToJson.jsonFor;
+import static org.openchat.infrastructure.jsonparser.UserToJson.jsonFor;
 
 public class LoginAPI {
 

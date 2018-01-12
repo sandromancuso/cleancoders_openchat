@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.openchat.infrastructure.persistence.IdGenerator;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,8 @@ public class UserServiceShould {
     private static final User BOB = aUser().build();
     private static final User CHARLIE = aUser().build();
 
-    @Mock IdGenerator idGenerator;
+    @Mock
+    IdGenerator idGenerator;
     @Mock UserRepository userRepository;
 
     private UserService userService;

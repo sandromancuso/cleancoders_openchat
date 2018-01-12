@@ -1,5 +1,7 @@
 package org.openchat.domain.user;
 
+import org.openchat.infrastructure.persistence.IdGenerator;
+
 public class UserBuilder {
     private String userId = new IdGenerator().nextId();
     private String username = "Alice";

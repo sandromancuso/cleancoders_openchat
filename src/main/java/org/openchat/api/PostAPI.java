@@ -3,7 +3,7 @@ package org.openchat.api;
 import org.openchat.domain.post.Post;
 import org.openchat.domain.post.PostService;
 import org.openchat.domain.user.UserDoesNotExistException;
-import org.openchat.instrastructure.jsonparser.PostToJson;
+import org.openchat.infrastructure.jsonparser.PostToJson;
 import spark.Request;
 import spark.Response;
 

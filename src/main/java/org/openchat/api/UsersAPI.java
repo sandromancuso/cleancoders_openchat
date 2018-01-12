@@ -8,7 +8,7 @@ import spark.Response;
 import java.util.List;
 
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
-import static org.openchat.instrastructure.jsonparser.UserToJson.jsonFor;
+import static org.openchat.infrastructure.jsonparser.UserToJson.jsonFor;
 
 public class UsersAPI {
     private static final String JSON = "application/json";

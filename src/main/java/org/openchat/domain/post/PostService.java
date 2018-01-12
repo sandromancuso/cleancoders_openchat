@@ -1,6 +1,6 @@
 package org.openchat.domain.post;
 
-import org.openchat.domain.user.IdGenerator;
+import org.openchat.infrastructure.persistence.IdGenerator;
 import org.openchat.domain.user.User;
 import org.openchat.domain.user.UserDoesNotExistException;
 import org.openchat.domain.user.UserService;

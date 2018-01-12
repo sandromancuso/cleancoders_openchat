@@ -1,4 +1,4 @@
-package org.openchat.domain.user;
+package org.openchat.infrastructure.persistence;
 
 import java.util.UUID;
 

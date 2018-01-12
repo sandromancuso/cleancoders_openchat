@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
-import static org.openchat.instrastructure.jsonparser.PostToJson.toJson;
+import static org.openchat.infrastructure.jsonparser.PostToJson.toJson;
 
 public class WallAPI {
     private static final String JSON = "application/json";

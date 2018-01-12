@@ -1,5 +1,7 @@
 package org.openchat.domain.user;
 
+import org.openchat.infrastructure.persistence.IdGenerator;
+
 import java.util.List;
 import java.util.Optional;
 
