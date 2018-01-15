@@ -1,0 +1,10 @@
+version: "2"
+services:
+  server:
+    image: "maven:3-jdk-8-alpine"
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: "mvn compile exec:java"
+    ports:
+      - 4321:4321
