@@ -30,6 +30,7 @@ public class OpenChat {
 
     public void start() {
         port(4321);
+        get("hello", (req, res) -> "Hello OpenChat!");
         post("registration", registrationAPI::register);
         post("login", loginAPI::login);
         post("user/:userId/posts", postAPI::createPost);
