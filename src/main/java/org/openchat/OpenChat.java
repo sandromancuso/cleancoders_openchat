@@ -4,16 +4,18 @@ import org.openchat.api.*;
 import org.openchat.domain.post.Clock;
 import org.openchat.domain.post.PostRepository;
 import org.openchat.domain.post.PostService;
-import org.openchat.infrastructure.persistence.IdGenerator;
 import org.openchat.domain.user.UserRepository;
 import org.openchat.domain.user.UserService;
+import org.openchat.infrastructure.persistence.IdGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Spark;
 
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class OpenChat {
+
+    static Logger logger = LoggerFactory.getLogger(OpenChat.class);
 
     private RegistrationAPI registrationAPI;
     private LoginAPI loginAPI;
@@ -24,12 +26,14 @@ public class OpenChat {
     private UsersAPI usersAPI;
     private FolloweesAPI followeesAPI;
 
+
     public OpenChat() {
         initialiseAPIs();
     }
 
     public void start() {
         port(4321);
+        setLog();
         get("hello", (req, res) -> "Hello OpenChat!");
         post("registration", registrationAPI::register);
         post("login", loginAPI::login);
@@ -39,6 +43,12 @@ public class OpenChat {
         get("user/:userId/wall", wallAPI::wall);
         get("users", usersAPI::allUsers);
         get("user/:userId/followees", followeesAPI::allFollowees);
+    }
+
+    private void setLog() {
+        before((request, response) -> {
+            logger.info("URL request: " + request.requestMethod() + " " + request.uri() + " - headers: " + request.headers());
+        });
     }
 
     public void stop() {
