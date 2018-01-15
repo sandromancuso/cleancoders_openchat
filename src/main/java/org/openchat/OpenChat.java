@@ -33,6 +33,7 @@ public class OpenChat {
 
     public void start() {
         port(4321);
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
         setLog();
         get("hello", (req, res) -> "Hello OpenChat!");
         post("registration", registrationAPI::register);
