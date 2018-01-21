@@ -22,19 +22,6 @@ public class UserService {
         return user;
     }
 
-    private User userFrom(RegistrationData registrationData) {
-        return new User(idGenerator.nextId(),
-                                    registrationData.username(),
-                                    registrationData.password(),
-                                    registrationData.about());
-    }
-
-    private void validateUsername(String username) {
-        if (userRepository.isUsernameInUse(username)) {
-            throw new UsernameAlreadyInUseException();
-        }
-    }
-
     public Optional<User> userBy(String username, String password) {
         return userRepository.userFor(username, password);
     }
@@ -58,5 +45,18 @@ public class UserService {
 
     public List<User> allUsers() {
         return userRepository.all();
+    }
+
+    private void validateUsername(String username) {
+        if (userRepository.isUsernameInUse(username)) {
+            throw new UsernameAlreadyInUseException();
+        }
+    }
+
+    private User userFrom(RegistrationData registrationData) {
+        return new User(idGenerator.nextId(),
+                registrationData.username(),
+                registrationData.password(),
+                registrationData.about());
     }
 }

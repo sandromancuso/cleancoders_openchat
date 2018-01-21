@@ -30,12 +30,12 @@ public class WallAPI_AcceptanceTest {
 
     @Test public void
     return_a_wall_containing_posts_from_the_user_and_her_followees() {
-        givenAUserPost(ALICE, POST_1);
-        givenAUserPost(BOB, POST_2);
-        givenAUserPost(CHARLIE, POST_3);
-        givenAUserPost(JULIE, POST_4);
-        givenAUserPost(ALICE, POST_5);
-        givenAUserPost(BOB, POST_6);
+        givenAPost(ALICE, POST_1);
+        givenAPost(BOB, POST_2);
+        givenAPost(CHARLIE, POST_3);
+        givenAPost(JULIE, POST_4);
+        givenAPost(ALICE, POST_5);
+        givenAPost(BOB, POST_6);
 
         givenAliceFollows(BOB, CHARLIE);
 
@@ -44,7 +44,7 @@ public class WallAPI_AcceptanceTest {
         thenSheSeesThePosts(POST_6, POST_5, POST_3, POST_2, POST_1);
     }
 
-    private void givenAUserPost(User user, Post post) {
+    private void givenAPost(User user, Post post) {
         given()
                 .body(withJsonContaining(post.text()))
         .when()

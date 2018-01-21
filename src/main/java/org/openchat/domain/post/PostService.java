@@ -37,11 +37,6 @@ public class PostService {
         return postRepository.postsInReverseChronologicalOrderFor(userId);
     }
 
-    private void validate(String userId) throws UserDoesNotExistException {
-        if (!userService.userBy(userId).isPresent())
-            throw new UserDoesNotExistException();
-    }
-
     public List<Post> wallFor(String userId) throws UserDoesNotExistException {
         validate(userId);
         User user = userService.userBy(userId).get();
@@ -49,5 +44,10 @@ public class PostService {
         List<User> allUsers = new ArrayList<>(followees);
         allUsers.add(user);
         return postRepository.postsInReverseChronologicalOrderFor(allUsers);
+    }
+
+    private void validate(String userId) throws UserDoesNotExistException {
+        if (!userService.userBy(userId).isPresent())
+            throw new UserDoesNotExistException();
     }
 }
