@@ -26,8 +26,7 @@ public class WallAPI_AcceptanceTest {
 
     private Response response;
     private JsonArray wall;
-
-
+    
     @Test public void
     return_a_wall_containing_posts_from_the_user_and_her_followees() {
         givenAPost(ALICE, POST_1);

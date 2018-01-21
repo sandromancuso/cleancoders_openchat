@@ -65,8 +65,7 @@ Status CREATED - 201
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hello everyone. I'm Alice.",
- 	"date" : "10/01/2018",
-	"time" : "11:30:00"
+ 	"dateTime" : "2018-01-10T11:30:00Z"
 }
 
 **Failure**
@@ -80,14 +79,12 @@ GET - openchat/user/<userId>/timeline
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
- 	"date" : "10/01/2018",
-	"time" : "11:30:00"
+ 	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hello everyone. I'm Alice.",
- 	"date" : "10/01/2018",
-	"time" : "09:00:00"
+ 	"dateTime" : "2018-01-10T09:00:00Z"
 }]
 
 **Success**
@@ -119,32 +116,27 @@ GET - openchat/user/<userId>/wall
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Planning to eat something with Charlie. Wanna join us?",
- 	"date" : "10/01/2018",
-	"time" : "13:25:00"
+ 	"dateTime" : "2018-01-10T13:25:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
- 	"date" : "10/01/2018",
-	"time" : "11:30:00"
+ 	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "What's up everyone?",
- 	"date" : "10/01/2018",
-	"time" : "11:20:50"
+ 	"dateTime" : "2018-01-10T11:20:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "CHARLIE_IDxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hi all. Charlie here.",
- 	"date" : "10/01/2018",
-	"time" : "09:15:34"
+ 	"dateTime" : "2018-01-10T09:15:34Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
- 	"date" : "10/01/2018",
-	"time" : "09:00:00"
+ 	"dateTime" : "2018-01-10T09:00:00Z"
 }]
 
 **Success**

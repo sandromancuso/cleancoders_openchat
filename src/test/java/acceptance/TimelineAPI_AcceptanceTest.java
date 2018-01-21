@@ -74,8 +74,7 @@ public class TimelineAPI_AcceptanceTest {
                 .body("postId", notNullValue())
                 .body("userId", is(post.userId()))
                 .body("text", is(post.text()))
-                .body("date", notNullValue())
-                .body("time", notNullValue());
+                .body("dateTime", notNullValue());
     }
 
     private String withJsonContaining(String text) {
