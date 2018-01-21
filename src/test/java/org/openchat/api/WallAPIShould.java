@@ -71,8 +71,7 @@ public class WallAPIShould {
                         .add("postId", post.postId())
                         .add("userId", post.userId())
                         .add("text", post.text())
-                        .add("date", post.dateAsString())
-                        .add("time", post.timeAsString());
+                        .add("dateTime", post.dateTimeAsString());
     }
 
 }

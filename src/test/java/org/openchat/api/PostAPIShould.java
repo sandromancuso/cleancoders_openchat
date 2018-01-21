@@ -72,8 +72,7 @@ public class PostAPIShould {
         assertIsEqual(jsonObject, "postId", post.postId());
         assertIsEqual(jsonObject, "userId", post.userId());
         assertIsEqual(jsonObject, "text", post.text());
-        assertIsEqual(jsonObject, "date", post.dateAsString());
-        assertIsEqual(jsonObject, "time", post.timeAsString());
+        assertIsEqual(jsonObject, "dateTime", post.dateTimeAsString());
     }
 
     private void assertIsEqual(JsonObject jsonObject, String value, String expected) {

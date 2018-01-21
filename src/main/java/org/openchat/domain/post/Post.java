@@ -3,13 +3,12 @@ package org.openchat.domain.post;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
 public class Post {
-    private static DateTimeFormatter dateFormatter = ofPattern("dd/MM/yyyy");
-    private static DateTimeFormatter timeFormatter = ofPattern("HH/mm/ss");
+
+    private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     private final String postId;
     private final String userId;
@@ -39,12 +38,8 @@ public class Post {
         return dateTime;
     }
 
-    public String dateAsString() {
-        return dateTime.format(dateFormatter);
-    }
-
-    public String timeAsString() {
-        return dateTime.format(timeFormatter);
+    public String dateTimeAsString() {
+        return dateTime.format(dateTimeFormatter);
     }
 
     @Override
