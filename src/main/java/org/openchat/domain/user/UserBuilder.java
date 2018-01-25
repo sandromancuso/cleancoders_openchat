@@ -32,6 +32,14 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder clonedFrom(User anotherUser) {
+        this.userId = anotherUser.userId();
+        this.username = anotherUser.username();
+        this.password = anotherUser.password();
+        this.about = anotherUser.about();
+        return this;
+    }
+
     public User build() {
         return new User(userId, username, password, about);
     }

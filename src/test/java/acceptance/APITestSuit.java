@@ -38,8 +38,12 @@ public class APITestSuit {
 
     @BeforeClass
     public static void setUp() {
+        System.out.println("APITestSuit setUp");
         openChat = openChat();
         openChat.start();
+        System.out.println("Before await initialisation");
+        openChat.awaitInitialization();
+        System.out.println("After await initialisation");
     }
 
     @AfterClass

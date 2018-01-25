@@ -2,59 +2,70 @@ package acceptance;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
 import io.restassured.response.Response;
+import org.junit.Before;
 import org.junit.Test;
 import org.openchat.domain.post.Post;
+import org.openchat.domain.user.User;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import static acceptance.APITestSuit.ALICE;
 import static acceptance.APITestSuit.BASE_URL;
-import static io.restassured.RestAssured.given;
+import static acceptance.OpenChatTestDSL.register;
+import static com.google.common.collect.Lists.reverse;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.is;
 import static org.openchat.domain.post.PostBuilder.aPost;
+import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class TimelineAPI_AcceptanceTest {
 
-    private static final LocalDateTime TODAY = LocalDateTime.now();
-    private static final LocalDateTime YESTERDAY = TODAY.minusDays(1);
+    private static User DAVID = aUser().withUsername("David").build();
 
-    private static final Post POST_1 = aPost().withUserId(ALICE.userId()).withText("Post 1").withDateTime(YESTERDAY).build();
-    private static final Post POST_2 = aPost().withUserId(ALICE.userId()).withText("Post 2").withDateTime(TODAY).build();
-
-    private Response response;
     private JsonArray timeline;
+    private List<Post> POSTS;
+
+    @Before
+    public void initialise() {
+        DAVID = register(DAVID);
+        POSTS = createPostsFor(DAVID, 2);
+    }
 
     @Test public void
     retrieve_a_timeline_with_all_posts_from_a_user_in_reverse_chronological_order() {
-        givenAlicePosts(POST_1, POST_2);
+        givenDavidPosts(POSTS);
 
-        whenSheChecksHerTimeline();
+        whenHeChecksHisTimeline();
 
-        thenSheShouldSee(POST_2, POST_1);
+        thenHeShouldSee(reverse(POSTS));
     }
 
-    private void givenAlicePosts(Post... posts) {
-        asList(posts).forEach(post -> create(post));
+    private List<Post> createPostsFor(User user, int numberOfPosts) {
+        List<Post> posts = new ArrayList<>();
+        for (int i = 0; i < numberOfPosts; i++) {
+            Post post = aPost().withUserId(user.userId()).withText("Post " + i).build();
+            posts.add(post);
+        }
+        return posts;
     }
 
-    private void whenSheChecksHerTimeline() {
-        response = when().get(BASE_URL + "/user/" + ALICE.userId() + "/timeline");
+    private void givenDavidPosts(List<Post> posts) {
+        posts.forEach(OpenChatTestDSL::create);
+    }
+
+    private void whenHeChecksHisTimeline() {
+        Response response = when().get(BASE_URL + "/user/" + DAVID.userId() + "/timeline");
         timeline = Json.parse(response.asString()).asArray();
 
         assertThat(response.statusCode()).isEqualTo(200);
         assertThat(response.contentType()).isEqualTo(JSON.toString());
     }
 
-    private void thenSheShouldSee(Post... posts) {
-        for (int index = 0; index < posts.length; index++) {
-            assertThatTimelineContains(posts[index], index);
+    private void thenHeShouldSee(List<Post> posts) {
+        for (int index = 0; index < posts.size(); index++) {
+            assertThatTimelineContains(posts.get(index), index);
         }
     }
 
@@ -63,21 +74,4 @@ public class TimelineAPI_AcceptanceTest {
         assertThat(text).isEqualTo(post.text());
     }
 
-    private void create(Post post) {
-        given()
-                .body(withJsonContaining(post.text()))
-        .when()
-                .post(BASE_URL + "/user/" + post.userId() + "/posts")
-        .then()
-                .statusCode(201)
-                .contentType(JSON)
-                .body("postId", notNullValue())
-                .body("userId", is(post.userId()))
-                .body("text", is(post.text()))
-                .body("dateTime", notNullValue());
-    }
-
-    private String withJsonContaining(String text) {
-        return new JsonObject().add("text", text).toString();
-    }
 }

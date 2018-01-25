@@ -1,28 +1,38 @@
 package acceptance;
 
 import com.eclipsesource.json.JsonObject;
+import org.junit.Before;
 import org.junit.Test;
+import org.openchat.domain.user.User;
 
-import static acceptance.APITestSuit.ALICE;
 import static acceptance.APITestSuit.BASE_URL;
+import static acceptance.OpenChatTestDSL.register;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
+import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class LoginAPI_AcceptanceTest {
+
+    private static User ANTONY = aUser().withUsername("Antony").build();
+
+    @Before
+    public void initialise() {
+        ANTONY = register(ANTONY);
+    }
 
     @Test public void
     perform_login() {
         given()
-                .body(withJsonContaining(ALICE.username(), ALICE.password()))
+                .body(withJsonContaining(ANTONY.username(), ANTONY.password()))
         .when()
                 .post(BASE_URL + "/login")
         .then()
                 .statusCode(200)
                 .contentType(JSON)
-                .body("userId", is(ALICE.userId()))
-                .body("username", is(ALICE.username()))
-                .body("about", is(ALICE.about()));
+                .body("userId", is(ANTONY.userId()))
+                .body("username", is(ANTONY.username()))
+                .body("about", is(ANTONY.about()));
     }
 
     private String withJsonContaining(String username, String password) {

@@ -46,6 +46,10 @@ public class OpenChat {
         get("user/:userId/followees", followeesAPI::allFollowees);
     }
 
+    public void awaitInitialization() {
+        Spark.awaitInitialization();
+    }
+
     private void setLog() {
         before((request, response) -> {
             logger.info("URL request: " + request.requestMethod() + " " + request.uri() + " - headers: " + request.headers());
