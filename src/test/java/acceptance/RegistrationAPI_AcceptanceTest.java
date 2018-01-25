@@ -13,7 +13,6 @@ public class RegistrationAPI_AcceptanceTest {
 
     @Test public void
     register_a_new_user() {
-        System.out.println("Register a new user");
         given()
                 .body(withJsonContaining("Lucy", "alki324d", "About Lucy"))
         .when()
