@@ -1,7 +1,6 @@
 package acceptance;
 
 import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,10 +8,8 @@ import org.openchat.domain.post.Post;
 import org.openchat.domain.user.User;
 
 import static acceptance.APITestSuit.BASE_URL;
-import static acceptance.OpenChatTestDSL.create;
-import static acceptance.OpenChatTestDSL.register;
+import static acceptance.OpenChatTestDSL.*;
 import static com.eclipsesource.json.Json.parse;
-import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,31 +49,29 @@ public class WallAPI_AcceptanceTest {
     
     @Test public void
     return_a_wall_containing_posts_from_the_user_and_her_followees() {
-        create(POST_1_ALICE);
-        create(POST_2_BOB);
-        create(POST_3_CHARLIE);
-        create(POST_4_JULIE);
-        create(POST_5_ALICE);
-        create(POST_6_BOB);
-
+        givenPosts(POST_1_ALICE,
+                   POST_2_BOB,
+                   POST_3_CHARLIE,
+                   POST_4_JULIE,
+                   POST_5_ALICE,
+                   POST_6_BOB);
         givenAliceFollows(BOB, CHARLIE);
 
         whenAliceChecksHerWall();
 
-        thenSheSeesThePosts(POST_6_BOB, POST_5_ALICE, POST_3_CHARLIE, POST_2_BOB, POST_1_ALICE);
-    }
-    
-    private void givenAliceFollows(User... followees) {
-        asList(followees).forEach(followee -> createFollowing(ALICE, followee));
+        thenSheSeesThePosts(POST_6_BOB,
+                            POST_5_ALICE,
+                            POST_3_CHARLIE,
+                            POST_2_BOB,
+                            POST_1_ALICE);
     }
 
-    private void createFollowing(User follower, User followee) {
-        given()
-                .body(withJsonContaining(follower, followee))
-        .when()
-                .post(BASE_URL + "/follow")
-        .then()
-                .statusCode(201);
+    private void givenPosts(Post... posts) {
+        asList(posts).forEach(OpenChatTestDSL::create);
+    }
+
+    private void givenAliceFollows(User... followees) {
+        asList(followees).forEach(followee -> createFollowing(ALICE, followee));
     }
 
     private void whenAliceChecksHerWall() {
@@ -96,17 +91,6 @@ public class WallAPI_AcceptanceTest {
     private void assertThatTimelineContains(Post post, int index) {
         String text = wall.get(index).asObject().getString("text", "");
         assertThat(text).isEqualTo(post.text());
-    }
-
-    private String withJsonContaining(User follower, User followee) {
-        return new JsonObject()
-                        .add("followerId", follower.userId())
-                        .add("followeeId", followee.userId())
-                        .toString();
-    }
-
-    private String withJsonContaining(String text) {
-        return new JsonObject().add("text", text).toString();
     }
 
 }

@@ -1,32 +1,40 @@
 package acceptance;
 
+import io.restassured.response.Response;
+import org.junit.Before;
 import org.junit.Test;
 import org.openchat.domain.user.User;
 
-import static acceptance.APITestSuit.*;
+import static acceptance.APITestSuit.BASE_URL;
+import static acceptance.OpenChatTestDSL.*;
 import static io.restassured.RestAssured.when;
-import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.is;
+import static java.util.Arrays.asList;
 import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class FolloweesAPI_AcceptanceTest {
 
-    private static User ALICE   = aUser().withUsername("Alice"  ).build();
-    private static User BOB     = aUser().withUsername("Bob"    ).build();
-    private static User CHARLIE = aUser().withUsername("Charlie").build();
-    private static User JULIE   = aUser().withUsername("Julie"  ).build();
+    private static User VIVIANE = aUser().withUsername("Viviane").build();
+    private static User SAMUEL  = aUser().withUsername("Samuel" ).build();
+    private static User OLIVIA  = aUser().withUsername("Olivia" ).build();
 
+    @Before
+    public void initialise() {
+        VIVIANE = register(VIVIANE);
+        SAMUEL  = register(SAMUEL);
+        OLIVIA  = register(OLIVIA);
+    }
 
-    @Test
-    public void
+    @Test public void
     return_all_followees_for_a_given_user() {
-        when()
-                .get(BASE_URL + "/user/" + ALICE.userId() + "/followees")
-        .then()
-                .statusCode(200)
-                .contentType(JSON)
-                .body("userId[0]", is(BOB.userId()))
-                .body("userId[1]", is(CHARLIE.userId()));
+        givenVivianeFollows(SAMUEL, OLIVIA);
+
+        Response response = when().get(BASE_URL + "/user/" + VIVIANE.userId() + "/followees");
+
+        assertAllUsersAreReturned(response, asList(SAMUEL, OLIVIA));
+    }
+
+    private void givenVivianeFollows(User... followees) {
+        asList(followees).forEach(followee -> createFollowing(VIVIANE, followee));
     }
 
 }
