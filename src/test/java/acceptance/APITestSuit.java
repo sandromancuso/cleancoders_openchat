@@ -11,7 +11,6 @@ import org.openchat.domain.user.UserRepository;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.openchat.domain.user.UserBuilder.aUser;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -24,13 +23,14 @@ import static org.openchat.domain.user.UserBuilder.aUser;
 })
 public class APITestSuit {
 
-    static User ALICE = aUser().withUsername("Alice").build();
-    static User BOB = aUser().withUsername("Bob").build();
-    static User CHARLIE = aUser().withUsername("Charlie").build();
-    static User JULIE = aUser().withUsername("Julie").build();
+//    static User ALICE = aUser().withUsername("Alice").build();
+//    static User BOB = aUser().withUsername("Bob").build();
+//    static User CHARLIE = aUser().withUsername("Charlie").build();
+//    static User JULIE = aUser().withUsername("Julie").build();
 
 
-    static List<User> USERS = asList(ALICE, BOB, CHARLIE, JULIE);
+//    static List<User> USERS = asList(ALICE, BOB, CHARLIE, JULIE);
+    static List<User> USERS = asList();
 
     static String BASE_URL = "http://localhost:4321";
 

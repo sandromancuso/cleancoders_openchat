@@ -1,13 +1,21 @@
 package acceptance;
 
 import org.junit.Test;
+import org.openchat.domain.user.User;
 
 import static acceptance.APITestSuit.*;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
+import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class FolloweesAPI_AcceptanceTest {
+
+    private static User ALICE   = aUser().withUsername("Alice"  ).build();
+    private static User BOB     = aUser().withUsername("Bob"    ).build();
+    private static User CHARLIE = aUser().withUsername("Charlie").build();
+    private static User JULIE   = aUser().withUsername("Julie"  ).build();
+
 
     @Test
     public void
