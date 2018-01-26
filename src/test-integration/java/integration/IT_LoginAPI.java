@@ -1,18 +1,18 @@
-package acceptance;
+package integration;
 
 import com.eclipsesource.json.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.openchat.domain.user.User;
 
-import static acceptance.APITestSuit.BASE_URL;
-import static acceptance.OpenChatTestDSL.register;
+import static integration.APITestSuit.BASE_URL;
+import static integration.OpenChatTestDSL.register;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 import static org.openchat.domain.user.UserBuilder.aUser;
 
-public class LoginAPI_AcceptanceTest {
+public class IT_LoginAPI {
 
     private static User ANTONY = aUser().withUsername("Antony").build();
 

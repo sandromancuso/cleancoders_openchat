@@ -1,4 +1,4 @@
-package acceptance;
+package integration;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
@@ -9,7 +9,7 @@ import org.openchat.domain.user.User;
 
 import java.util.List;
 
-import static acceptance.APITestSuit.BASE_URL;
+import static integration.APITestSuit.BASE_URL;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;

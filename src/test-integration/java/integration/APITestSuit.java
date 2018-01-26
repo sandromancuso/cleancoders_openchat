@@ -1,4 +1,4 @@
-package acceptance;
+package integration;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -8,12 +8,12 @@ import org.openchat.OpenChat;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        RegistrationAPI_AcceptanceTest.class,
-        LoginAPI_AcceptanceTest.class,
-        TimelineAPI_AcceptanceTest.class,
-        WallAPI_AcceptanceTest.class,
-        UsersAPI_AcceptanceTest.class,
-        FolloweesAPI_AcceptanceTest.class
+        IT_RegistrationAPI.class,
+        IT_LoginAPI.class,
+        IT_TimelineAPI.class,
+        IT_WallAPI.class,
+        IT_UsersAPI.class,
+        IT_FolloweesAPI.class
 })
 public class APITestSuit {
 

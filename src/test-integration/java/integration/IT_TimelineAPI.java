@@ -1,4 +1,4 @@
-package acceptance;
+package integration;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
@@ -11,8 +11,8 @@ import org.openchat.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import static acceptance.APITestSuit.BASE_URL;
-import static acceptance.OpenChatTestDSL.register;
+import static integration.APITestSuit.BASE_URL;
+import static integration.OpenChatTestDSL.register;
 import static com.google.common.collect.Lists.reverse;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openchat.domain.post.PostBuilder.aPost;
 import static org.openchat.domain.user.UserBuilder.aUser;
 
-public class TimelineAPI_AcceptanceTest {
+public class IT_TimelineAPI {
 
     private static User DAVID = aUser().withUsername("David").build();
 

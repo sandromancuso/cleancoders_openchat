@@ -1,4 +1,4 @@
-package acceptance;
+package integration;
 
 import com.eclipsesource.json.JsonArray;
 import io.restassured.response.Response;
@@ -7,8 +7,9 @@ import org.junit.Test;
 import org.openchat.domain.post.Post;
 import org.openchat.domain.user.User;
 
-import static acceptance.APITestSuit.BASE_URL;
-import static acceptance.OpenChatTestDSL.*;
+import static integration.APITestSuit.BASE_URL;
+import static integration.OpenChatTestDSL.createFollowing;
+import static integration.OpenChatTestDSL.register;
 import static com.eclipsesource.json.Json.parse;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openchat.domain.post.PostBuilder.aPost;
 import static org.openchat.domain.user.UserBuilder.aUser;
 
-public class WallAPI_AcceptanceTest {
+public class IT_WallAPI {
 
     private static User ALICE   = aUser().withUsername("Alice"  ).build();
     private static User BOB     = aUser().withUsername("Bob"    ).build();

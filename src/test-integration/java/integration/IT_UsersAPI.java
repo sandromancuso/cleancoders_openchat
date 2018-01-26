@@ -1,17 +1,17 @@
-package acceptance;
+package integration;
 
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.openchat.domain.user.User;
 
-import static acceptance.APITestSuit.BASE_URL;
-import static acceptance.OpenChatTestDSL.assertAllUsersAreReturned;
-import static acceptance.OpenChatTestDSL.register;
+import static integration.APITestSuit.BASE_URL;
+import static integration.OpenChatTestDSL.assertAllUsersAreReturned;
+import static integration.OpenChatTestDSL.register;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
 import static org.openchat.domain.user.UserBuilder.aUser;
 
-public class UsersAPI_AcceptanceTest {
+public class IT_UsersAPI {
 
     private static User SANDRO = aUser().withUsername("Sandro").build();
     private static User MASH   = aUser().withUsername("Mash"  ).build();
