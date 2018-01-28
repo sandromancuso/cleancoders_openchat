@@ -1,21 +1,22 @@
 package integration;
 
 import com.eclipsesource.json.JsonArray;
+import integration.dsl.OpenChatTestDSL;
+import integration.dsl.PostDSL.Post;
+import integration.dsl.UserDSL.User;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
-import org.openchat.domain.post.Post;
-import org.openchat.domain.user.User;
 
-import static integration.APITestSuit.BASE_URL;
-import static integration.OpenChatTestDSL.createFollowing;
-import static integration.OpenChatTestDSL.register;
 import static com.eclipsesource.json.Json.parse;
+import static integration.APITestSuit.BASE_URL;
+import static integration.dsl.OpenChatTestDSL.createFollowing;
+import static integration.dsl.OpenChatTestDSL.register;
+import static integration.dsl.PostDSL.PostBuilder.aPost;
+import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.openchat.domain.post.PostBuilder.aPost;
-import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class IT_WallAPI {
 
@@ -40,12 +41,12 @@ public class IT_WallAPI {
         CHARLIE = register(CHARLIE);
         JULIE = register(JULIE);
 
-        POST_1_ALICE   = aPost().withUserId(ALICE  .userId()).withText("Post 1").build();
-        POST_2_BOB     = aPost().withUserId(BOB    .userId()).withText("Post 2").build();
-        POST_3_CHARLIE = aPost().withUserId(CHARLIE.userId()).withText("Post 3").build();
-        POST_4_JULIE   = aPost().withUserId(JULIE  .userId()).withText("Post 4").build();
-        POST_5_ALICE   = aPost().withUserId(ALICE  .userId()).withText("Post 5").build();
-        POST_6_BOB     = aPost().withUserId(BOB    .userId()).withText("Post 6").build();
+        POST_1_ALICE   = aPost().withUserId(ALICE  .id()).withText("Post 1").build();
+        POST_2_BOB     = aPost().withUserId(BOB    .id()).withText("Post 2").build();
+        POST_3_CHARLIE = aPost().withUserId(CHARLIE.id()).withText("Post 3").build();
+        POST_4_JULIE   = aPost().withUserId(JULIE  .id()).withText("Post 4").build();
+        POST_5_ALICE   = aPost().withUserId(ALICE  .id()).withText("Post 5").build();
+        POST_6_BOB     = aPost().withUserId(BOB    .id()).withText("Post 6").build();
     }
     
     @Test public void
@@ -76,7 +77,7 @@ public class IT_WallAPI {
     }
 
     private void whenAliceChecksHerWall() {
-        Response response = when().get(BASE_URL + "/user/" + ALICE.userId() + "/wall");
+        Response response = when().get(BASE_URL + "/user/" + ALICE.id() + "/wall");
         wall = parse(response.asString()).asArray();
 
         assertThat(response.statusCode()).isEqualTo(200);

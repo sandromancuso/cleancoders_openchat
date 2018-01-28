@@ -17,7 +17,7 @@ POST - openchat/registration
 Status CREATED - 201
 Response:
 {
-    "userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    "id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	"username" : "Alice",
 	"about" : "I love playing the piano and travelling."
 }
@@ -38,7 +38,7 @@ POST - openchat/login
 Status OK - 200
 Response:
 {
-    "userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    "id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	"username" : "Alice",
 	"about" : "I love playing the piano and travelling."
 }
@@ -50,7 +50,7 @@ Response: "Invalid credentials."
 
 ## Create Post
 
-POST openchat/user/<userId>/posts
+POST openchat/user/<id>/posts
 {
 	"text" : "Hello everyone. I'm Alice."
 }
@@ -58,7 +58,7 @@ POST openchat/user/<userId>/posts
 Status CREATED - 201
 {
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hello everyone. I'm Alice.",
  	"dateTime" : "2018-01-10T11:30:00Z"
 }
@@ -69,15 +69,15 @@ Response: "User does not exit."
 
 ## Retrieve Posts (User timeline)
 
-GET - openchat/user/<userId>/timeline
+GET - openchat/user/<id>/timeline
 [{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
  	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hello everyone. I'm Alice.",
  	"dateTime" : "2018-01-10T09:00:00Z"
 }]
@@ -106,30 +106,30 @@ Response: "At least one of the users does not exit."
 
 ## Retrieve Wall
 
-GET - openchat/user/<userId>/wall
+GET - openchat/user/<id>/wall
 [{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Planning to eat something with Charlie. Wanna join us?",
  	"dateTime" : "2018-01-10T13:25:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
  	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "What's up everyone?",
  	"dateTime" : "2018-01-10T11:20:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "CHARLIE_IDxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "CHARLIE_IDxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hi all. Charlie here.",
  	"dateTime" : "2018-01-10T09:15:34Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"id" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
  	"dateTime" : "2018-01-10T09:00:00Z"
 }]
@@ -145,15 +145,15 @@ Response: "User does not exist."
 
 GET - openchat/users
 [{
-	"userId" : "123e4567-e89b-12d3-a456-426655440000",
+	"id" : "123e4567-e89b-12d3-a456-426655440000",
 	"username" : "Alice",
 	"about" : "I love playing the pianno and travel.",
 },{
-	"userId" : "093f2342-e89b-12d3-a456-426655440000",
+	"id" : "093f2342-e89b-12d3-a456-426655440000",
 	"username" : "Bob",
 	"about" : "Writer and photographer. Passionate about food and languages."
 },{
-	"userId" : "316h3543-e89b-12d3-a456-426655440000",
+	"id" : "316h3543-e89b-12d3-a456-426655440000",
 	"username" : "Charlie",
 	"about" : "I'm a basketball player, love cycling and meeting new people. "
 }]
@@ -163,17 +163,17 @@ Status OK - 200
 
 ## Retrieve all users followed by another user (followees)
 
-GET - openchat/user/:userId/followees
+GET - openchat/user/:id/followees
 [{
-	"userId" : "123e4567-e89b-12d3-a456-426655440000",
+	"id" : "123e4567-e89b-12d3-a456-426655440000",
 	"username" : "Alice",
 	"about" : "I love playing the pianno and travel.",
 },{
-	"userId" : "093f2342-e89b-12d3-a456-426655440000",
+	"id" : "093f2342-e89b-12d3-a456-426655440000",
 	"username" : "Bob",
 	"about" : "Writer and photographer. Passionate about food and languages."
 },{
-	"userId" : "316h3543-e89b-12d3-a456-426655440000",
+	"id" : "316h3543-e89b-12d3-a456-426655440000",
 	"username" : "Charlie",
 	"about" : "I'm a basketball player, love cycling and meeting new people. "
 }]

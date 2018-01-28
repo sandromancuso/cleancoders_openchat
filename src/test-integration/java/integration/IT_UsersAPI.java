@@ -1,15 +1,15 @@
 package integration;
 
+import integration.dsl.UserDSL.User;
 import io.restassured.response.Response;
 import org.junit.Test;
-import org.openchat.domain.user.User;
 
 import static integration.APITestSuit.BASE_URL;
-import static integration.OpenChatTestDSL.assertAllUsersAreReturned;
-import static integration.OpenChatTestDSL.register;
+import static integration.dsl.OpenChatTestDSL.assertAllUsersAreReturned;
+import static integration.dsl.OpenChatTestDSL.register;
+import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
-import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class IT_UsersAPI {
 

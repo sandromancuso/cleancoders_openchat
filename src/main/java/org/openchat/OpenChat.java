@@ -12,27 +12,32 @@ public class OpenChat {
 
     public void start() {
         port(4321);
-        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+        enableCORS();
         setLog();
         createRoutes();
     }
 
     private void createRoutes() {
-        get("hello", (req, res) -> "Hello OpenChat!");
+        get("status", (req, res) -> "OpenChat: OK!");
+    }
+
+    public void stop() {
+        Spark.stop();
     }
 
     public void awaitInitialization() {
         Spark.awaitInitialization();
     }
 
+    private void enableCORS() {
+        // Enable Cross Origin Resource Sharing.
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+    }
+
     private void setLog() {
         before((request, response) -> {
             logger.info("URL request: " + request.requestMethod() + " " + request.uri() + " - headers: " + request.headers());
         });
-    }
-
-    public void stop() {
-        Spark.stop();
     }
 
 }

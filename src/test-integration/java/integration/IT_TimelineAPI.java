@@ -2,23 +2,24 @@ package integration;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
+import integration.dsl.OpenChatTestDSL;
+import integration.dsl.PostDSL.Post;
+import integration.dsl.UserDSL.User;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
-import org.openchat.domain.post.Post;
-import org.openchat.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static integration.APITestSuit.BASE_URL;
-import static integration.OpenChatTestDSL.register;
 import static com.google.common.collect.Lists.reverse;
+import static integration.APITestSuit.BASE_URL;
+import static integration.dsl.OpenChatTestDSL.register;
+import static integration.dsl.PostDSL.PostBuilder.aPost;
+import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.openchat.domain.post.PostBuilder.aPost;
-import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class IT_TimelineAPI {
 
@@ -45,7 +46,7 @@ public class IT_TimelineAPI {
     private List<Post> createPostsFor(User user, int numberOfPosts) {
         List<Post> posts = new ArrayList<>();
         for (int i = 0; i < numberOfPosts; i++) {
-            Post post = aPost().withUserId(user.userId()).withText("Post " + i).build();
+            Post post = aPost().withUserId(user.id()).withText("Post " + i).build();
             posts.add(post);
         }
         return posts;
@@ -56,7 +57,7 @@ public class IT_TimelineAPI {
     }
 
     private void whenHeChecksHisTimeline() {
-        Response response = when().get(BASE_URL + "/user/" + DAVID.userId() + "/timeline");
+        Response response = when().get(BASE_URL + "/user/" + DAVID.id() + "/timeline");
         timeline = Json.parse(response.asString()).asArray();
 
         assertThat(response.statusCode()).isEqualTo(200);

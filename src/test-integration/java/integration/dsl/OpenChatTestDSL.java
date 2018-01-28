@@ -1,23 +1,24 @@
-package integration;
+package integration.dsl;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import integration.dsl.PostDSL.Post;
+import integration.dsl.UserDSL.User;
 import io.restassured.response.Response;
-import org.openchat.domain.post.Post;
-import org.openchat.domain.user.User;
 
 import java.util.List;
 
-import static integration.APITestSuit.BASE_URL;
+import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.is;
-import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class OpenChatTestDSL {
+
+    private static final String BASE_URL = "http://localhost:4321";
 
     public static User register(User user) {
         Response response = given()
@@ -25,7 +26,7 @@ public class OpenChatTestDSL {
                             .when()
                                 .post(BASE_URL + "/registration");
         String userId = userIdFrom(response);
-        return aUser().clonedFrom(user).withUserId(userId).build();
+        return aUser().clonedFrom(user).withId(userId).build();
     }
 
     public static void create(Post post) {
@@ -61,15 +62,15 @@ public class OpenChatTestDSL {
 
     private static JsonObject jsonFor(User user) {
         return new JsonObject()
-                .add("userId", user.userId())
-                .add("username", user.username())
-                .add("about", user.about());
+                        .add("userId", user.id())
+                        .add("username", user.username())
+                        .add("about", user.about());
     }
 
     private static String withFollowingJsonContaining(User follower, User followee) {
         return new JsonObject()
-                        .add("followerId", follower.userId())
-                        .add("followeeId", followee.userId())
+                        .add("followerId", follower.id())
+                        .add("followeeId", followee.id())
                         .toString();
     }
 

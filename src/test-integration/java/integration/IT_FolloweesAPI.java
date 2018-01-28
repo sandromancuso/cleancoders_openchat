@@ -1,15 +1,15 @@
 package integration;
 
+import integration.dsl.UserDSL.User;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
-import org.openchat.domain.user.User;
 
 import static integration.APITestSuit.BASE_URL;
-import static integration.OpenChatTestDSL.*;
+import static integration.dsl.OpenChatTestDSL.*;
+import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
-import static org.openchat.domain.user.UserBuilder.aUser;
 
 public class IT_FolloweesAPI {
 
@@ -28,7 +28,7 @@ public class IT_FolloweesAPI {
     return_all_followees_for_a_given_user() {
         givenVivianeFollows(SAMUEL, OLIVIA);
 
-        Response response = when().get(BASE_URL + "/user/" + VIVIANE.userId() + "/followees");
+        Response response = when().get(BASE_URL + "/user/" + VIVIANE.id() + "/followees");
 
         assertAllUsersAreReturned(response, asList(SAMUEL, OLIVIA));
     }

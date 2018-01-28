@@ -1,16 +1,16 @@
 package integration;
 
 import com.eclipsesource.json.JsonObject;
+import integration.dsl.UserDSL.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.openchat.domain.user.User;
 
 import static integration.APITestSuit.BASE_URL;
-import static integration.OpenChatTestDSL.register;
+import static integration.dsl.OpenChatTestDSL.register;
+import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.is;
-import static org.openchat.domain.user.UserBuilder.aUser;
+import static org.hamcrest.CoreMatchers.is;
 
 public class IT_LoginAPI {
 
@@ -30,7 +30,7 @@ public class IT_LoginAPI {
         .then()
                 .statusCode(200)
                 .contentType(JSON)
-                .body("userId", is(ANTONY.userId()))
+                .body("userId", is(ANTONY.id()))
                 .body("username", is(ANTONY.username()))
                 .body("about", is(ANTONY.about()));
     }
