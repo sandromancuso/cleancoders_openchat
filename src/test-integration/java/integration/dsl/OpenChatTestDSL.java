@@ -9,12 +9,14 @@ import io.restassured.response.Response;
 
 import java.util.List;
 
+import static integration.APITestSuit.UUID_PATTERN;
 import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.matchesPattern;
 
 public class OpenChatTestDSL {
 
@@ -37,7 +39,7 @@ public class OpenChatTestDSL {
         .then()
                 .statusCode(201)
                 .contentType(JSON)
-                .body("postId", notNullValue())
+                .body("postId", matchesPattern(UUID_PATTERN))
                 .body("userId", is(post.userId()))
                 .body("text", is(post.text()))
                 .body("dateTime", notNullValue());

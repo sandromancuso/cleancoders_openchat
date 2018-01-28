@@ -10,15 +10,13 @@ public class OpenChat {
 
     private static Logger logger = LoggerFactory.getLogger(OpenChat.class);
 
+    private Routes routes = new Routes();
+
     public void start() {
         port(4321);
         enableCORS();
         setLog();
-        createRoutes();
-    }
-
-    private void createRoutes() {
-        get("status", (req, res) -> "OpenChat: OK!");
+        routes.create();
     }
 
     public void stop() {

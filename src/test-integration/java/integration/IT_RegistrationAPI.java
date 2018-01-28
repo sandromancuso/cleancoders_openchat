@@ -4,10 +4,11 @@ import com.eclipsesource.json.JsonObject;
 import org.junit.Test;
 
 import static integration.APITestSuit.BASE_URL;
+import static integration.APITestSuit.UUID_PATTERN;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.matchesPattern;
 
 public class IT_RegistrationAPI {
 
@@ -20,7 +21,7 @@ public class IT_RegistrationAPI {
         .then()
                 .statusCode(201)
                 .contentType(JSON)
-                .body("userId", notNullValue())
+                .body("userId", matchesPattern(UUID_PATTERN))
                 .body("username", is("Lucy"))
                 .body("about", is("About Lucy"));
     }
