@@ -110,25 +110,25 @@
 
 	<build>
 		<plugins>
-			<!--<plugin>-->
-				<!--<groupId>org.codehaus.mojo</groupId>-->
-				<!--<artifactId>build-helper-maven-plugin</artifactId>-->
-				<!--<version>1.9.1</version>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<id>add-integration-test-sources</id>-->
-						<!--<phase>generate-test-sources</phase>-->
-						<!--<goals>-->
-							<!--<goal>add-test-source</goal>-->
-						<!--</goals>-->
-						<!--<configuration>-->
-							<!--<sources>-->
-								<!--<source>src/test-integration/java</source>-->
-							<!--</sources>-->
-						<!--</configuration>-->
-					<!--</execution>-->
-				<!--</executions>-->
-			<!--</plugin>-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9.1</version>
+				<executions>
+					<execution>
+						<id>add-integration-test-sources</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test-integration/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -156,9 +156,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.4.0</version>
-				<!--<configuration>-->
-					<!--<mainClass>org.openchat.OpenChatLauncher</mainClass>-->
-				<!--</configuration>-->
 				<executions>
 					<execution>
 						<id>pre-integration-test</id>
@@ -190,10 +187,6 @@
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.19.1</version>
 				<executions>
-					<!--
-						Invokes both the integration-test and the verify goals of the
-						Failsafe Maven plugin
-					-->
 					<execution>
 						<id>integration-tests</id>
 						<goals>
@@ -201,10 +194,6 @@
 							<goal>verify</goal>
 						</goals>
 						<configuration>
-							<!--
-								Skips integration tests if the value of skip.integration.tests
-								property is true
-							-->
 							<skipTests>false</skipTests>
 							<includes>
 								<include>**/IT*.java</include>
@@ -223,7 +212,6 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>2.3</version>
 				<executions>
-					<!-- Run shade goal on package phase -->
 					<execution>
 						<phase>package</phase>
 						<goals>
