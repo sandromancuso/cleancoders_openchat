@@ -6,4 +6,5 @@
 
 **Running integration tests**
 
-> mvn clean verify -P integration-test 
+> mvn clean verify -P integration-test
+ 

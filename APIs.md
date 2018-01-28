@@ -2,11 +2,6 @@
 
 **Running the app: mvn build exec:java**
 
-## TODO
-
-- Remove FollowAPI, FolloweesAPI, WallAPI,
-- TimelineAPI (return all posts from all users)
-
 Here is a list of the APIs that need to be implemented by OpenChat.
 
 ## Register New User
