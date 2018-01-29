@@ -1,21 +1,21 @@
 package integration;
 
-import integration.dsl.UserDSL.User;
+import integration.dsl.UserDSL.ITUser;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 
 import static integration.APITestSuit.BASE_URL;
 import static integration.dsl.OpenChatTestDSL.*;
-import static integration.dsl.UserDSL.UserBuilder.aUser;
+import static integration.dsl.UserDSL.ITUserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
 
 public class IT_FolloweesAPI {
 
-    private static User VIVIANE = aUser().withUsername("Viviane").build();
-    private static User SAMUEL  = aUser().withUsername("Samuel" ).build();
-    private static User OLIVIA  = aUser().withUsername("Olivia" ).build();
+    private static ITUser VIVIANE = aUser().withUsername("Viviane").build();
+    private static ITUser SAMUEL  = aUser().withUsername("Samuel" ).build();
+    private static ITUser OLIVIA  = aUser().withUsername("Olivia" ).build();
 
     @Before
     public void initialise() {
@@ -33,7 +33,7 @@ public class IT_FolloweesAPI {
         assertAllUsersAreReturned(response, asList(SAMUEL, OLIVIA));
     }
 
-    private void givenVivianeFollows(User... followees) {
+    private void givenVivianeFollows(ITUser... followees) {
         asList(followees).forEach(followee -> createFollowing(VIVIANE, followee));
     }
 

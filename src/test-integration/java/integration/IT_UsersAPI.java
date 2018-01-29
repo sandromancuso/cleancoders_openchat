@@ -1,22 +1,22 @@
 package integration;
 
-import integration.dsl.UserDSL.User;
+import integration.dsl.UserDSL.ITUser;
 import io.restassured.response.Response;
 import org.junit.Test;
 
 import static integration.APITestSuit.BASE_URL;
 import static integration.dsl.OpenChatTestDSL.assertAllUsersAreReturned;
 import static integration.dsl.OpenChatTestDSL.register;
-import static integration.dsl.UserDSL.UserBuilder.aUser;
+import static integration.dsl.UserDSL.ITUserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
 
 public class IT_UsersAPI {
 
-    private static User SANDRO = aUser().withUsername("Sandro").build();
-    private static User MASH   = aUser().withUsername("Mash"  ).build();
-    private static User STEVE  = aUser().withUsername("Steve" ).build();
-    private static User PEDRO  = aUser().withUsername("Pedro" ).build();
+    private static ITUser SANDRO = aUser().withUsername("Sandro").build();
+    private static ITUser MASH   = aUser().withUsername("Mash"  ).build();
+    private static ITUser STEVE  = aUser().withUsername("Steve" ).build();
+    private static ITUser PEDRO  = aUser().withUsername("Pedro" ).build();
 
     @Test public void
     return_all_users() {

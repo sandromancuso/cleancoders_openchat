@@ -3,8 +3,8 @@ package integration;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import integration.dsl.OpenChatTestDSL;
-import integration.dsl.PostDSL.Post;
-import integration.dsl.UserDSL.User;
+import integration.dsl.PostDSL.ITPost;
+import integration.dsl.UserDSL.ITUser;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,18 +16,18 @@ import static com.google.common.collect.Lists.reverse;
 import static integration.APITestSuit.BASE_URL;
 import static integration.dsl.OpenChatTestDSL.assertThatJsonPostMatchesPost;
 import static integration.dsl.OpenChatTestDSL.register;
-import static integration.dsl.PostDSL.PostBuilder.aPost;
-import static integration.dsl.UserDSL.UserBuilder.aUser;
+import static integration.dsl.PostDSL.ITPostBuilder.aPost;
+import static integration.dsl.UserDSL.ITUserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IT_TimelineAPI {
 
-    private static User DAVID = aUser().withUsername("David").build();
+    private static ITUser DAVID = aUser().withUsername("David").build();
 
     private JsonArray timeline;
-    private List<Post> POSTS;
+    private List<ITPost> POSTS;
 
     @Before
     public void initialise() {
@@ -44,16 +44,16 @@ public class IT_TimelineAPI {
         thenHeShouldSee(reverse(POSTS));
     }
 
-    private List<Post> createPostsFor(User user, int numberOfPosts) {
-        List<Post> posts = new ArrayList<>();
+    private List<ITPost> createPostsFor(ITUser user, int numberOfPosts) {
+        List<ITPost> posts = new ArrayList<>();
         for (int i = 0; i < numberOfPosts; i++) {
-            Post post = aPost().withUserId(user.id()).withText("Post " + i).build();
+            ITPost post = aPost().withUserId(user.id()).withText("Post " + i).build();
             posts.add(post);
         }
         return posts;
     }
 
-    private void givenDavidPosts(List<Post> posts) {
+    private void givenDavidPosts(List<ITPost> posts) {
         posts.forEach(OpenChatTestDSL::create);
     }
 
@@ -65,7 +65,7 @@ public class IT_TimelineAPI {
         assertThat(response.contentType()).isEqualTo(JSON.toString());
     }
 
-    private void thenHeShouldSee(List<Post> posts) {
+    private void thenHeShouldSee(List<ITPost> posts) {
         for (int index = 0; index < posts.size(); index++) {
             assertThatJsonPostMatchesPost(timeline.get(index), posts.get(index));
         }

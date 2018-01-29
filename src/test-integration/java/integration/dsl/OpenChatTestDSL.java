@@ -4,15 +4,15 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-import integration.dsl.PostDSL.Post;
-import integration.dsl.UserDSL.User;
+import integration.dsl.PostDSL.ITPost;
+import integration.dsl.UserDSL.ITUser;
 import io.restassured.response.Response;
 
 import java.util.List;
 
 import static integration.APITestSuit.DATE_PATTERN;
 import static integration.APITestSuit.UUID_PATTERN;
-import static integration.dsl.UserDSL.UserBuilder.aUser;
+import static integration.dsl.UserDSL.ITUserBuilder.aUser;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +24,7 @@ public class OpenChatTestDSL {
 
     private static final String BASE_URL = "http://localhost:4321";
 
-    public static User register(User user) {
+    public static ITUser register(ITUser user) {
         Response response = given()
                                 .body(withRegistrationJsonFor(user))
                             .when()
@@ -33,7 +33,7 @@ public class OpenChatTestDSL {
         return aUser().clonedFrom(user).withId(userId).build();
     }
 
-    public static void create(Post post) {
+    public static void create(ITPost post) {
         given()
                 .body(withPostJsonContaining(post.text()))
         .when()
@@ -47,7 +47,7 @@ public class OpenChatTestDSL {
                 .body("dateTime", notNullValue());
     }
 
-    public static void createFollowing(User follower, User followee) {
+    public static void createFollowing(ITUser follower, ITUser followee) {
         given()
                 .body(withFollowingJsonContaining(follower, followee))
         .when()
@@ -56,7 +56,7 @@ public class OpenChatTestDSL {
                 .statusCode(201);
     }
 
-    public static void assertAllUsersAreReturned(Response response, List<User> users) {
+    public static void assertAllUsersAreReturned(Response response, List<ITUser> users) {
         assertThat(response.statusCode()).isEqualTo(200);
         assertThat(response.contentType()).isEqualTo("application/json");
 
@@ -64,7 +64,7 @@ public class OpenChatTestDSL {
         users.forEach(user -> assertThat(usersArray.values().contains(jsonFor(user))).isTrue());
     }
 
-    public static void assertThatJsonPostMatchesPost(JsonValue jsonValue, Post post) {
+    public static void assertThatJsonPostMatchesPost(JsonValue jsonValue, ITPost post) {
         JsonObject postJson = jsonValue.asObject();
         assertThat(postJson.getString("postId", "")).matches(UUID_PATTERN);
         assertThat(postJson.getString("userId", "")).matches(UUID_PATTERN);
@@ -72,14 +72,14 @@ public class OpenChatTestDSL {
         assertThat(postJson.getString("dateTime", "")).matches(DATE_PATTERN);
     }
 
-    private static JsonObject jsonFor(User user) {
+    private static JsonObject jsonFor(ITUser user) {
         return new JsonObject()
                         .add("userId", user.id())
                         .add("username", user.username())
                         .add("about", user.about());
     }
 
-    private static String withFollowingJsonContaining(User follower, User followee) {
+    private static String withFollowingJsonContaining(ITUser follower, ITUser followee) {
         return new JsonObject()
                         .add("followerId", follower.id())
                         .add("followeeId", followee.id())
@@ -95,7 +95,7 @@ public class OpenChatTestDSL {
         return responseJson.getString("userId", "");
     }
 
-    private static String withRegistrationJsonFor(User user) {
+    private static String withRegistrationJsonFor(ITUser user) {
         return new JsonObject()
                         .add("username", user.username())
                         .add("password", user.password())

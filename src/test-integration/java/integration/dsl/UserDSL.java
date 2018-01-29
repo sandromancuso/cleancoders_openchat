@@ -6,14 +6,14 @@ import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 
 public class UserDSL {
 
-    public static class User {
+    public static class ITUser {
 
         private final String id;
         private final String username;
         private final String about;
         private final String password;
 
-        public User(String id, String username, String about, String password) {
+        ITUser(String id, String username, String about, String password) {
             this.id = id;
             this.username = username;
             this.about = about;
@@ -42,38 +42,38 @@ public class UserDSL {
         }
     }
 
-    public static class UserBuilder {
+    public static class ITUserBuilder {
 
         private String userId = UUID.randomUUID().toString();
         private String username = "Alice";
         private String password = "lask3424";
         private String about = "About Alice";
 
-        public static UserBuilder aUser() {
-            return new UserBuilder();
+        public static ITUserBuilder aUser() {
+            return new ITUserBuilder();
         }
 
-        public UserBuilder withId(String userId) {
+        public ITUserBuilder withId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        public UserBuilder withUsername(String username) {
+        public ITUserBuilder withUsername(String username) {
             this.username = username;
             return this;
         }
 
-        public UserBuilder withPassword(String password) {
+        public ITUserBuilder withPassword(String password) {
             this.password = password;
             return this;
         }
 
-        public UserBuilder withAbout(String about) {
+        public ITUserBuilder withAbout(String about) {
             this.about = about;
             return this;
         }
 
-        public UserBuilder clonedFrom(User anotherUser) {
+        public ITUserBuilder clonedFrom(ITUser anotherUser) {
             this.userId = anotherUser.id();
             this.username = anotherUser.username();
             this.password = anotherUser.password();
@@ -81,8 +81,8 @@ public class UserDSL {
             return this;
         }
 
-        public User build() {
-            return new User(userId, username, password, about);
+        public ITUser build() {
+            return new ITUser(userId, username, password, about);
         }
 
     }

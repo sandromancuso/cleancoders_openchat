@@ -2,8 +2,8 @@ package integration;
 
 import com.eclipsesource.json.JsonArray;
 import integration.dsl.OpenChatTestDSL;
-import integration.dsl.PostDSL.Post;
-import integration.dsl.UserDSL.User;
+import integration.dsl.PostDSL.ITPost;
+import integration.dsl.UserDSL.ITUser;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,25 +13,25 @@ import static integration.APITestSuit.BASE_URL;
 import static integration.dsl.OpenChatTestDSL.assertThatJsonPostMatchesPost;
 import static integration.dsl.OpenChatTestDSL.createFollowing;
 import static integration.dsl.OpenChatTestDSL.register;
-import static integration.dsl.PostDSL.PostBuilder.aPost;
-import static integration.dsl.UserDSL.UserBuilder.aUser;
+import static integration.dsl.PostDSL.ITPostBuilder.aPost;
+import static integration.dsl.UserDSL.ITUserBuilder.aUser;
 import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IT_WallAPI {
 
-    private static User ALICE   = aUser().withUsername("Alice"  ).build();
-    private static User BOB     = aUser().withUsername("Bob"    ).build();
-    private static User CHARLIE = aUser().withUsername("Charlie").build();
-    private static User JULIE   = aUser().withUsername("Julie"  ).build();
+    private static ITUser ALICE   = aUser().withUsername("Alice"  ).build();
+    private static ITUser BOB     = aUser().withUsername("Bob"    ).build();
+    private static ITUser CHARLIE = aUser().withUsername("Charlie").build();
+    private static ITUser JULIE   = aUser().withUsername("Julie"  ).build();
 
-    private static Post POST_1_ALICE = aPost().withText("Post 1").build();
-    private static Post POST_2_BOB = aPost().withText("Post 2").build();
-    private static Post POST_3_CHARLIE = aPost().withText("Post 3").build();
-    private static Post POST_4_JULIE = aPost().withText("Post 4").build();
-    private static Post POST_5_ALICE = aPost().withText("Post 5").build();
-    private static Post POST_6_BOB = aPost().withText("Post 6").build();
+    private static ITPost POST_1_ALICE = aPost().withText("Post 1").build();
+    private static ITPost POST_2_BOB = aPost().withText("Post 2").build();
+    private static ITPost POST_3_CHARLIE = aPost().withText("Post 3").build();
+    private static ITPost POST_4_JULIE = aPost().withText("Post 4").build();
+    private static ITPost POST_5_ALICE = aPost().withText("Post 5").build();
+    private static ITPost POST_6_BOB = aPost().withText("Post 6").build();
 
     private JsonArray wall;
 
@@ -58,7 +58,7 @@ public class IT_WallAPI {
                    POST_4_JULIE,
                    POST_5_ALICE,
                    POST_6_BOB);
-        givenAliceFollows(BOB, CHARLIE);
+        andAliceFollows(BOB, CHARLIE);
 
         whenAliceChecksHerWall();
 
@@ -69,11 +69,11 @@ public class IT_WallAPI {
                             POST_1_ALICE);
     }
 
-    private void givenPosts(Post... posts) {
+    private void givenPosts(ITPost... posts) {
         asList(posts).forEach(OpenChatTestDSL::create);
     }
 
-    private void givenAliceFollows(User... followees) {
+    private void andAliceFollows(ITUser... followees) {
         asList(followees).forEach(followee -> createFollowing(ALICE, followee));
     }
 
@@ -85,7 +85,7 @@ public class IT_WallAPI {
         assertThat(response.contentType()).isEqualTo("application/json");
     }
 
-    private void thenSheSeesThePosts(Post... posts) {
+    private void thenSheSeesThePosts(ITPost... posts) {
         for (int index = 0; index < posts.length; index++) {
             assertThatJsonPostMatchesPost(wall.get(index), posts[index]);
         }

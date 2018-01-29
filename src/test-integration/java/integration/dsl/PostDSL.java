@@ -9,7 +9,7 @@ import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCod
 
 public class PostDSL {
 
-    public static class Post {
+    public static class ITPost {
 
         private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -18,7 +18,7 @@ public class PostDSL {
         private final String text;
         private final LocalDateTime dateTime;
 
-        public Post(String postId, String userId, String text, LocalDateTime dateTime) {
+        ITPost(String postId, String userId, String text, LocalDateTime dateTime) {
             this.postId = postId;
             this.userId = userId;
             this.text = text;
@@ -56,40 +56,39 @@ public class PostDSL {
         }
     }
 
-    public static class PostBuilder {
+    public static class ITPostBuilder {
 
         private String postId = UUID.randomUUID().toString();
         private String userId = "1234";
         private String text = "some text";
         private LocalDateTime dateTime = LocalDateTime.now();
 
-        public static PostBuilder aPost() {
-            return new PostBuilder();
+        public static ITPostBuilder aPost() {
+            return new ITPostBuilder();
         }
 
-        public PostBuilder withPostId(String postId) {
+        public ITPostBuilder withPostId(String postId) {
             this.postId = postId;
             return this;
         }
 
-        public PostBuilder withUserId(String userId) {
+        public ITPostBuilder withUserId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        public PostBuilder withText(String text) {
+        public ITPostBuilder withText(String text) {
             this.text = text;
             return this;
         }
 
-        public PostBuilder withDateTime(LocalDateTime dateTime) {
+        public ITPostBuilder withDateTime(LocalDateTime dateTime) {
             this.dateTime = dateTime;
             return this;
         }
 
-        public Post build() {
-            Post post = new Post(postId, userId, text, dateTime);
-            return post;
+        public ITPost build() {
+            return new ITPost(postId, userId, text, dateTime);
         }
     }
 }
