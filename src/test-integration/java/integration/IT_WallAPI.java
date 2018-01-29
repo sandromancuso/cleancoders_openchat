@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import static com.eclipsesource.json.Json.parse;
 import static integration.APITestSuit.BASE_URL;
+import static integration.dsl.OpenChatTestDSL.assertThatJsonPostMatchesPost;
 import static integration.dsl.OpenChatTestDSL.createFollowing;
 import static integration.dsl.OpenChatTestDSL.register;
 import static integration.dsl.PostDSL.PostBuilder.aPost;
@@ -86,13 +87,8 @@ public class IT_WallAPI {
 
     private void thenSheSeesThePosts(Post... posts) {
         for (int index = 0; index < posts.length; index++) {
-            assertThatTimelineContains(posts[index], index);
+            assertThatJsonPostMatchesPost(wall.get(index), posts[index]);
         }
-    }
-
-    private void assertThatTimelineContains(Post post, int index) {
-        String text = wall.get(index).asObject().getString("text", "");
-        assertThat(text).isEqualTo(post.text());
     }
 
 }

@@ -3,12 +3,14 @@ package integration.dsl;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import integration.dsl.PostDSL.Post;
 import integration.dsl.UserDSL.User;
 import io.restassured.response.Response;
 
 import java.util.List;
 
+import static integration.APITestSuit.DATE_PATTERN;
 import static integration.APITestSuit.UUID_PATTERN;
 import static integration.dsl.UserDSL.UserBuilder.aUser;
 import static io.restassured.RestAssured.given;
@@ -62,6 +64,14 @@ public class OpenChatTestDSL {
         users.forEach(user -> assertThat(usersArray.values().contains(jsonFor(user))).isTrue());
     }
 
+    public static void assertThatJsonPostMatchesPost(JsonValue jsonValue, Post post) {
+        JsonObject postJson = jsonValue.asObject();
+        assertThat(postJson.getString("postId", "")).matches(UUID_PATTERN);
+        assertThat(postJson.getString("userId", "")).matches(UUID_PATTERN);
+        assertThat(postJson.getString("text", "")).isEqualTo(post.text());
+        assertThat(postJson.getString("dateTime", "")).matches(DATE_PATTERN);
+    }
+
     private static JsonObject jsonFor(User user) {
         return new JsonObject()
                         .add("userId", user.id())
@@ -87,9 +97,9 @@ public class OpenChatTestDSL {
 
     private static String withRegistrationJsonFor(User user) {
         return new JsonObject()
-                .add("username", user.username())
-                .add("password", user.password())
-                .add("about", user.about())
-                .toString();
+                        .add("username", user.username())
+                        .add("password", user.password())
+                        .add("about", user.about())
+                        .toString();
     }
 }

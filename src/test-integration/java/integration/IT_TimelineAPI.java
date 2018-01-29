@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.reverse;
 import static integration.APITestSuit.BASE_URL;
+import static integration.dsl.OpenChatTestDSL.assertThatJsonPostMatchesPost;
 import static integration.dsl.OpenChatTestDSL.register;
 import static integration.dsl.PostDSL.PostBuilder.aPost;
 import static integration.dsl.UserDSL.UserBuilder.aUser;
@@ -66,13 +67,8 @@ public class IT_TimelineAPI {
 
     private void thenHeShouldSee(List<Post> posts) {
         for (int index = 0; index < posts.size(); index++) {
-            assertThatTimelineContains(posts.get(index), index);
+            assertThatJsonPostMatchesPost(timeline.get(index), posts.get(index));
         }
-    }
-
-    private void assertThatTimelineContains(Post post, int index) {
-        String text = timeline.get(index).asObject().getString("text", "");
-        assertThat(text).isEqualTo(post.text());
     }
 
 }
