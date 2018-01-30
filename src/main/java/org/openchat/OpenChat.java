@@ -29,7 +29,11 @@ public class OpenChat {
 
     private void enableCORS() {
         // Enable Cross Origin Resource Sharing.
-        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+        before((request, response) -> {
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Allow-Headers", "*");
+            response.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH, OPTIONS");
+        });
     }
 
     private void setLog() {
