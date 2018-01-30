@@ -58,7 +58,7 @@ Response: "Invalid credentials."
 Status CREATED - 201
 {
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hello everyone. I'm Alice.",
  	"dateTime" : "2018-01-10T11:30:00Z"
 }
@@ -72,12 +72,12 @@ Response: "User does not exit."
 GET - openchat/user/<id>/timeline
 [{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
  	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hello everyone. I'm Alice.",
  	"dateTime" : "2018-01-10T09:00:00Z"
 }]
@@ -109,27 +109,27 @@ Response: "At least one of the users does not exit."
 GET - openchat/user/<id>/wall
 [{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Planning to eat something with Charlie. Wanna join us?",
  	"dateTime" : "2018-01-10T13:25:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
  	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "What's up everyone?",
  	"dateTime" : "2018-01-10T11:20:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "CHARLIE_IDxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "CHARLIE_IDxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hi all. Charlie here.",
  	"dateTime" : "2018-01-10T09:15:34Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"id" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
  	"dateTime" : "2018-01-10T09:00:00Z"
 }]
