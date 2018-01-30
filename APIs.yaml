@@ -185,6 +185,31 @@ paths:
             items:
               $ref: "#/definitions/User"
 
+  /user/{userId}/followees:
+    get:
+      tags:
+        - user
+      summary: Return users followed by a given user.
+      operationId: followees
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the follower user.
+          required: true
+          type: string
+          format: UUID
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        "404":
+          description: User does not exist.
+
 definitions:
   Registration:
     type: object
