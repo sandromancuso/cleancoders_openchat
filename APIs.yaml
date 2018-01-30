@@ -1,0 +1,262 @@
+swagger: "2.0"
+info:
+  description: |
+    OpenChat application used by Robert C. Martin and Sandro Mancuso in their Clean Coders series.
+  version: "1.0.0"
+  title: OpenChat
+  termsOfService: http://codurance.com/
+  contact:
+    name: sandro@codurance.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: localhost:4312
+basePath: /v2
+schemes:
+  - http
+paths:
+  /registration:
+    post:
+      tags:
+        - registration
+      summary: Register a new user.
+      description: ""
+      operationId: registration
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: New user information
+          required: true
+          schema:
+            $ref: "#/definitions/Registration"
+      responses:
+        "201":
+          description: User created.
+          schema:
+            $ref: "#/definitions/User"
+        "400":
+          description: Username already in use.
+
+  /login:
+    post:
+      tags:
+        - login
+      summary: User login
+      description: ""
+      operationId: login
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: user credentials
+          required: true
+          schema:
+            $ref: "#/definitions/Login"
+      responses:
+        "200":
+          description: User logged in.
+          schema:
+            $ref: "#/definitions/User"
+        "404":
+          description: Invalid credentials.
+
+  /user/{userId}/posts:
+    post:
+      tags:
+        - post
+      summary: Create a new post
+      operationId: createPost
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the user creating the post.
+          required: true
+          type: string
+          format: UUID
+        - in: body
+          name: body
+          description: Post text
+          required: true
+          schema:
+            $ref: "#/definitions/NewPost"
+      responses:
+        "201":
+          description: Post created.
+          schema:
+            $ref: "#/definitions/Post"
+        "404":
+          description: User does not exist.
+
+  /user/{userId}/timeline:
+    get:
+      tags:
+        - post
+      summary: Return user's timeline.
+      operationId: timeline
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the user creating the post.
+          required: true
+          type: string
+          format: UUID
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Post"
+        "404":
+          description: User does not exist.
+
+  /follow:
+    post:
+      tags:
+        - user
+      summary: Create a following relationship between users.
+      operationId: follow
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Following information
+          required: true
+          schema:
+            $ref: "#/definitions/Follow"
+      responses:
+        "201":
+          description: Following created.
+        "404":
+          description: At least one of the users does not exit..
+
+  /user/{userId}/wall:
+    get:
+      tags:
+        - post
+      summary: Return user's wall.
+      operationId: wall
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the user creating the post.
+          required: true
+          type: string
+          format: UUID
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Post"
+        "400":
+          description: User does not exist.
+
+  /users:
+    get:
+      tags:
+        - user
+      summary: Return all users.
+      operationId: allUsers
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+
+definitions:
+  Registration:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+      about:
+        type: string
+
+  Login:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+        format: UUID
+        description: UUID
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      username:
+        type: string
+      about:
+        type: string
+
+  NewPost:
+    type: object
+    properties:
+      text:
+        type: string
+        example: "Hello, I'm Alice"
+
+  Post:
+    type: object
+    properties:
+      postId:
+        type: string
+        format: UUID
+        description: UUID
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      userId:
+        type: string
+        format: UUID
+        description: UUID
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      text:
+        type: string
+      dateTime:
+        type: string
+        format: date-time
+        description: "yyyy-MM-ddTHH:mm:ssZ"
+        example: "2018-01-10T11:30:00Z"
+
+  Follow:
+    type: object
+    properties:
+      followerId:
+        type: string
+        format: UUID
+        description: UUID
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      followeeId:
+        type: string
+        format: UUID
+        description: UUID
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+

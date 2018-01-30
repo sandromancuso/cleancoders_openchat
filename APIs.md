@@ -50,7 +50,7 @@ Response: "Invalid credentials."
 
 ## Create Post
 
-POST openchat/user/<id>/posts
+    POST openchat/user/<id>/posts
 {
 	"text" : "Hello everyone. I'm Alice."
 }
