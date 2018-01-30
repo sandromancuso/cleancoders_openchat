@@ -92,7 +92,7 @@ public class OpenChatTestDSL {
 
     private static String userIdFrom(Response response) {
         JsonObject responseJson = Json.parse(response.body().asString()).asObject();
-        return responseJson.getString("userId", "");
+        return responseJson.getString("id", "");
     }
 
     private static String withRegistrationJsonFor(ITUser user) {

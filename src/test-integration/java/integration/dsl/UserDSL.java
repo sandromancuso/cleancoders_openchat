@@ -3,6 +3,8 @@ package integration.dsl;
 import java.util.UUID;
 
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 public class UserDSL {
 
@@ -13,11 +15,11 @@ public class UserDSL {
         private final String about;
         private final String password;
 
-        ITUser(String id, String username, String about, String password) {
+        ITUser(String id, String username, String password, String about) {
             this.id = id;
             this.username = username;
-            this.about = about;
             this.password = password;
+            this.about = about;
         }
 
         public String id() {
@@ -39,6 +41,11 @@ public class UserDSL {
         @Override
         public boolean equals(Object other) {
             return reflectionEquals(this, other);
+        }
+
+        @Override
+        public String toString() {
+            return reflectionToString(this, MULTI_LINE_STYLE);
         }
     }
 

@@ -30,7 +30,7 @@ public class IT_LoginAPI {
         .then()
                 .statusCode(200)
                 .contentType(JSON)
-                .body("userId", is(ANTONY.id()))
+                .body("id", is(ANTONY.id()))
                 .body("username", is(ANTONY.username()))
                 .body("about", is(ANTONY.about()));
     }

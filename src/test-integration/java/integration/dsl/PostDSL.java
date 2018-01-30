@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 public class PostDSL {
 
@@ -53,6 +55,11 @@ public class PostDSL {
         @Override
         public int hashCode() {
             return reflectionHashCode(this);
+        }
+
+        @Override
+        public String toString() {
+            return reflectionToString(this, MULTI_LINE_STYLE);
         }
     }
 
