@@ -74,7 +74,7 @@ public class OpenChatTestDSL {
 
     private static JsonObject jsonFor(ITUser user) {
         return new JsonObject()
-                        .add("userId", user.id())
+                        .add("id", user.id())
                         .add("username", user.username())
                         .add("about", user.about());
     }
