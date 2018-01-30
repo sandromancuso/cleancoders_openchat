@@ -21,7 +21,7 @@ public class IT_RegistrationAPI {
         .then()
                 .statusCode(201)
                 .contentType(JSON)
-                .body("userId", matchesPattern(UUID_PATTERN))
+                .body("id", matchesPattern(UUID_PATTERN))
                 .body("username", is("Lucy"))
                 .body("about", is("About Lucy"));
     }
