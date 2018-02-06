@@ -29,15 +29,20 @@ public class OpenChatTestDSL {
     private static final String BASE_URL = "http://localhost:4321";
 
     public static ITUser register(ITUser user) {
+        logger.info("Register user: " + user);
         Response response = given()
                                 .body(withRegistrationJsonFor(user))
                             .when()
                                 .post(BASE_URL + "/registration");
+        logger.info("Registration response: " + response.body().asString());
         String userId = userIdFrom(response);
-        return aUser().clonedFrom(user).withId(userId).build();
+        ITUser registeredUser = aUser().clonedFrom(user).withId(userId).build();
+        logger.info("Registration done. User: " + registeredUser);
+        return registeredUser;
     }
 
     public static void create(ITPost post) {
+        logger.info("Create post: " + post);
         given()
                 .body(withPostJsonContaining(post.text()))
         .when()
@@ -49,15 +54,18 @@ public class OpenChatTestDSL {
                 .body("userId", is(post.userId()))
                 .body("text", is(post.text()))
                 .body("dateTime", notNullValue());
+        logger.info("Post created.");
     }
 
     public static void createFollowing(ITUser follower, ITUser followee) {
+        logger.info("Create following - follower [" + follower + "], followee [" + followee + "]");
         given()
                 .body(withFollowingJsonContaining(follower, followee))
         .when()
                 .post(BASE_URL + "/follow")
         .then()
                 .statusCode(201);
+        logger.info("Following created");
     }
 
     public static void assertAllUsersAreReturned(Response response, List<ITUser> users) {
