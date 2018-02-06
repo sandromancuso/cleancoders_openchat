@@ -166,7 +166,7 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Post"
-        "400":
+        "404":
           description: User does not exist.
 
   /users:
