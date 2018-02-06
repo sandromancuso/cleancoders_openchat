@@ -7,6 +7,8 @@ import com.eclipsesource.json.JsonValue;
 import integration.dsl.PostDSL.ITPost;
 import integration.dsl.UserDSL.ITUser;
 import io.restassured.response.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -21,6 +23,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.matchesPattern;
 
 public class OpenChatTestDSL {
+
+    private static Logger logger = LoggerFactory.getLogger(OpenChatTestDSL.class);
 
     private static final String BASE_URL = "http://localhost:4321";
 
