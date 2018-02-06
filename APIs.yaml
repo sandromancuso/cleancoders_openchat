@@ -123,6 +123,22 @@ paths:
         "404":
           description: User does not exist.
 
+  /users:
+    get:
+      tags:
+        - user
+      summary: Return all users.
+      operationId: allUsers
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+
   /follow:
     post:
       tags:
@@ -143,47 +159,6 @@ paths:
           description: Following created.
         "404":
           description: At least one of the users does not exit..
-
-  /user/{userId}/wall:
-    get:
-      tags:
-        - post
-      summary: Return user's wall.
-      operationId: wall
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: userId
-          description: ID of the user creating the post.
-          required: true
-          type: string
-          format: UUID
-      responses:
-        "200":
-          description: Successful operation
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Post"
-        "404":
-          description: User does not exist.
-
-  /users:
-    get:
-      tags:
-        - user
-      summary: Return all users.
-      operationId: allUsers
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: Successful operation
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/User"
 
   /user/{userId}/followees:
     get:
@@ -207,6 +182,31 @@ paths:
             type: array
             items:
               $ref: "#/definitions/User"
+        "404":
+          description: User does not exist.
+
+  /user/{userId}/wall:
+    get:
+      tags:
+        - post
+      summary: Return user's wall.
+      operationId: wall
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the user creating the post.
+          required: true
+          type: string
+          format: UUID
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Post"
         "404":
           description: User does not exist.
 
