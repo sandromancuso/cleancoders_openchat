@@ -9,7 +9,7 @@
 	<version>1.0-SNAPSHOT</version>
 
 	<properties>
-		<sparkjava.version>2.5</sparkjava.version>
+		<sparkjava.version>2.5.5</sparkjava.version>
 		<commonslang.version>3.6</commonslang.version>
 		<minimal-json.version>0.9.4</minimal-json.version>
 		<slf4j-simple.version>1.8.0-beta0</slf4j-simple.version>

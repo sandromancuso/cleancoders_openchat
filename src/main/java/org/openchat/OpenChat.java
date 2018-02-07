@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import spark.Spark;
 
 import static spark.Spark.*;
+import static spark.Spark.internalServerError;
+import static spark.Spark.notFound;
 
 public class OpenChat {
 
@@ -17,6 +19,8 @@ public class OpenChat {
         enableCORS();
         setLog();
         routes.create();
+        configureInternalServerError();
+        configureNotImplemented();
     }
 
     public void stop() {
@@ -25,6 +29,21 @@ public class OpenChat {
 
     public void awaitInitialization() {
         Spark.awaitInitialization();
+    }
+
+    private void configureInternalServerError() {
+        internalServerError((req, res) -> {
+            res.type("application/json");
+            res.status(501);
+            return "Internal server error";
+        });
+    }
+
+    private void configureNotImplemented() {
+        notFound((req, res) -> {
+            res.status(501);
+            return "API not implemented.";
+        });
     }
 
     private void enableCORS() {
