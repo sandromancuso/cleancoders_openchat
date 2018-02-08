@@ -11,9 +11,9 @@ import org.openchat.OpenChat;
         IT_RegistrationAPI.class,
         IT_LoginAPI.class,
         IT_TimelineAPI.class,
-        IT_WallAPI.class,
         IT_UsersAPI.class,
-        IT_FolloweesAPI.class
+        IT_FolloweesAPI.class,
+        IT_WallAPI.class
 })
 public class APITestSuit {
 

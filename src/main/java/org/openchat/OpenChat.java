@@ -4,13 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
 
+import static org.eclipse.jetty.http.HttpStatus.NOT_IMPLEMENTED_501;
 import static spark.Spark.*;
-import static spark.Spark.internalServerError;
-import static spark.Spark.notFound;
 
 public class OpenChat {
 
     private static Logger logger = LoggerFactory.getLogger(OpenChat.class);
+
+    private static final String API_NOT_IMPLEMENTED = "API not implemented.";
+    private static final String INTERNAL_SERVER_ERROR = "Internal server error.";
 
     private Routes routes = new Routes();
 
@@ -34,15 +36,17 @@ public class OpenChat {
     private void configureInternalServerError() {
         internalServerError((req, res) -> {
             res.type("application/json");
-            res.status(501);
-            return "Internal server error";
+            res.status(NOT_IMPLEMENTED_501);
+            logger.error(INTERNAL_SERVER_ERROR);
+            return INTERNAL_SERVER_ERROR;
         });
     }
 
     private void configureNotImplemented() {
         notFound((req, res) -> {
-            res.status(501);
-            return "API not implemented.";
+            res.status(NOT_IMPLEMENTED_501);
+            logger.error(API_NOT_IMPLEMENTED);
+            return API_NOT_IMPLEMENTED;
         });
     }
 
