@@ -35,9 +35,8 @@ public class OpenChat {
 
     private void configureInternalServerError() {
         internalServerError((req, res) -> {
-            res.type("application/json");
             res.status(NOT_IMPLEMENTED_501);
-            logger.error(INTERNAL_SERVER_ERROR);
+            logger.error(INTERNAL_SERVER_ERROR + ": " + req.pathInfo());
             return INTERNAL_SERVER_ERROR;
         });
     }
@@ -45,7 +44,7 @@ public class OpenChat {
     private void configureNotImplemented() {
         notFound((req, res) -> {
             res.status(NOT_IMPLEMENTED_501);
-            logger.error(API_NOT_IMPLEMENTED);
+            logger.error(API_NOT_IMPLEMENTED + ": " + req.pathInfo());
             return API_NOT_IMPLEMENTED;
         });
     }
