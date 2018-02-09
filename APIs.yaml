@@ -15,7 +15,8 @@ basePath: /v2
 schemes:
   - http
 paths:
-  /registration:
+
+  /users:
     post:
       tags:
         - registration
@@ -40,6 +41,20 @@ paths:
             $ref: "#/definitions/User"
         "400":
           description: Username already in use.
+    get:
+      tags:
+        - user
+      summary: Return all users.
+      operationId: allUsers
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
 
   /login:
     post:
@@ -67,11 +82,11 @@ paths:
         "404":
           description: Invalid credentials.
 
-  /user/{userId}/posts:
+  /users/{userId}/timeline:
     post:
       tags:
         - post
-      summary: Create a new post
+      summary: Create a new post. All posts are moderated. Posts containing inappropriate language will be refused. For now, words considered inappropriated are - orange, ice cream, elephant. More will be added in the future.
       operationId: createPost
       consumes:
         - application/json
@@ -95,10 +110,10 @@ paths:
           description: Post created.
           schema:
             $ref: "#/definitions/Post"
+        "400":
+          description: Post contains inappropriate language.
         "404":
           description: User does not exist.
-
-  /user/{userId}/timeline:
     get:
       tags:
         - post
@@ -120,31 +135,13 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Post"
-        "404":
-          description: User does not exist.
 
-  /users:
-    get:
-      tags:
-        - user
-      summary: Return all users.
-      operationId: allUsers
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: Successful operation
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/User"
-
-  /follow:
+  /followings:
     post:
       tags:
         - user
       summary: Create a following relationship between users.
-      operationId: follow
+      operationId: following
       consumes:
         - application/json
       parameters:
@@ -158,9 +155,11 @@ paths:
         "201":
           description: Following created.
         "404":
-          description: At least one of the users does not exit..
+          description: At least one of the users does not exit.
+        "400":
+          description: Following already exist.
 
-  /user/{userId}/followees:
+  /followings/{followerId}/followees:
     get:
       tags:
         - user
@@ -170,7 +169,7 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: userId
+          name: followerId
           description: ID of the follower user.
           required: true
           type: string
@@ -182,10 +181,8 @@ paths:
             type: array
             items:
               $ref: "#/definitions/User"
-        "404":
-          description: User does not exist.
 
-  /user/{userId}/wall:
+  /users/{userId}/wall:
     get:
       tags:
         - post
@@ -207,8 +204,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Post"
-        "404":
-          description: User does not exist.
 
 definitions:
   Registration:
@@ -283,5 +278,3 @@ definitions:
         format: UUID
         description: UUID
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-
-
