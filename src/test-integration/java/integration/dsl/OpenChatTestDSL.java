@@ -33,7 +33,7 @@ public class OpenChatTestDSL {
         Response response = given()
                                 .body(withRegistrationJsonFor(user))
                             .when()
-                                .post(BASE_URL + "/registration");
+                                .post(BASE_URL + "/users");
         logger.info("Registration response: " + response.body().asString());
         String userId = userIdFrom(response);
         ITUser registeredUser = aUser().clonedFrom(user).withId(userId).build();
@@ -46,7 +46,7 @@ public class OpenChatTestDSL {
         given()
                 .body(withPostJsonContaining(post.text()))
         .when()
-                .post(BASE_URL + "/user/" + post.userId() + "/posts")
+                .post(BASE_URL + "/users/" + post.userId() + "/timeline")
         .then()
                 .statusCode(201)
                 .contentType(JSON)
@@ -62,7 +62,7 @@ public class OpenChatTestDSL {
         given()
                 .body(withFollowingJsonContaining(follower, followee))
         .when()
-                .post(BASE_URL + "/follow")
+                .post(BASE_URL + "/followings")
         .then()
                 .statusCode(201);
         logger.info("Following created");

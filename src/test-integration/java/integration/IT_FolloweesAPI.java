@@ -28,7 +28,7 @@ public class IT_FolloweesAPI {
     return_all_followees_for_a_given_user() {
         givenVivianeFollows(SAMUEL, OLIVIA);
 
-        Response response = when().get(BASE_URL + "/user/" + VIVIANE.id() + "/followees");
+        Response response = when().get(BASE_URL + "/followings/" + VIVIANE.id() + "/followees");
 
         assertAllUsersAreReturned(response, asList(SAMUEL, OLIVIA));
     }

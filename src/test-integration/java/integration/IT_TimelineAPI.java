@@ -58,7 +58,7 @@ public class IT_TimelineAPI {
     }
 
     private void whenHeChecksHisTimeline() {
-        Response response = when().get(BASE_URL + "/user/" + DAVID.id() + "/timeline");
+        Response response = when().get(BASE_URL + "/users/" + DAVID.id() + "/timeline");
         timeline = Json.parse(response.asString()).asArray();
 
         assertThat(response.statusCode()).isEqualTo(200);

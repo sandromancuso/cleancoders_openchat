@@ -17,7 +17,7 @@ public class IT_RegistrationAPI {
         given()
                 .body(withJsonContaining("Lucy", "alki324d", "About Lucy"))
         .when()
-                .post(BASE_URL + "/registration")
+                .post(BASE_URL + "/users")
         .then()
                 .statusCode(201)
                 .contentType(JSON)

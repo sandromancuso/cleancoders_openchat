@@ -78,7 +78,7 @@ public class IT_WallAPI {
     }
 
     private void whenAliceChecksHerWall() {
-        Response response = when().get(BASE_URL + "/user/" + ALICE.id() + "/wall");
+        Response response = when().get(BASE_URL + "/users/" + ALICE.id() + "/wall");
         wall = parse(response.asString()).asArray();
 
         assertThat(response.statusCode()).isEqualTo(200);
