@@ -112,8 +112,6 @@ paths:
             $ref: "#/definitions/Post"
         "400":
           description: Post contains inappropriate language.
-        "404":
-          description: User does not exist.
     get:
       tags:
         - post
