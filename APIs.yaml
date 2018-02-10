@@ -152,8 +152,6 @@ paths:
       responses:
         "201":
           description: Following created.
-        "404":
-          description: At least one of the users does not exit.
         "400":
           description: Following already exist.
 
