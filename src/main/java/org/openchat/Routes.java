@@ -4,6 +4,7 @@ import org.openchat.api.LoginAPI;
 import org.openchat.api.PostsAPI;
 import org.openchat.api.UsersAPI;
 import org.openchat.domain.posts.Clock;
+import org.openchat.domain.posts.LanguageService;
 import org.openchat.domain.posts.PostRepository;
 import org.openchat.domain.posts.PostService;
 import org.openchat.domain.users.IdGenerator;
@@ -34,7 +35,8 @@ public class Routes {
 
         Clock clock = new Clock();
         PostRepository postRepository = new PostRepository();
-        PostService postService = new PostService(idGenerator, clock, postRepository);
+        LanguageService languageService = new LanguageService();
+        PostService postService = new PostService(languageService, idGenerator, clock, postRepository);
 
         usersAPI = new UsersAPI(userService);
         loginAPI = new LoginAPI(userRepository);

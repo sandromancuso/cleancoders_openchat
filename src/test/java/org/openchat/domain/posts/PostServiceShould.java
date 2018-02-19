@@ -27,12 +27,13 @@ public class PostServiceShould {
     @Mock IdGenerator idGenerator;
     @Mock Clock clock;
     @Mock PostRepository postRepository;
+    @Mock LanguageService languageService;
 
     PostService service;
 
     @Before
     public void initialise() {
-        service = new PostService(idGenerator, clock, postRepository);
+        service = new PostService(languageService, idGenerator, clock, postRepository);
     }
 
     @Test public void
@@ -44,6 +45,13 @@ public class PostServiceShould {
 
         verify(postRepository).add(NEW_POST);
         assertThat(post).isEqualTo(NEW_POST);
-    } 
+    }
+
+    @Test(expected = InappropriateLanguageException.class) public void
+    throw_exception_when_creating_post_with_inappropriate_language() throws InappropriateLanguageException {
+        given(languageService.isInappropriate(TEXT)).willReturn(true);
+
+        service.createPost(USERID, TEXT);
+    }
 
 }
