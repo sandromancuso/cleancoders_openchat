@@ -2,7 +2,7 @@ package org.openchat.domain.posts;
 
 public class PostService {
 
-    public void createPost(String userId, String text) {
+    public Post createPost(String userId, String text) throws InappropriateLanguageException{
         throw new UnsupportedOperationException();
     }
 }
