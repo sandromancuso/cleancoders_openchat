@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.domain.users.RegistrationData;
 import org.openchat.domain.users.User;
 import org.openchat.domain.users.UserService;
+import org.openchat.domain.users.UsernameAlreadyInUseException;
 import spark.Request;
 import spark.Response;
 
@@ -44,14 +45,14 @@ public class UsersAPIShould {
     private UsersAPI usersAPI;
 
     @Before
-    public void initialise() {
+    public void initialise() throws UsernameAlreadyInUseException {
         usersAPI = new UsersAPI(userService);
         given(request.body()).willReturn(jsonContaining(REGISTRATION_DATA));
         given(userService.createUser(REGISTRATION_DATA)).willReturn(USER);
     }
 
     @Test public void
-    create_a_new_user() {
+    create_a_new_user() throws UsernameAlreadyInUseException {
         usersAPI.createUser(request, response);
 
         verify(userService).createUser(REGISTRATION_DATA);
@@ -64,6 +65,16 @@ public class UsersAPIShould {
         verify(response).status(201);
         verify(response).type("application/json");
         assertThat(result).isEqualTo(jsonContaining(USER));
+    }
+
+    @Test public void
+    return_an_error_when_creating_a_user_with_an_existing_username() throws UsernameAlreadyInUseException {
+        given(userService.createUser(REGISTRATION_DATA)).willThrow(UsernameAlreadyInUseException.class);
+
+        String result = usersAPI.createUser(request, response);
+
+        verify(response).status(400);
+        assertThat(result).isEqualTo("Username already in use.");
     }
 
     private String jsonContaining(User user) {
