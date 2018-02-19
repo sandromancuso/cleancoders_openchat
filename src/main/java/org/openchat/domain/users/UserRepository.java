@@ -18,6 +18,8 @@ public class UserRepository {
     }
 
     public Optional<User> userFor(UserCredentials userCredentials) {
-        throw new UnsupportedOperationException();
+        return users.stream()
+                    .filter(userCredentials::matches)
+                    .findFirst();
     }
 }

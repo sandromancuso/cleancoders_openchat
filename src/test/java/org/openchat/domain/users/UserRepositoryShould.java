@@ -10,6 +10,9 @@ public class UserRepositoryShould {
 
     private static final User ALICE = aUser().withUsername("Alice").build();
     private static final User CHARLIE = aUser().withUsername("Charlie").build();
+    private static final UserCredentials ALICE_CREDENTIALS = new UserCredentials(ALICE.username(), ALICE.password());
+    private static final UserCredentials CHARLIE_CREDENTIALS = new UserCredentials(CHARLIE.username(), CHARLIE.password());
+    private static final UserCredentials UNKNOWN_CREDENTIALS = new UserCredentials("unknown", "unknown");
 
     private UserRepository userRepository;
 
@@ -28,7 +31,12 @@ public class UserRepositoryShould {
 
     @Test public void
     return_user_matching_valid_credentials() {
+        userRepository.add(ALICE);
+        userRepository.add(CHARLIE);
+
         assertThat(userRepository.userFor(ALICE_CREDENTIALS)).contains(ALICE);
+        assertThat(userRepository.userFor(CHARLIE_CREDENTIALS)).contains(CHARLIE);
+        assertThat(userRepository.userFor(UNKNOWN_CREDENTIALS)).isEmpty();
     }
 
 }

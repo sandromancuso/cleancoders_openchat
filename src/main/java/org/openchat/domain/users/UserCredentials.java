@@ -20,6 +20,10 @@ public class UserCredentials {
         return password;
     }
 
+    public boolean matches(User user) {
+        return username.equals(user.username()) && password.equals(user.password());
+    }
+
     @Override
     public boolean equals(Object other) {
         return reflectionEquals(this, other);
