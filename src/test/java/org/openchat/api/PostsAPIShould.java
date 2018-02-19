@@ -70,6 +70,18 @@ public class PostsAPIShould {
         assertThat(result).isEqualTo("Post contains inappropriate language.");
     }
 
+    @Test public void
+    return_a_json_containing_posts_from_a_given_user() {
+        given(request.params("userId")).willReturn(USER_ID);
+        given(postService.postsBy(USER_ID)).willReturn(POSTS);
+
+        String result = postsAPI.postsByUser(request, response);
+
+        verify(response).status(200);
+        verify(response).type("application/json");
+        assertThat(result).isEqualTo(jsonContaining(POSTS));
+    }
+
     private String jsonContaining(Post post) {
         return new JsonObject()
                         .add("postId", post.postId())

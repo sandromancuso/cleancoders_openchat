@@ -48,6 +48,7 @@ public class Routes {
         post("users", (req, res) -> usersAPI.createUser(req, res));
         post("login", (req, res) -> loginAPI.login(req, res));
         post("users/:userId/timeline", (req, res) -> postsAPI.createPost(req, res));
+        get("users/:userId/timeline", (req, res) -> postsAPI.postsByUser(req, res));
     }
 
     private void swaggerRoutes() {

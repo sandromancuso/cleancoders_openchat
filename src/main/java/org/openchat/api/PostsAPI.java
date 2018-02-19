@@ -31,6 +31,10 @@ public class PostsAPI {
         }
     }
 
+    public String postsByUser(Request request, Response response) {
+        throw new UnsupportedOperationException();
+    }
+
     private String prepareErrorReponse(Response response) {
         response.status(BAD_REQUEST_400);
         return "Post contains inappropriate language.";
