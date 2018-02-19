@@ -1,7 +1,9 @@
 package org.openchat;
 
 import org.openchat.api.LoginAPI;
+import org.openchat.api.PostsAPI;
 import org.openchat.api.UsersAPI;
+import org.openchat.domain.posts.PostService;
 import org.openchat.domain.users.IdGenerator;
 import org.openchat.domain.users.UserRepository;
 import org.openchat.domain.users.UserService;
@@ -14,6 +16,7 @@ public class Routes {
 
     private UsersAPI usersAPI;
     private LoginAPI loginAPI;
+    private PostsAPI postsAPI;
 
     public void create() {
         createAPIs();
@@ -27,14 +30,18 @@ public class Routes {
         UserRepository userRepository = new UserRepository();
         UserService userService = new UserService(idGenerator, userRepository);
         
+        PostService postService = new PostService();
+
         usersAPI = new UsersAPI(userService);
         loginAPI = new LoginAPI(userRepository);
+        postsAPI = new PostsAPI(postService);
     }
 
     private void openchatRoutes() {
         get("status", (req, res) -> "OpenChat: OK!");
         post("users", (req, res) -> usersAPI.createUser(req, res));
         post("login", (req, res) -> loginAPI.login(req, res));
+        post("users/:userId/timeline", (req, res) -> postsAPI.createPost(req, res));
     }
 
     private void swaggerRoutes() {
