@@ -1,5 +1,6 @@
 package org.openchat;
 
+import org.openchat.api.LoginAPI;
 import org.openchat.api.UsersAPI;
 import org.openchat.domain.users.IdGenerator;
 import org.openchat.domain.users.UserRepository;
@@ -12,6 +13,7 @@ import static spark.Spark.post;
 public class Routes {
 
     private UsersAPI usersAPI;
+    private LoginAPI loginAPI;
 
     public void create() {
         createAPIs();
@@ -26,11 +28,13 @@ public class Routes {
         UserService userService = new UserService(idGenerator, userRepository);
         
         usersAPI = new UsersAPI(userService);
+        loginAPI = new LoginAPI();
     }
 
     private void openchatRoutes() {
         get("status", (req, res) -> "OpenChat: OK!");
         post("users", (req, res) -> usersAPI.createUser(req, res));
+        post("login", (req, res) -> loginAPI.login(req, res));
     }
 
     private void swaggerRoutes() {
