@@ -26,4 +26,9 @@ public class UserRepositoryShould {
         assertThat(userRepository.isUsernameTaken(CHARLIE.username())).isFalse();
     }
 
+    @Test public void
+    return_user_matching_valid_credentials() {
+        assertThat(userRepository.userFor(ALICE_CREDENTIALS)).contains(ALICE);
+    }
+
 }
