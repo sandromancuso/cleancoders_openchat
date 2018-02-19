@@ -4,4 +4,8 @@ public class UserRepository {
     public void add(User user) {
         throw new UnsupportedOperationException();
     }
+
+    public boolean isUsernameTaken(String username) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -44,5 +44,12 @@ public class UserServiceShould {
         verify(userRepository).add(USER);
         assertThat(result).isEqualTo(USER);
     }
+
+    @Test(expected = UsernameAlreadyInUseException.class) public void
+    throw_exception_when_attempting_to_create_a_duplicate_user() throws UsernameAlreadyInUseException {
+        given(userRepository.isUsernameTaken(USERNAME)).willReturn(true);
+
+        userService.createUser(REGISTRATION_DATA);
+    }
     
 }
