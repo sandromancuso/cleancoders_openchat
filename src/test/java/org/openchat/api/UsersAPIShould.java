@@ -17,6 +17,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.openchat.infrastructure.builders.UserBuilder.aUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UsersAPIShould {
@@ -28,7 +29,12 @@ public class UsersAPIShould {
 
     private static final RegistrationData REGISTRATION_DATA = new RegistrationData(USERNAME, PASSWORD, ABOUT);
 
-    private static final User USER = new User(USER_ID, USERNAME, PASSWORD, ABOUT);
+    private static final User USER = aUser()
+                                            .withId(USER_ID)
+                                            .withUsername(USERNAME)
+                                            .withPassword(PASSWORD)
+                                            .withAbout(ABOUT)
+                                            .build();
 
     @Mock Request request;
     @Mock Response response;
