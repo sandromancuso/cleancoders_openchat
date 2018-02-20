@@ -19,7 +19,9 @@ public class PostRepository {
                     .collect(toList());
     }
 
-    public List<Post> postsFor(List<String> userIds) {
-        throw new UnsupportedOperationException();
+    public List<Post> postsBy(List<String> userIds) {
+        return posts.stream()
+                    .filter(post -> userIds.contains(post.userId()))
+                    .collect(toList());
     }
 }

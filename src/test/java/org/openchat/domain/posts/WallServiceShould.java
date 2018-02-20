@@ -38,7 +38,7 @@ public class WallServiceShould {
     @Test public void
     return_wall_for_a_given_user() {
         given(userService.followeesFor(ALICE.id())).willReturn(asList(CHARLIE, LUCY));
-        given(postRepository.postsFor(asList(CHARLIE.id(), LUCY.id(), ALICE.id()))).willReturn(WALL_POSTS);
+        given(postRepository.postsBy(asList(CHARLIE.id(), LUCY.id(), ALICE.id()))).willReturn(WALL_POSTS);
 
         List<Post> result = wallService.wallFor(ALICE.id());
 

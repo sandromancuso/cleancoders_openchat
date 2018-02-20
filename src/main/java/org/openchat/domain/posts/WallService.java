@@ -22,7 +22,7 @@ public class WallService {
                                         .map(user -> user.id())
                                         .collect(toList());
         userIds.add(userId);
-        List<Post> wallPosts = postRepository.postsFor(userIds);
+        List<Post> wallPosts = postRepository.postsBy(userIds);
         return wallPosts;
     }
 }

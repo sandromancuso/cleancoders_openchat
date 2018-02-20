@@ -6,6 +6,7 @@ import org.openchat.domain.users.User;
 
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openchat.infrastructure.builders.PostBuilder.aPost;
 import static org.openchat.infrastructure.builders.UserBuilder.aUser;
@@ -25,17 +26,23 @@ public class PostRepositoryShould {
     @Before
     public void initialise() {
         postRepository = new PostRepository();
+        postRepository.add(ALICE_POST_1);
+        postRepository.add(CHARLIE_POST_1);
+        postRepository.add(ALICE_POST_2);
     }
 
     @Test public void
     return_posts_for_a_given_user_in_reverse_chronological_order() {
-        postRepository.add(ALICE_POST_1);
-        postRepository.add(CHARLIE_POST_1);
-        postRepository.add(ALICE_POST_2);
-
         List<Post> result = postRepository.postsBy(ALICE.id());
 
         assertThat(result).containsExactly(ALICE_POST_2, ALICE_POST_1);
+    }
+
+    @Test public void
+    return_a_list_of_posts_for_a_list_of_users() {
+        List<Post> result = postRepository.postsBy(asList(ALICE.id(), CHARLIE.id()));
+
+        assertThat(result).containsExactly(ALICE_POST_2, CHARLIE_POST_1, ALICE_POST_1);
     }
 
 }
