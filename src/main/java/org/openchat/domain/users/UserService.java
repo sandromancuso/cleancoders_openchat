@@ -36,4 +36,8 @@ public class UserService {
                         registrationData.password(),
                         registrationData.about());
     }
+
+    public void addFollowing(Following following) {
+        throw new UnsupportedOperationException();
+    }
 }
