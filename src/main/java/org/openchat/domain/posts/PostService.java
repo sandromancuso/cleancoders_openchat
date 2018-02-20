@@ -3,6 +3,7 @@ package org.openchat.domain.posts;
 import org.openchat.domain.users.IdGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PostService {
     private LanguageService languageService;
@@ -37,5 +38,9 @@ public class PostService {
         if (languageService.isInappropriate(text)) {
             throw new InappropriateLanguageException();
         }
+    }
+
+    public List<Post> postsBy(String userId) {
+        throw new UnsupportedOperationException();
     }
 }

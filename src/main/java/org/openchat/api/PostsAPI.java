@@ -8,8 +8,9 @@ import org.openchat.domain.posts.PostService;
 import spark.Request;
 import spark.Response;
 
-import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
-import static org.eclipse.jetty.http.HttpStatus.CREATED_201;
+import java.util.List;
+
+import static org.eclipse.jetty.http.HttpStatus.*;
 import static org.openchat.infrastructure.json.PostJson.toJson;
 
 public class PostsAPI {
@@ -32,7 +33,11 @@ public class PostsAPI {
     }
 
     public String postsByUser(Request request, Response response) {
-        throw new UnsupportedOperationException();
+        String userId = request.params("userId");
+        List<Post> posts = postService.postsBy(userId);
+        response.status(OK_200);
+        response.type("application/json");
+        return toJson(posts);
     }
 
     private String prepareErrorReponse(Response response) {

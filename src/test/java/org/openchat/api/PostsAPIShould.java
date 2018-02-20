@@ -1,5 +1,6 @@
 package org.openchat.api;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +14,10 @@ import spark.Request;
 import spark.Response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -28,6 +31,7 @@ public class PostsAPIShould {
     private static final LocalDateTime DATE_TIME = LocalDateTime.of(2018, 1, 10, 14, 30, 0);
 
     private static final Post POST = new Post(POST_ID, USER_ID, POST_TEXT, DATE_TIME);
+    private static final List<Post> POSTS = asList(POST);
 
     @Mock Request request;
     @Mock Response response;
@@ -82,13 +86,22 @@ public class PostsAPIShould {
         assertThat(result).isEqualTo(jsonContaining(POSTS));
     }
 
+    private String jsonContaining(List<Post> posts) {
+        JsonArray json = new JsonArray();
+        posts.forEach(post -> json.add(jsonObjectFor(post)));
+        return json.toString();
+    }
+
     private String jsonContaining(Post post) {
+        return jsonObjectFor(post).toString();
+    }
+
+    private JsonObject jsonObjectFor(Post post) {
         return new JsonObject()
                         .add("postId", post.postId())
                         .add("userId", post.userId())
                         .add("text", post.text())
-                        .add("dateTime", "2018-01-10T14:30:00Z")
-                        .toString();
+                        .add("dateTime", "2018-01-10T14:30:00Z");
     }
 
     private String jsonContaining(String text) {
