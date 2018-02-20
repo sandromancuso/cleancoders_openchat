@@ -14,6 +14,9 @@ public class UserRepositoryShould {
     private static final UserCredentials CHARLIE_CREDENTIALS = new UserCredentials(CHARLIE.username(), CHARLIE.password());
     private static final UserCredentials UNKNOWN_CREDENTIALS = new UserCredentials("unknown", "unknown");
 
+    private static final Following ALICE_FOLLOWS_CHARLIE = new Following(ALICE.id(), CHARLIE.id());
+    private static final Following CHARLIE_FOLLOWS_ALICE = new Following(CHARLIE.id(), ALICE.id());
+
     private UserRepository userRepository;
 
     @Before
@@ -45,6 +48,14 @@ public class UserRepositoryShould {
         userRepository.add(CHARLIE);
 
         assertThat(userRepository.all()).containsExactly(ALICE, CHARLIE);
+    }
+
+    @Test public void
+    detect_a_following_already_exists() {
+        userRepository.add(ALICE_FOLLOWS_CHARLIE);
+
+        assertThat(userRepository.hasFollowing(ALICE_FOLLOWS_CHARLIE)).isTrue();
+        assertThat(userRepository.hasFollowing(CHARLIE_FOLLOWS_ALICE)).isFalse();
     }
 
 }

@@ -23,6 +23,13 @@ public class UserService {
         return userRepository.all();
     }
 
+    public void addFollowing(Following following) throws FollowingAlreadyExistsException{
+        if (userRepository.hasFollowing(following)) {
+            throw new FollowingAlreadyExistsException();
+        }
+        userRepository.add(following);
+    }
+
     private void validateUsername(String username) throws UsernameAlreadyInUseException {
         if (userRepository.isUsernameTaken(username)) {
             throw new UsernameAlreadyInUseException();
@@ -35,9 +42,5 @@ public class UserService {
                         registrationData.username(),
                         registrationData.password(),
                         registrationData.about());
-    }
-
-    public void addFollowing(Following following) {
-        throw new UnsupportedOperationException();
     }
 }

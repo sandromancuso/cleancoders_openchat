@@ -27,6 +27,7 @@ public class UserServiceShould {
 
     private static final User USER = new User(USER_ID, USERNAME, PASSWORD, ABOUT);
     private static final List<User> USERS = asList(USER);
+    private static final Following FOLLOWING = new Following("followerId", "followeeId");
 
     @Mock IdGenerator idGenerator;
     @Mock UserRepository userRepository;
@@ -62,6 +63,20 @@ public class UserServiceShould {
         List<User> result = userService.allUsers();
 
         assertThat(result).isEqualTo(USERS);
+    }
+
+    @Test public void
+    register_a_following() throws FollowingAlreadyExistsException {
+        userService.addFollowing(FOLLOWING);
+
+        verify(userRepository).add(FOLLOWING);
+    }
+
+    @Test(expected = FollowingAlreadyExistsException.class) public void
+    throw_exception_when_creating_an_existing_following() throws FollowingAlreadyExistsException {
+        given(userRepository.hasFollowing(FOLLOWING)).willReturn(true);
+
+        userService.addFollowing(FOLLOWING);
     }
     
 }
