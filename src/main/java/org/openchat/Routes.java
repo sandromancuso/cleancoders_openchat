@@ -1,13 +1,7 @@
 package org.openchat;
 
-import org.openchat.api.FollowingAPI;
-import org.openchat.api.LoginAPI;
-import org.openchat.api.PostsAPI;
-import org.openchat.api.UsersAPI;
-import org.openchat.domain.posts.Clock;
-import org.openchat.domain.posts.LanguageService;
-import org.openchat.domain.posts.PostRepository;
-import org.openchat.domain.posts.PostService;
+import org.openchat.api.*;
+import org.openchat.domain.posts.*;
 import org.openchat.domain.users.IdGenerator;
 import org.openchat.domain.users.UserRepository;
 import org.openchat.domain.users.UserService;
@@ -22,6 +16,7 @@ public class Routes {
     private LoginAPI loginAPI;
     private PostsAPI postsAPI;
     private FollowingAPI followingAPI;
+    private WallAPI wallAPI;
 
     public void create() {
         createAPIs();
@@ -39,11 +34,13 @@ public class Routes {
         PostRepository postRepository = new PostRepository();
         LanguageService languageService = new LanguageService();
         PostService postService = new PostService(languageService, idGenerator, clock, postRepository);
+        WallService wallService = new WallService(userService, postRepository);
 
         usersAPI = new UsersAPI(userService);
         loginAPI = new LoginAPI(userRepository);
         postsAPI = new PostsAPI(postService);
         followingAPI = new FollowingAPI(userService);
+        wallAPI = new WallAPI(wallService);
     }
 
     private void openchatRoutes() {
@@ -55,6 +52,7 @@ public class Routes {
         get("users/:userId/timeline", (req, res) -> postsAPI.postsByUser(req, res));
         post("followings", (req, res) -> followingAPI.createFollowing(req, res));
         get("followings/:followerId/followees", (req, res) -> followingAPI.getFollowees(req, res));
+        get("users/:userId/wall", (req, res) -> wallAPI.wallByUser(req, res));
     }
 
     private void swaggerRoutes() {

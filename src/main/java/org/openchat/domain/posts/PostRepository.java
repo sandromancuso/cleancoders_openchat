@@ -18,4 +18,8 @@ public class PostRepository {
                     .filter(post -> post.userId().equals(userId))
                     .collect(toList());
     }
+
+    public List<Post> postsFor(List<String> userIds) {
+        throw new UnsupportedOperationException();
+    }
 }
