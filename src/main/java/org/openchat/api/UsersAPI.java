@@ -9,8 +9,9 @@ import org.openchat.domain.users.UsernameAlreadyInUseException;
 import spark.Request;
 import spark.Response;
 
-import static org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400;
-import static org.eclipse.jetty.http.HttpStatus.CREATED_201;
+import java.util.List;
+
+import static org.eclipse.jetty.http.HttpStatus.*;
 import static org.openchat.infrastructure.json.UserJson.jsonFor;
 
 public class UsersAPI {
@@ -33,6 +34,13 @@ public class UsersAPI {
             response.status(BAD_REQUEST_400);
             return "Username already in use.";
         }
+    }
+
+    public String allUsers(Request request, Response response) {
+        List<User> users = userService.allUsers();
+        response.status(OK_200);
+        response.type("application/json");
+        return jsonFor(users);
     }
 
     private RegistrationData registrationDataFrom(Request request) {

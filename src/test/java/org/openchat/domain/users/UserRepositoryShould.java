@@ -38,5 +38,13 @@ public class UserRepositoryShould {
         assertThat(userRepository.userFor(CHARLIE_CREDENTIALS)).contains(CHARLIE);
         assertThat(userRepository.userFor(UNKNOWN_CREDENTIALS)).isEmpty();
     }
+    
+    @Test public void
+    return_all_users() {
+        userRepository.add(ALICE);
+        userRepository.add(CHARLIE);
+
+        assertThat(userRepository.all()).containsExactly(ALICE, CHARLIE);
+    }
 
 }

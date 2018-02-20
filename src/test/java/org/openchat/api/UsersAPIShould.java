@@ -1,5 +1,6 @@
 package org.openchat.api;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +14,10 @@ import org.openchat.domain.users.UsernameAlreadyInUseException;
 import spark.Request;
 import spark.Response;
 
+import java.util.List;
 import java.util.UUID;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -36,6 +39,7 @@ public class UsersAPIShould {
                                             .withPassword(PASSWORD)
                                             .withAbout(ABOUT)
                                             .build();
+    private static final List<User> USERS = asList(USER);
 
     @Mock Request request;
     @Mock Response response;
@@ -77,12 +81,32 @@ public class UsersAPIShould {
         assertThat(result).isEqualTo("Username already in use.");
     }
 
+    @Test public void
+    return_all_users() {
+        given(userService.allUsers()).willReturn(USERS);
+
+        String result = usersAPI.allUsers(request, response);
+
+        verify(response).status(200);
+        verify(response).type("application/json");
+        assertThat(result).isEqualTo(jsonContaining(USERS));
+    }
+
+    private String jsonContaining(List<User> users) {
+        JsonArray json = new JsonArray();
+        users.forEach(user -> json.add(jsonObjectFor(user)));
+        return json.toString();
+    }
+
     private String jsonContaining(User user) {
+        return jsonObjectFor(user).toString();
+    }
+
+    private JsonObject jsonObjectFor(User user) {
         return new JsonObject()
                         .add("id", user.id())
                         .add("username", user.username())
-                        .add("about", user.about())
-                        .toString();
+                        .add("about", user.about());
     }
 
     private String jsonContaining(RegistrationData registrationData) {

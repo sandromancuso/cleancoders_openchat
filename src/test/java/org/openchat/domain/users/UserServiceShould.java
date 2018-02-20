@@ -6,8 +6,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
 import java.util.UUID;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -24,6 +26,7 @@ public class UserServiceShould {
                                             new RegistrationData(USERNAME, PASSWORD, ABOUT);
 
     private static final User USER = new User(USER_ID, USERNAME, PASSWORD, ABOUT);
+    private static final List<User> USERS = asList(USER);
 
     @Mock IdGenerator idGenerator;
     @Mock UserRepository userRepository;
@@ -50,6 +53,15 @@ public class UserServiceShould {
         given(userRepository.isUsernameTaken(USERNAME)).willReturn(true);
 
         userService.createUser(REGISTRATION_DATA);
+    }
+    
+    @Test public void
+    return_all_users() {
+        given(userRepository.all()).willReturn(USERS);
+
+        List<User> result = userService.allUsers();
+
+        assertThat(result).isEqualTo(USERS);
     }
     
 }

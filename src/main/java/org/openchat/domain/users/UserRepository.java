@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.unmodifiableList;
+
 public class UserRepository {
 
     private List<User> users = new ArrayList<>();
@@ -21,5 +23,9 @@ public class UserRepository {
         return users.stream()
                     .filter(userCredentials::matches)
                     .findFirst();
+    }
+
+    public List<User> all() {
+        return unmodifiableList(users);
     }
 }

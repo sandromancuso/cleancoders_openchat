@@ -46,6 +46,7 @@ public class Routes {
     private void openchatRoutes() {
         get("status", (req, res) -> "OpenChat: OK!");
         post("users", (req, res) -> usersAPI.createUser(req, res));
+        get("users", (req, res) -> usersAPI.allUsers(req, res));
         post("login", (req, res) -> loginAPI.login(req, res));
         post("users/:userId/timeline", (req, res) -> postsAPI.createPost(req, res));
         get("users/:userId/timeline", (req, res) -> postsAPI.postsByUser(req, res));

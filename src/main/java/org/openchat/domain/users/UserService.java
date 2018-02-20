@@ -1,5 +1,7 @@
 package org.openchat.domain.users;
 
+import java.util.List;
+
 public class UserService {
     private final IdGenerator idGenerator;
     private final UserRepository userRepository;
@@ -15,6 +17,10 @@ public class UserService {
         User user = createUserFrom(registrationData);
         userRepository.add(user);
         return user;
+    }
+
+    public List<User> allUsers() {
+        return userRepository.all();
     }
 
     private void validateUsername(String username) throws UsernameAlreadyInUseException {
