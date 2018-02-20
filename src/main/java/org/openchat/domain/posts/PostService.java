@@ -28,6 +28,10 @@ public class PostService {
         return post;
     }
 
+    public List<Post> postsBy(String userId) {
+        return repository.postsBy(userId);
+    }
+
     private Post createNewPost(String userId, String text) {
         String postId = idGenerator.next();
         LocalDateTime now = clock.now();
@@ -38,9 +42,5 @@ public class PostService {
         if (languageService.isInappropriate(text)) {
             throw new InappropriateLanguageException();
         }
-    }
-
-    public List<Post> postsBy(String userId) {
-        throw new UnsupportedOperationException();
     }
 }
