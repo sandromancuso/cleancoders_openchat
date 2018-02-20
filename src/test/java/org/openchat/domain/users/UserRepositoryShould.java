@@ -3,6 +3,8 @@ package org.openchat.domain.users;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openchat.infrastructure.builders.UserBuilder.aUser;
 
@@ -10,12 +12,19 @@ public class UserRepositoryShould {
 
     private static final User ALICE = aUser().withUsername("Alice").build();
     private static final User CHARLIE = aUser().withUsername("Charlie").build();
+    private static final User BOB = aUser().build();
+    private static final User LUCY = aUser().build();
+
     private static final UserCredentials ALICE_CREDENTIALS = new UserCredentials(ALICE.username(), ALICE.password());
     private static final UserCredentials CHARLIE_CREDENTIALS = new UserCredentials(CHARLIE.username(), CHARLIE.password());
     private static final UserCredentials UNKNOWN_CREDENTIALS = new UserCredentials("unknown", "unknown");
 
     private static final Following ALICE_FOLLOWS_CHARLIE = new Following(ALICE.id(), CHARLIE.id());
     private static final Following CHARLIE_FOLLOWS_ALICE = new Following(CHARLIE.id(), ALICE.id());
+
+    private static final Following BOB_FOLLOWS_CHARLIE = new Following(BOB.id(), CHARLIE.id());
+    private static final Following ALICE_FOLLOWS_LUCY = new Following(ALICE.id(), LUCY.id());
+    private static final Following LUCY_FOLLOWS_BOB = new Following(LUCY.id(), BOB.id());
 
     private UserRepository userRepository;
 
@@ -56,6 +65,23 @@ public class UserRepositoryShould {
 
         assertThat(userRepository.hasFollowing(ALICE_FOLLOWS_CHARLIE)).isTrue();
         assertThat(userRepository.hasFollowing(CHARLIE_FOLLOWS_ALICE)).isFalse();
+    }
+    
+    @Test public void
+    return_followees_for_a_given_follower_id() {
+        userRepository.add(ALICE);
+        userRepository.add(CHARLIE);
+        userRepository.add(BOB);
+        userRepository.add(LUCY);
+
+        userRepository.add(ALICE_FOLLOWS_CHARLIE);
+        userRepository.add(BOB_FOLLOWS_CHARLIE);
+        userRepository.add(ALICE_FOLLOWS_LUCY);
+        userRepository.add(LUCY_FOLLOWS_BOB);
+
+        List<User> result = userRepository.followeesBy(ALICE.id());
+
+        assertThat(result).containsExactly(CHARLIE, LUCY);
     }
 
 }

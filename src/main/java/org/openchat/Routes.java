@@ -54,6 +54,7 @@ public class Routes {
         post("users/:userId/timeline", (req, res) -> postsAPI.createPost(req, res));
         get("users/:userId/timeline", (req, res) -> postsAPI.postsByUser(req, res));
         post("followings", (req, res) -> followingAPI.createFollowing(req, res));
+        get("followings/:followerId/followees", (req, res) -> followingAPI.getFollowees(req, res));
     }
 
     private void swaggerRoutes() {

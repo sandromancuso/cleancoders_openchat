@@ -30,6 +30,10 @@ public class UserService {
         userRepository.add(following);
     }
 
+    public List<User> followeesFor(String followerId) {
+        return userRepository.followeesBy(followerId);
+    }
+
     private void validateUsername(String username) throws UsernameAlreadyInUseException {
         if (userRepository.isUsernameTaken(username)) {
             throw new UsernameAlreadyInUseException();

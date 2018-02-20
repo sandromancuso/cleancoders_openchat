@@ -28,6 +28,7 @@ public class UserServiceShould {
     private static final User USER = new User(USER_ID, USERNAME, PASSWORD, ABOUT);
     private static final List<User> USERS = asList(USER);
     private static final Following FOLLOWING = new Following("followerId", "followeeId");
+    private static final List<User> FOLLOWEES = USERS;
 
     @Mock IdGenerator idGenerator;
     @Mock UserRepository userRepository;
@@ -77,6 +78,13 @@ public class UserServiceShould {
         given(userRepository.hasFollowing(FOLLOWING)).willReturn(true);
 
         userService.addFollowing(FOLLOWING);
+    }
+    
+    @Test public void
+    return_users_followed_by_a_given_user() {
+        given(userRepository.followeesBy(USER_ID)).willReturn(FOLLOWEES);
+
+        assertThat(userService.followeesFor(USER_ID)).isEqualTo(FOLLOWEES);
     }
     
 }
