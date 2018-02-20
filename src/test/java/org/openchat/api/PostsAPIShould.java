@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.domain.posts.InappropriateLanguageException;
 import org.openchat.domain.posts.Post;
 import org.openchat.domain.posts.PostService;
+import org.openchat.infrastructure.builders.PostBuilder;
 import spark.Request;
 import spark.Response;
 
@@ -30,7 +31,7 @@ public class PostsAPIShould {
     private static final String POST_TEXT = "Some text";
     private static final LocalDateTime DATE_TIME = LocalDateTime.of(2018, 1, 10, 14, 30, 0);
 
-    private static final Post POST = new Post(POST_ID, USER_ID, POST_TEXT, DATE_TIME);
+    private static final Post POST = new PostBuilder().withPostId(POST_ID).withUserId(USER_ID).withText(POST_TEXT).withDateTime(DATE_TIME).build();
     private static final List<Post> POSTS = asList(POST);
 
     @Mock Request request;

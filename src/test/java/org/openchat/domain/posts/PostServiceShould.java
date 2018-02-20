@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openchat.domain.users.IdGenerator;
+import org.openchat.infrastructure.builders.PostBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +25,7 @@ public class PostServiceShould {
     private static final String TEXT = "text";
     private static final LocalDateTime DATE_TIME = LocalDateTime.now();
 
-    private static final Post NEW_POST = new Post(POSTID, USER_ID, "text", DATE_TIME);
+    private static final Post NEW_POST = new PostBuilder().withPostId(POSTID).withUserId(USER_ID).withText("text").withDateTime(DATE_TIME).build();
     private static final List<Post> POSTS = asList(NEW_POST);
 
     @Mock IdGenerator idGenerator;
