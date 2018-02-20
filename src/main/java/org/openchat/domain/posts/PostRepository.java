@@ -1,14 +1,21 @@
 package org.openchat.domain.posts;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class PostRepository {
 
-    public void add(Post post) {
+    private List<Post> posts = new LinkedList<>();
 
+    public void add(Post post) {
+        posts.add(0, post);
     }
 
     public List<Post> postsBy(String userId) {
-        throw new UnsupportedOperationException();
+        return posts.stream()
+                    .filter(post -> post.userId().equals(userId))
+                    .collect(toList());
     }
 }
