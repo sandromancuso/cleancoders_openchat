@@ -8,6 +8,12 @@ public class User {
   public String password;
   public String about;
 
+  public User(String username, String password, String about) {
+    this.username = username;
+    this.password = password;
+    this.about = about;
+  }
+
   public boolean equals(Object other) {
     return reflectionEquals(this, other);
   }

@@ -4,15 +4,15 @@ import org.openchat.entities.User;
 
 public class CreateUser {
   public User createUser(CreateUserRequest request) {
-    if (Context.repository.getUser(request.username) != null)
+    if (UseCaseContext.repository.getUser(request.username) != null)
       throw new Repository.DuplicateUser();
     User user = makeUser(request);
-    Context.repository.addUser(user);
+    UseCaseContext.repository.addUser(user);
     return user;
   }
 
   private User makeUser(CreateUserRequest request) {
-    User user = new User();
+    User user = new org.openchat.entities.UserBuilder().createUser();
     user.username = request.username;
     user.password = request.password;
     user.about = request.about;

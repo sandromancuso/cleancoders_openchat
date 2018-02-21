@@ -3,10 +3,8 @@ package org.openchat.usecases;
 import org.junit.Before;
 import org.junit.Test;
 import org.openchat.entities.User;
-import org.openchat.repositories.InMemoryRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CreateUserTest {
   private CreateUser useCase;
@@ -15,7 +13,7 @@ public class CreateUserTest {
 
   @Before
   public void setUp() throws Exception {
-    Context.repository = new InMemoryRepository();
+    UseCaseContext.initialize();
     useCase = new CreateUser();
     request = new CreateUserRequest();
     request.username = "username";
@@ -33,7 +31,7 @@ public class CreateUserTest {
 
   @Test
   public void createdUserIsRegistered() throws Exception {
-    User fetchedUser = Context.repository.getUser("username");
+    User fetchedUser = UseCaseContext.repository.getUser("username");
     assertThat(fetchedUser).isEqualTo(user);
   }
 

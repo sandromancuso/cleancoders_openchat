@@ -5,6 +5,7 @@ import com.eclipsesource.json.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.openchat.entities.User;
+import org.openchat.entities.UserBuilder;
 import org.openchat.usecases.CreateUserRequest;
 import spark.Response;
 
@@ -16,6 +17,7 @@ public class UserApiTest {
 
   @Before
   public void setUp() throws Exception {
+    APIContext.initialize();
     userApi = new UserApi();
   }
 
@@ -43,12 +45,12 @@ public class UserApiTest {
   @Test
   public void createsAppropriateCreateUserResponse() throws Exception {
     StubResponse res = new StubResponse();
-    User user = new User();
+    User user = new UserBuilder().build();
     user.username = "username";
     user.password = "don't care";
     user.about = "about";
 
-    APIContext.makeUUIDFor("username");
+    APIContext.instance.makeUUIDForUser("username");
 
     String body = userApi.makeCreatedUserResponse(user, res);
     JsonObject actual = Json.parse(body).asObject();
@@ -58,7 +60,7 @@ public class UserApiTest {
 
     assertThat(actual.getString("username", "")).isEqualTo("username");
     assertThat(actual.getString("about", "")).isEqualTo("about");
-    assertThat(actual.getString("id", "")).isEqualTo(APIContext.getUUIDForUser("username"));
+    assertThat(actual.getString("id", "")).isEqualTo(APIContext.instance.getUUIDForUser("username"));
   }
 
   class StubResponse extends Response {

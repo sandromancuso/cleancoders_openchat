@@ -14,7 +14,7 @@ public class InMemoryRepository implements Repository {
   }
 
   public void addUser(User user) {
-    User copy = new User();
+    User copy = new org.openchat.entities.UserBuilder().createUser();
     copy.username = user.username;
     copy.password = user.password;
     copy.about = user.about;
