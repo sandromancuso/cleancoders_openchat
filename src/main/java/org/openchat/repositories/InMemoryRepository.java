@@ -13,11 +13,11 @@ public class InMemoryRepository implements Repository {
     return users.get(username);
   }
 
-  public User addUser(User user) {
+  public void addUser(User user) {
     User copy = new User();
     copy.username = user.username;
     copy.password = user.password;
     copy.about = user.about;
-    return users.put(user.username, copy);
+    users.put(user.username, copy);
   }
 }

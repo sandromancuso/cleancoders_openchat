@@ -6,6 +6,7 @@ import org.openchat.entities.User;
 import org.openchat.repositories.InMemoryRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CreateUserTest {
   private CreateUser useCase;
@@ -32,8 +33,12 @@ public class CreateUserTest {
 
   @Test
   public void createdUserIsRegistered() throws Exception {
-    User u = Context.repository.getUser("username");
-    assertThat(u).isEqualTo(user);
+    User fetchedUser = Context.repository.getUser("username");
+    assertThat(fetchedUser).isEqualTo(user);
+  }
 
+  @Test(expected=Repository.DuplicateUser.class)
+  public void throwsExceptionIfDuplicateIsCreated() throws Exception {
+    useCase.createUser(request);
   }
 }
