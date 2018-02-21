@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.openchat.entities.User;
 import org.openchat.entities.UserBuilder;
 import org.openchat.usecases.CreateUserRequest;
-import spark.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -61,27 +60,6 @@ public class UserApiTest {
     assertThat(actual.getString("username", "")).isEqualTo("username");
     assertThat(actual.getString("about", "")).isEqualTo("about");
     assertThat(actual.getString("id", "")).isEqualTo(APIContext.instance.getUUIDForUser("username"));
-  }
-
-  class StubResponse extends Response {
-    private int status = -1;
-    private String type = "TILT";
-
-    public String type() {
-      return type;
-    }
-
-    public void type(String contentType) {
-      type = contentType;
-    }
-
-    public void status(int statusCode) {
-      status = statusCode;
-    }
-
-    public int status() {
-      return status;
-    }
   }
 
 }

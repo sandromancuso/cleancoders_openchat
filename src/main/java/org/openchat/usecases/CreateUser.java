@@ -12,7 +12,7 @@ public class CreateUser {
   }
 
   private User makeUser(CreateUserRequest request) {
-    User user = new org.openchat.entities.UserBuilder().createUser();
+    User user = new User();
     user.username = request.username;
     user.password = request.password;
     user.about = request.about;
