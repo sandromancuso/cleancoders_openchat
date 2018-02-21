@@ -8,6 +8,7 @@ public class CreateUser {
     user.username = request.username;
     user.password = request.password;
     user.about = request.about;
+    Context.repository.addUser(user);
     return user;
   }
 }
