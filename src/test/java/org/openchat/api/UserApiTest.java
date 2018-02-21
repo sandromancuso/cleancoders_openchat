@@ -48,19 +48,17 @@ public class UserApiTest {
     user.password = "don't care";
     user.about = "about";
 
+    APIContext.makeUUIDFor("username");
+
     String body = userApi.makeCreatedUserResponse(user, res);
     JsonObject actual = Json.parse(body).asObject();
-    
+
     assertThat(res.status()).isEqualTo(201);
     assertThat(res.type()).isEqualTo("application/json");
 
-    JsonObject expected = new JsonObject()
-                              .add("username", "username")
-                              .add("id", "stupidUUID")
-                              .add("about", "about");
-
-    assertThat().isEqualTo();
-
+    assertThat(actual.getString("username", "")).isEqualTo("username");
+    assertThat(actual.getString("about", "")).isEqualTo("about");
+    assertThat(actual.getString("id", "")).isEqualTo(APIContext.getUUIDForUser("username"));
   }
 
   class StubResponse extends Response {

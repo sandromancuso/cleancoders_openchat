@@ -16,6 +16,7 @@ public class UserApi {
 
     try {
       User user = useCase.createUser(createUserRequest);
+      APIContext.instance.makeUUIDFor(user.username);
       return makeCreatedUserResponse(user, res);
     } catch (Repository.DuplicateUser e) {
       return makeDuplicateUserResponse(res);
@@ -34,7 +35,7 @@ public class UserApi {
     String body = new JsonObject()
                         .add("username", user.username)
                         .add("about", user.about)
-                        .add("id", "some dumb UUID")
+                        .add("id", APIContext.getUUIDForUser(user.username))
                         .toString();
     return body;
   }
