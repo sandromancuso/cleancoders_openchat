@@ -18,17 +18,25 @@ public class UserApi {
       User user = useCase.createUser(createUserRequest);
       return makeCreatedUserResponse(user, res);
     } catch (Repository.DuplicateUser e) {
-      return makeDuplicateUserReponse(res);
+      return makeDuplicateUserResponse(res);
     }
   }
 
-  protected String makeDuplicateUserReponse(Response res) {
+  protected String makeDuplicateUserResponse(Response res) {
     res.status(400);
     return "Username already in use.";
   }
 
   protected String makeCreatedUserResponse(User user, Response res) {
-    return null;
+    res.status(201);
+    res.type("application/json");
+
+    String body = new JsonObject()
+                        .add("username", user.username)
+                        .add("about", user.about)
+                        .add("id", "some dumb UUID")
+                        .toString();
+    return body;
   }
 
   protected CreateUserRequest makeCreateUserRequest(String jsonString) {
