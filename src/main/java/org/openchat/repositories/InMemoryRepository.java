@@ -41,6 +41,7 @@ public class InMemoryRepository implements Repository {
     copy.username = document.username;
     copy.text = document.text;
     copy.id = document.id;
+    copy.dateTime = document.dateTime;
 
     documents.put(document.id, copy);
   }

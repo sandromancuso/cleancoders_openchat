@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openchat.entities.Document;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
@@ -22,11 +24,13 @@ public class PostDocumentTest {
 
   @Test
   public void canPostAnyDocument() throws Exception {
+    LocalDateTime now = LocalDateTime.now();
     Document createdDocument = postDocument.post("username", "text");
     Document fetchedDocument = UseCaseContext.repository.getDocument(createdDocument.id);
     assertThat(fetchedDocument.username).isEqualTo("username");
     assertThat(fetchedDocument.text).isEqualTo("text");
     assertThat(fetchedDocument.id).isEqualTo(createdDocument.id);
+    assertThat(fetchedDocument.dateTime).isEqualTo(createdDocument.dateTime);
   }
 
   @Test
