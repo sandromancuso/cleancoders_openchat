@@ -4,6 +4,7 @@ import org.openchat.entities.Document;
 import org.openchat.entities.User;
 import org.openchat.usecases.Repository;
 
+import javax.print.Doc;
 import java.util.*;
 
 public class InMemoryRepository implements Repository {
@@ -44,5 +45,15 @@ public class InMemoryRepository implements Repository {
     copy.dateTime = document.dateTime;
 
     documents.put(document.id, copy);
+  }
+
+  public List<Document> getDocsForUser(String username) {
+    Collection<Document> allDocs = documents.values();
+    List<Document> result = new ArrayList<>();
+    for (Document d : allDocs) {
+      if (d.username.equals(username))
+        result.add(d);
+    }
+    return  result;
   }
 }

@@ -12,6 +12,7 @@ public interface Repository {
   Document getDocument(Long id);
   Long getNextDocumentId();
   void addDocument(Document document);
+  List<Document> getDocsForUser(String username);
 
   class DuplicateUser extends RuntimeException {
   }
