@@ -1,6 +1,7 @@
 package org.openchat;
 
 import org.openchat.api.*;
+import org.openchat.usecases.Subscribe;
 import org.openchat.usecases.UseCaseContext;
 
 import static spark.Spark.*;
@@ -14,6 +15,7 @@ public class Routes {
     private GetUsersAPI getUsersApi;
     private PostDocumentAPI postDocumentApi;
     private GetDocsForUserAPI getDocsForUserApi;
+    private SubscribeAPI subscribeApi;
 
     public void create() {
         UseCaseContext.initialize();
@@ -23,6 +25,7 @@ public class Routes {
         getUsersApi = new GetUsersAPI();
         postDocumentApi = new PostDocumentAPI();
         getDocsForUserApi = new GetDocsForUserAPI();
+        subscribeApi = new SubscribeAPI();
         openchatRoutes();
     }
 
@@ -35,6 +38,7 @@ public class Routes {
         get("users", (req, res) -> getUsersApi.exec(req, res));
         post("users/:userId/timeline", (req, res) -> postDocumentApi.exec(req, res));
         get("users/:userId/timeline", (req, res) -> getDocsForUserApi.exec(req, res));
+        post("followings", (req, res) -> subscribeApi.exec(req, res));
     }
 
 }

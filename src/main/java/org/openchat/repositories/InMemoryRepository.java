@@ -1,6 +1,7 @@
 package org.openchat.repositories;
 
 import org.openchat.entities.Document;
+import org.openchat.entities.Subscription;
 import org.openchat.entities.User;
 import org.openchat.usecases.Repository;
 
@@ -10,6 +11,7 @@ import java.util.*;
 public class InMemoryRepository implements Repository {
   private Map<String, User> users = new HashMap<>();
   private Map<Long, Document> documents = new HashMap<>();
+  private List<Subscription> subscriptions = new ArrayList<>();
   private Long nextId = 0L;
 
   public User getUser(String username) {
@@ -57,7 +59,11 @@ public class InMemoryRepository implements Repository {
     return  result;
   }
 
-  public boolean follows(String subscriber, String author) {
-    return false;
+  public boolean follows(String subscriberName, String authorName) {
+    return subscriptions.contains(new Subscription(subscriberName, authorName));
+  }
+
+  public void addSubscription(String subscriberName, String authorName) {
+    subscriptions.add(new Subscription(subscriberName, authorName));
   }
 }
