@@ -16,6 +16,7 @@ public class Routes {
     private PostDocumentAPI postDocumentApi;
     private GetDocsForUserAPI getDocsForUserApi;
     private SubscribeAPI subscribeApi;
+    private GetSubscribedAuthorsAPI getSubscribedAuthorsApi;
 
     public void create() {
         UseCaseContext.initialize();
@@ -26,6 +27,7 @@ public class Routes {
         postDocumentApi = new PostDocumentAPI();
         getDocsForUserApi = new GetDocsForUserAPI();
         subscribeApi = new SubscribeAPI();
+        getSubscribedAuthorsApi = new GetSubscribedAuthorsAPI();
         openchatRoutes();
     }
 
@@ -39,6 +41,7 @@ public class Routes {
         post("users/:userId/timeline", (req, res) -> postDocumentApi.exec(req, res));
         get("users/:userId/timeline", (req, res) -> getDocsForUserApi.exec(req, res));
         post("followings", (req, res) -> subscribeApi.exec(req, res));
+        get("followings/:followerId/followees", (req, res) -> getSubscribedAuthorsApi.exec(req, res));
     }
 
 }

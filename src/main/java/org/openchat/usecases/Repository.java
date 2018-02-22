@@ -15,6 +15,7 @@ public interface Repository {
   List<Document> getDocsForUser(String username);
   boolean follows(String subscriber, String author);
   void addSubscription(String subscriberName, String authorName);
+  List<String> getAuthorsSubscribedBy(String subscriberName);
 
   class DuplicateUser extends RuntimeException {
   }

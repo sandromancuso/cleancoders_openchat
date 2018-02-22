@@ -66,4 +66,13 @@ public class InMemoryRepository implements Repository {
   public void addSubscription(String subscriberName, String authorName) {
     subscriptions.add(new Subscription(subscriberName, authorName));
   }
+
+  public List<String> getAuthorsSubscribedBy(String subscriberName) {
+    List<String> authorNames = new ArrayList<>();
+    for (Subscription s : subscriptions) {
+      if (s.subscriberName.equals(subscriberName))
+        authorNames.add(s.authorName);
+    }
+    return authorNames;
+  }
 }
