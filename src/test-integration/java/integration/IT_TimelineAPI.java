@@ -14,13 +14,20 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.reverse;
 import static integration.APITestSuit.BASE_URL;
+import static integration.APITestSuit.UUID_PATTERN;
 import static integration.dsl.OpenChatTestDSL.assertThatJsonPostMatchesPost;
 import static integration.dsl.OpenChatTestDSL.register;
+import static integration.dsl.OpenChatTestDSL.withPostJsonContaining;
 import static integration.dsl.PostDSL.ITPostBuilder.aPost;
 import static integration.dsl.UserDSL.ITUserBuilder.aUser;
+import static io.restassured.RestAssured.delete;
+import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.matchesPattern;
 
 public class IT_TimelineAPI {
 
@@ -31,8 +38,41 @@ public class IT_TimelineAPI {
 
     @Before
     public void initialise() {
+        delete(BASE_URL+"/repositories");
         DAVID = register(DAVID);
         POSTS = createPostsFor(DAVID, 2);
+    }
+
+    @Test
+    public void can_add_one_post() throws Exception {
+        ITPost post = aPost().build();
+        given()
+                .body(withPostJsonContaining(post.text()))
+        .when()
+                .post(BASE_URL + "/users/" + post.userId() + "/timeline")
+        .then()
+                .statusCode(201)
+                .contentType(JSON)
+                .body("postId", matchesPattern(UUID_PATTERN))
+                .body("userId", is(post.userId()))
+                .body("text", is(post.text()))
+                .body("dateTime", notNullValue());
+    }
+
+    @Test
+    public void cannot_add_one_innappropriate_post() throws Exception {
+        ITPost post = aPost().build();
+        given()
+                .body(withPostJsonContaining("orange"))
+        .when()
+                .post(BASE_URL + "/users/" + post.userId() + "/timeline")
+        .then()
+                .statusCode(201)
+                .contentType(JSON)
+                .body("postId", matchesPattern(UUID_PATTERN))
+                .body("userId", is(post.userId()))
+                .body("text", is(post.text()))
+                .body("dateTime", notNullValue());
     }
 
     @Test public void

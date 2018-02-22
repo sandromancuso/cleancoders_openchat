@@ -9,13 +9,21 @@ public class APIContext {
   public static void initialize() {
     instance = new APIContext();
   }
-  private Map<String, String> userUUIDS = new HashMap<>();
-
-  public String getUUIDForUser(String username) {
-    return userUUIDS.get(username);
-  }
+  private Map<String, String> usernameToUUID = new HashMap<>();
+  private Map<String, String> UUIDToUsername = new HashMap<>();
 
   public void makeUUIDForUser(String username) {
-    userUUIDS.put(username, UUID.randomUUID().toString());
+    String uuid = UUID.randomUUID().toString();
+    usernameToUUID.put(username, uuid);
+    UUIDToUsername.put(uuid, username);
+
+  }
+
+  public String getUUIDForUser(String username) {
+    return usernameToUUID.get(username);
+  }
+
+  public String getUserNameForUUID(String uuid) {
+    return UUIDToUsername.get(uuid);
   }
 }

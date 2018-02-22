@@ -98,7 +98,7 @@ public class OpenChatTestDSL {
                         .toString();
     }
 
-    private static String withPostJsonContaining(String text) {
+    public static String withPostJsonContaining(String text) {
         return new JsonObject().add("text", text).toString();
     }
 
