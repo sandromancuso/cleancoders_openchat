@@ -19,7 +19,7 @@ public class GetUsersTest {
     User bob = aUser().setUsername("Bob").build();
     UseCaseContext.repository.addUser(bob);
     GetUsers getUsers = new GetUsers();
-    List<User> users = getUsers.get();
+    List<User> users = getUsers.getAll();
     assertThat(users).containsExactly(bob);
 
 

@@ -21,7 +21,7 @@ public class Routes {
         APIContext.initialize();
         userApi = new UserApi();
         loginAPI = new LoginApi();
-        getUsersApi = new GetUsersApi();
+        getUsersApi = new GetUsersAPI();
         openchatRoutes();
     }
 
