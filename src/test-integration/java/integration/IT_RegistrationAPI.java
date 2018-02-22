@@ -1,19 +1,13 @@
 package integration;
 
 import com.eclipsesource.json.JsonObject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openchat.OpenChat;
-import org.openchat.OpenChatLauncher;
-import org.openchat.api.APIContext;
-import org.openchat.usecases.UseCaseContext;
 
 import static integration.APITestSuit.BASE_URL;
 import static integration.APITestSuit.UUID_PATTERN;
 import static io.restassured.RestAssured.delete;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.post;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.matchesPattern;
