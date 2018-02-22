@@ -1,9 +1,6 @@
 package org.openchat;
 
-import org.openchat.api.APIContext;
-import org.openchat.api.GetUsersAPI;
-import org.openchat.api.LoginApi;
-import org.openchat.api.UserApi;
+import org.openchat.api.*;
 import org.openchat.usecases.UseCaseContext;
 
 import static spark.Spark.*;
@@ -15,6 +12,7 @@ public class Routes {
     private UserApi userApi;
     private LoginApi loginAPI;
     private GetUsersAPI getUsersApi;
+    private PostDocumentAPI postDocumentApi;
 
     public void create() {
         UseCaseContext.initialize();
@@ -22,6 +20,7 @@ public class Routes {
         userApi = new UserApi();
         loginAPI = new LoginApi();
         getUsersApi = new GetUsersAPI();
+        postDocumentApi = new PostDocumentAPI();
         openchatRoutes();
     }
 
@@ -32,6 +31,7 @@ public class Routes {
         post("users", (req, res) -> userApi.registerUser(req, res));
         post("login", (req, res) -> loginAPI.login(req, res));
         get("users", (req, res) -> getUsersApi.getUsers(req, res));
+        post("users/:userId/timeline", (req, res) -> postDocumentApi.post(req, res));
     }
 
 }

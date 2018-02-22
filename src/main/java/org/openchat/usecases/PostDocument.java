@@ -11,4 +11,14 @@ public class PostDocument {
     UseCaseContext.repository.addDocument(document);
     return document;
   }
+
+  public Document postOnlyAppropriateDocument(String username, String text) {
+    String lowerText = text.toLowerCase();
+    if (lowerText.contains("orange") || lowerText.contains("ice cream") || lowerText.contains("elephant"))
+      throw new InappropriateException();
+    return post(username, text);
+  }
+
+  public class InappropriateException extends RuntimeException {
+  }
 }
