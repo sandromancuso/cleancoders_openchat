@@ -10,7 +10,7 @@ import spark.Response;
 import java.time.format.DateTimeFormatter;
 
 public class PostDocumentAPI {
-  public String post(Request req, Response res) {
+  public String exec(Request req, Response res) {
     String userId = req.params("userId");
     String text = Json.parse(req.body()).asObject().getString("text", "");
     PostDocument postDocument = new PostDocument();

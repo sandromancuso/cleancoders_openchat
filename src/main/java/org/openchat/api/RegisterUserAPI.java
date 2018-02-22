@@ -9,8 +9,8 @@ import org.openchat.usecases.Repository;
 import spark.Request;
 import spark.Response;
 
-public class UserApi {
-  public String registerUser(Request req, Response res) {
+public class RegisterUserAPI {
+  public String exec(Request req, Response res) {
     CreateUserRequest createUserRequest = makeCreateUserRequest(req.body());
     CreateUser useCase = new CreateUser();
 

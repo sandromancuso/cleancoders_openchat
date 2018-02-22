@@ -33,4 +33,8 @@ public class APIContext {
     messageIdToUUID.put(id, uuid);
     return uuid;
   }
+
+  public String getUUIDForMessageId(long docId) {
+    return messageIdToUUID.get(docId);
+  }
 }

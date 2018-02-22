@@ -6,12 +6,12 @@ public class CreateUser {
   public User createUser(CreateUserRequest request) {
     if (UseCaseContext.repository.getUser(request.username) != null)
       throw new Repository.DuplicateUser();
-    User user = makeUser(request);
+    User user = exec(request);
     UseCaseContext.repository.addUser(user);
     return user;
   }
 
-  private User makeUser(CreateUserRequest request) {
+  private User exec(CreateUserRequest request) {
     User user = new User();
     user.username = request.username;
     user.password = request.password;

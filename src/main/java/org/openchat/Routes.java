@@ -9,18 +9,20 @@ import static spark.Spark.*;
 public class Routes {
     private static boolean TEST_CONFIG = true; // should be environment variable.
 
-    private UserApi userApi;
+    private RegisterUserAPI registerRegisterUserAPI;
     private LoginApi loginAPI;
     private GetUsersAPI getUsersApi;
     private PostDocumentAPI postDocumentApi;
+    private GetDocsForUserAPI getDocsForUserApi;
 
     public void create() {
         UseCaseContext.initialize();
         APIContext.initialize();
-        userApi = new UserApi();
+        registerRegisterUserAPI = new RegisterUserAPI();
         loginAPI = new LoginApi();
         getUsersApi = new GetUsersAPI();
         postDocumentApi = new PostDocumentAPI();
+        getDocsForUserApi = new GetDocsForUserAPI();
         openchatRoutes();
     }
 
@@ -28,10 +30,11 @@ public class Routes {
         if (TEST_CONFIG)
             delete("repositories", (req, res) -> {APIContext.initialize(); UseCaseContext.initialize(); return "";});
         get("status", (req, res) -> "OpenChat: OK!");
-        post("users", (req, res) -> userApi.registerUser(req, res));
-        post("login", (req, res) -> loginAPI.login(req, res));
-        get("users", (req, res) -> getUsersApi.getUsers(req, res));
-        post("users/:userId/timeline", (req, res) -> postDocumentApi.post(req, res));
+        post("users", (req, res) -> registerRegisterUserAPI.exec(req, res));
+        post("login", (req, res) -> loginAPI.exec(req, res));
+        get("users", (req, res) -> getUsersApi.exec(req, res));
+        post("users/:userId/timeline", (req, res) -> postDocumentApi.exec(req, res));
+        get("users/:userId/timeline", (req, res) -> getDocsForUserApi.exec(req, res));
     }
 
 }

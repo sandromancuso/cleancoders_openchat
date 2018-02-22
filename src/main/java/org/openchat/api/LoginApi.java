@@ -8,12 +8,12 @@ import spark.Request;
 import spark.Response;
 
 public class LoginApi {
-  public String login(Request req, Response res) {
+  public String exec(Request req, Response res) {
     JsonObject json = Json.parse(req.body()).asObject();
     String username = json.getString("username", "");
     String password = json.getString("password", "");
     Login login = new Login();
-    User user = login.validate(username, password);
+    User user = login.exec(username, password);
     if (user != null) {
       String body = new JsonObject()
                           .add("username", user.username)

@@ -10,9 +10,9 @@ import spark.Response;
 import java.util.List;
 
 public class GetUsersAPI {
-  public String getUsers(Request req, Response res) {
+  public String exec(Request req, Response res) {
     GetUsers getUsers = new GetUsers();
-    List<User> users = getUsers.getAll();
+    List<User> users = getUsers.exec();
     JsonArray userArray = new JsonArray();
     for (User u : users) {
       JsonObject user = new JsonObject()
