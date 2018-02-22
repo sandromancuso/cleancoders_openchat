@@ -13,6 +13,7 @@ public interface Repository {
   Long getNextDocumentId();
   void addDocument(Document document);
   List<Document> getDocsForUser(String username);
+  boolean follows(String subscriber, String author);
 
   class DuplicateUser extends RuntimeException {
   }

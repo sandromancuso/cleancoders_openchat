@@ -56,4 +56,8 @@ public class InMemoryRepository implements Repository {
     }
     return  result;
   }
+
+  public boolean follows(String subscriber, String author) {
+    return false;
+  }
 }

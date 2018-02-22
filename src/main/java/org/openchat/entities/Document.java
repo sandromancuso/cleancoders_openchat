@@ -21,6 +21,15 @@ public class Document {
     this.dateTime = dateTime;
   }
 
+  public String toString() {
+    return "Document{" +
+      "username='" + username + '\'' +
+      ", text='" + text + '\'' +
+      ", id=" + id +
+      ", dateTime=" + dateTime +
+      '}';
+  }
+
   public boolean equals(Object other) {
     return reflectionEquals(this, other);
   }
