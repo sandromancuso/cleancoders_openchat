@@ -11,6 +11,7 @@ public class APIContext {
   }
   private Map<String, String> usernameToUUID = new HashMap<>();
   private Map<String, String> UUIDToUsername = new HashMap<>();
+  private Map<Long, String> messageIdToUUID = new HashMap<>();
 
   public void makeUUIDForUser(String username) {
     String uuid = UUID.randomUUID().toString();
@@ -25,5 +26,11 @@ public class APIContext {
 
   public String getUserNameForUUID(String uuid) {
     return UUIDToUsername.get(uuid);
+  }
+
+  public String makeUUIDforID(Long id) {
+    String uuid = UUID.randomUUID().toString();
+    messageIdToUUID.put(id, uuid);
+    return uuid;
   }
 }

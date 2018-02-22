@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.reverse;
 import static integration.APITestSuit.BASE_URL;
+import static integration.APITestSuit.DATE_PATTERN;
 import static integration.APITestSuit.UUID_PATTERN;
 import static integration.dsl.OpenChatTestDSL.assertThatJsonPostMatchesPost;
 import static integration.dsl.OpenChatTestDSL.register;
@@ -45,7 +46,7 @@ public class IT_TimelineAPI {
 
     @Test
     public void can_add_one_post() throws Exception {
-        ITPost post = aPost().build();
+        ITPost post = aPost().withUserId(DAVID.id()).build();
         given()
                 .body(withPostJsonContaining(post.text()))
         .when()
@@ -56,23 +57,19 @@ public class IT_TimelineAPI {
                 .body("postId", matchesPattern(UUID_PATTERN))
                 .body("userId", is(post.userId()))
                 .body("text", is(post.text()))
-                .body("dateTime", notNullValue());
+                .body("dateTime", matchesPattern(DATE_PATTERN));
     }
 
     @Test
-    public void cannot_add_one_innappropriate_post() throws Exception {
+    public void cannot_add_one_inappropriate_post() throws Exception {
         ITPost post = aPost().build();
         given()
                 .body(withPostJsonContaining("orange"))
         .when()
                 .post(BASE_URL + "/users/" + post.userId() + "/timeline")
         .then()
-                .statusCode(201)
-                .contentType(JSON)
-                .body("postId", matchesPattern(UUID_PATTERN))
-                .body("userId", is(post.userId()))
-                .body("text", is(post.text()))
-                .body("dateTime", notNullValue());
+                .statusCode(400)
+                .body(is("Post contains inappropriate language."));
     }
 
     @Test public void
