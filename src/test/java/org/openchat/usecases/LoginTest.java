@@ -22,19 +22,18 @@ public class LoginTest {
   @Test
   public void canLoginWithGoodCredentials() throws Exception {
     UseCaseContext.repository.addUser(user);
-    boolean result = login.validate(user.username, user.password);
-    assertThat(result).isTrue();
+    User u = login.validate(user.username, user.password);
+    assertThat(u).isNotNull();
   }
 
   @Test
   public void canNotLoginIfcredentialsAreBad() throws Exception {
-    assertThat(login.validate("nobody", "nopassword")).isFalse();
+    assertThat(login.validate("nobody", "nopassword")).isNull();
   }
 
   @Test
   public void canNotLoginWithGoodNameButBadPassword() throws Exception {
     UseCaseContext.repository.addUser(user);
-    boolean result = login.validate(user.username, "bad");
-    assertThat(result).isFalse();
+    assertThat(login.validate(user.username, "bad")).isNull();
   }
 }
