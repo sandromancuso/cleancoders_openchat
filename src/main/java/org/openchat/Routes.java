@@ -1,6 +1,7 @@
 package org.openchat;
 
 import org.openchat.api.*;
+import org.openchat.usecases.GetSubscribedDocuments;
 import org.openchat.usecases.Subscribe;
 import org.openchat.usecases.UseCaseContext;
 
@@ -17,6 +18,7 @@ public class Routes {
     private GetDocsForUserAPI getDocsForUserApi;
     private SubscribeAPI subscribeApi;
     private GetSubscribedAuthorsAPI getSubscribedAuthorsApi;
+    private GetSubscribedDocumentsAPI getSubscribedDocumentsApi;
 
     public void create() {
         UseCaseContext.initialize();
@@ -28,6 +30,7 @@ public class Routes {
         getDocsForUserApi = new GetDocsForUserAPI();
         subscribeApi = new SubscribeAPI();
         getSubscribedAuthorsApi = new GetSubscribedAuthorsAPI();
+        getSubscribedDocumentsApi = new GetSubscribedDocumentsAPI();
         openchatRoutes();
     }
 
@@ -42,6 +45,7 @@ public class Routes {
         get("users/:userId/timeline", (req, res) -> getDocsForUserApi.exec(req, res));
         post("followings", (req, res) -> subscribeApi.exec(req, res));
         get("followings/:followerId/followees", (req, res) -> getSubscribedAuthorsApi.exec(req, res));
+        get("users/:userId/wall", (req, res) -> getSubscribedDocumentsApi.exec(req, res));
     }
 
 }
