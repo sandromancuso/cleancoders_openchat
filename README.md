@@ -1,6 +1,6 @@
 ## Maven 
 
-**Runnig unit tests**
+**Running unit tests**
 
 > mvn clean test -P dev
 
